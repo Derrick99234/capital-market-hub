@@ -17,12 +17,12 @@ import { MdStackedLineChart } from "react-icons/md";
 
 function Aside() {
   return (
-    <aside className="w-1/5 h-screen bg-gray-100 p-4 border fixed overflow-y-auto">
+    <aside className="w-1/5 h-screen bg-black text-white p-4 fixed overflow-y-auto">
       <Image
         src="/images/CapitalMarketHub.png"
         alt="login"
         width={400}
-        className="sticky top-0 p-2 mb-4 mx-auto bg-amber-50 w-full"
+        className="sticky top-0 p-2 mb-4 mx-auto bg-gray-800 w-full"
         height={100}
         priority
       />
@@ -36,7 +36,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/trade-options"
+              href="/dashboard/trade-options"
               className="flex items-center gap-2 my-4"
             >
               <MdStackedLineChart />
@@ -45,7 +45,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/copy-trading"
+              href="/dashboard/copy-trading"
               className="flex items-center gap-2 my-4"
             >
               <IoPeopleSharp />
@@ -54,7 +54,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/my-wallet"
+              href="/dashboard/my-wallet"
               className="flex items-center gap-2 my-4"
             >
               <BsWallet2 />
@@ -63,7 +63,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/copy-trading"
+              href="/dashboard/copy-trading"
               className="flex items-center gap-2 my-4"
             >
               <GrTransaction />
@@ -72,7 +72,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/buy-crypto"
+              href="/dashboard/buy-crypto"
               className="flex items-center gap-2 my-4"
             >
               <IoCartOutline />
@@ -81,7 +81,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/packages"
+              href="/dashboard/packages"
               className="flex items-center gap-2 my-4"
             >
               <FiPackage />
@@ -90,7 +90,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/trading-tools"
+              href="/dashboard/trading-tools"
               className="flex items-center gap-2 my-4"
             >
               <IoSettingsOutline />
@@ -112,7 +112,7 @@ function Aside() {
           </li>
           <li>
             <Link
-              href="/dasboard/live-chat"
+              href="/dashboard/live-chat"
               className="flex items-center gap-2 my-4"
             >
               <LuMessageCircleMore />

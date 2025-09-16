@@ -1,11 +1,29 @@
+"use client";
+import React, { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
 import { FiHome } from "react-icons/fi";
 
-function Register() {
+export default function Register() {
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    country: "",
+    currency: "",
+    password: "",
+  });
+
+  const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const router = useRouter();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-500">
       <div className="flex bg-white max-w-3xl w-full shadow-lg rounded-lg">
         <div className="w-2/5 bg-gray-900">
           <Image
@@ -16,10 +34,16 @@ function Register() {
             priority
           />
           <div className="flex flex-col gap-4 px-8">
-            <button className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-2 justify-center">
+            <button
+              className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-2 justify-center"
+              onClick={() => router.push("/")}
+            >
               <FiHome /> Back to home page
             </button>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+              onClick={() => router.push("/login")}
+            >
               Login
             </button>
           </div>
@@ -32,6 +56,7 @@ function Register() {
               id="firstName"
               className="border-b-[3px] border-gray-700 mt-8 mb-2 p-2 w-full h-16 outline-none"
               placeholder="First Name"
+              onChange={handleOnchange}
               required
             />
             <input
@@ -39,6 +64,7 @@ function Register() {
               id="lastName"
               className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
               placeholder="Last Name"
+              onChange={handleOnchange}
               required
             />
             <input
@@ -46,6 +72,7 @@ function Register() {
               id="email"
               className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
               placeholder="Email Address"
+              onChange={handleOnchange}
               required
             />
             <input
@@ -53,6 +80,7 @@ function Register() {
               id="phone"
               className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
               placeholder="Phone Number"
+              onChange={handleOnchange}
               required
             />
             <select
@@ -81,6 +109,7 @@ function Register() {
               className="border-b-[3px] border-gray-700 mb-8 mt-2 p-2 w-full h-16 outline-none"
               placeholder="Password"
               required
+              onChange={handleOnchange}
             />
             <div className="flex justify-between my-5">
               <div>
@@ -105,5 +134,3 @@ function Register() {
     </main>
   );
 }
-
-export default Register;

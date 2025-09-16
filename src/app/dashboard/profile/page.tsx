@@ -1,5 +1,7 @@
 "use client";
 import Aside from "@/components/aside";
+import TickerLive from "@/components/live-price";
+import Image from "next/image";
 import React, { useState } from "react";
 
 function ProfilePage() {
@@ -14,23 +16,35 @@ function ProfilePage() {
     <>
       <Aside />
       <main>
-        <div className="flex min-h-screen max-w-4/5 ml-auto flex-col items-center justify-center p-8">
-          <div className="bg-blue-800 rounded-lg p-6 flex items-center gap-6 mb-8 w-full">
-            <div className="w-16 h-16 rounded-full bg-red-400 flex items-center justify-center text-3xl font-bold text-white">
-              G
-            </div>
-            <div>
-              <h2 className="text-2xl font-semibold text-red-400">
-                {formData.firstName} {formData.lastName}
-              </h2>
-              <p className="text-white">{formData.email}</p>
-              <p className="text-sm text-gray-200">{formData.country}</p>
+        <div className="flex min-h-screen max-w-4/5 ml-auto flex-col items-center justify-center p-8 bg-black">
+          <TickerLive />
+          <div className="bg-gray-800 rounded-lg p-6 flex gap-6 mb-8 w-full flex-col">
+            <Image
+              src={
+                "https://cdn.pixabay.com/photo/2022/12/26/11/37/bitcoin-7678816_1280.jpg"
+              }
+              width={400}
+              height={400}
+              className="w-full h-56 object-cover object- blur-[2.5px]"
+              alt="user profiel"
+            />
+            <div className="flex gap-5">
+              <div className="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center text-3xl font-bold text-white">
+                G
+              </div>
+              <div>
+                <h2 className="text-2xl font-semibold text-purple-700">
+                  {formData.firstName} {formData.lastName}
+                </h2>
+                <p className="text-white">{formData.email}</p>
+                <p className="text-sm text-gray-200">{formData.country}</p>
+              </div>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Personal Info Card */}
-            <div className="bg-blue-800 p-6 rounded-lg space-y-4 text-white">
+            <div className="bg-gray-800 p-6 rounded-lg space-y-4 text-white">
               <h3 className="text-lg font-semibold">Personal Information</h3>
               <div className="space-y-6 text-sm">
                 <p>
@@ -73,7 +87,7 @@ function ProfilePage() {
             </div>
 
             {/* Edit Form */}
-            <div className="bg-blue-800 p-6 rounded-lg">
+            <div className="bg-gray-800 p-6 rounded-lg">
               <form className="space-y-4">
                 <div>
                   <label className="block text-sm mb-1 text-white">Email</label>
@@ -83,7 +97,7 @@ function ProfilePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full p-2 rounded bg-white border border-gray-700"
+                    className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -97,7 +111,7 @@ function ProfilePage() {
                       onChange={(e) =>
                         setFormData({ ...formData, firstName: e.target.value })
                       }
-                      className="w-full p-2 rounded bg-white border border-gray-700"
+                      className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                     />
                   </div>
                   <div>
@@ -110,7 +124,7 @@ function ProfilePage() {
                       onChange={(e) =>
                         setFormData({ ...formData, lastName: e.target.value })
                       }
-                      className="w-full p-2 rounded bg-white border border-gray-700"
+                      className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                     />
                   </div>
                 </div>
@@ -124,7 +138,7 @@ function ProfilePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full p-2 rounded bg-white border border-gray-700"
+                    className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
                 <div>
@@ -137,7 +151,7 @@ function ProfilePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, country: e.target.value })
                     }
-                    className="w-full p-2 rounded bg-white border border-gray-700"
+                    className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
                 <div>
@@ -146,7 +160,7 @@ function ProfilePage() {
                   </label>
                   <input
                     type="file"
-                    className="w-full p-2 rounded bg-white border border-gray-700"
+                    className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
                 <button

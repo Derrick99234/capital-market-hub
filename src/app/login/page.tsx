@@ -1,11 +1,14 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FiHome } from "react-icons/fi";
 
 function Login() {
+  const router = useRouter();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-500">
       <div className="flex bg-white max-w-3xl w-full shadow-lg rounded-lg">
         <div className="w-2/5 bg-gray-900">
           <Image
@@ -16,10 +19,16 @@ function Login() {
             priority
           />
           <div className="flex flex-col gap-4 px-8">
-            <button className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-2 justify-center">
+            <button
+              className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-2 justify-center"
+              onClick={() => router.push("/")}
+            >
               <FiHome /> Back to home page
             </button>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+              onClick={() => router.push("/register")}
+            >
               Register
             </button>
           </div>
