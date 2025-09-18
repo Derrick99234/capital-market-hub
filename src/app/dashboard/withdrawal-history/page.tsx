@@ -4,7 +4,7 @@ import DataTable from "@/components/Table";
 import Image from "next/image";
 import React from "react";
 
-function Commodities() {
+function WithdrawalHistory() {
   const commodities = [
     {
       id: 1,
@@ -62,16 +62,16 @@ function Commodities() {
   return (
     <>
       <Aside />
-      <main className="min-h-screen max-w-4/5 ml-auto p-8 bg-black text-white">
-        <h2 className="text-2xl font-semibold">Commodities</h2>
-        <TickerLive />
-        <p className="mt-4 mb-2">
-          You can buy or sell any commodities of your choice here.
-        </p>
-        <DataTable data={commodities} columns={columns} />
+      <main className="flex min-h-screen max-w-4/5 ml-auto p-8 bg-black">
+        <div className="w-full space-y-6 min-h-screen text-white">
+          <h2 className="text-2xl font-semibold">Withdrawal History</h2>
+          <TickerLive />
+
+          <DataTable data={commodities} columns={columns} />
+        </div>
       </main>
     </>
   );
 }
 
-export default Commodities;
+export default WithdrawalHistory;

@@ -4,7 +4,7 @@ import DataTable from "@/components/Table";
 import Image from "next/image";
 import React from "react";
 
-function Commodities() {
+function AccountFunding() {
   const commodities = [
     {
       id: 1,
@@ -62,16 +62,34 @@ function Commodities() {
   return (
     <>
       <Aside />
-      <main className="min-h-screen max-w-4/5 ml-auto p-8 bg-black text-white">
-        <h2 className="text-2xl font-semibold">Commodities</h2>
-        <TickerLive />
-        <p className="mt-4 mb-2">
-          You can buy or sell any commodities of your choice here.
-        </p>
-        <DataTable data={commodities} columns={columns} />
+      <main className="flex min-h-screen max-w-4/5 ml-auto p-8 bg-black">
+        <div className="w-full space-y-6 min-h-screen text-white">
+          <TickerLive />
+          <div className="flex justify-center flex-col items-center space-y-4">
+            <button className="bg-lime-400 py-2 px-5">Cancel Txn</button>
+            <p className="text-sm font-semibold">
+              KINDLY MAKE DEPOSIT TO THE FOLLOWING DETAILS BELOW ONLY
+            </p>
+            <Image
+              src="/images/log.png"
+              width={300}
+              height={300}
+              alt="wallet image"
+            />
+            <p className="text-sm font-semibold">
+              Amount: $67788 ( 67788 Ethereum )
+            </p>
+            <hr />
+            <p className="text-sm font-semibold">
+              Wallet Address: 0xEeD06ef23009A270779EdB36106EBDfF11d12903
+            </p>
+            <hr />
+            <DataTable data={commodities} columns={columns} />
+          </div>
+        </div>
       </main>
     </>
   );
 }
 
-export default Commodities;
+export default AccountFunding;

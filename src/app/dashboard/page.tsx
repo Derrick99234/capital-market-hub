@@ -53,8 +53,16 @@ function Dashboard() {
             {/* Chart Placeholder */}
             <div className="bg-gray-900 p-4 rounded-lg">
               <h2 className="text-sm text-gray-400 mb-2">USDCAD Chart</h2>
-              <div className="h-80 bg-gray-800 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500">[Insert Chart Here]</span>
+              <div className="h-[35rem] bg-gray-800 rounded-lg">
+                <span className="text-gray-500 ">
+                  <iframe
+                    src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_advanced&symbol=OANDA:USDCAD&interval=1&theme=dark&style=1&toolbarbg=f1f3f6&studies=MACD%40tv-basicstudies%2CBollingerBands%40tv-basicstudies%2CMoneyFlowIndex%40tv-basicstudies&hide_side_toolbar=false&withdateranges=true&allow_symbol_change=true"
+                    width="50%"
+                    className="h-[35rem] w-full"
+                    height="50"
+                    allowFullScreen
+                  ></iframe>
+                </span>
               </div>
             </div>
 

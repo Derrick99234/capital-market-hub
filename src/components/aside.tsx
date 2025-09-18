@@ -1,6 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { BsWallet2 } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiVideoOn } from "react-icons/ci";
@@ -14,94 +15,194 @@ import {
 } from "react-icons/io5";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { MdStackedLineChart } from "react-icons/md";
+import { IoChevronDown, IoChevronForward } from "react-icons/io5";
 
 function Aside() {
+  const [openTradeOptions, setOpenTradeOptions] = useState(false);
+  const [openTransactions, setOpenTransactions] = useState(false);
+  const [openPackages, setOpenPackages] = useState(false);
+  const [openTradingTools, setOpenTradingTools] = useState(false);
+
   return (
     <aside className="w-1/5 h-screen bg-black text-white p-4 fixed overflow-y-auto">
+      {/* Logo */}
       <Image
         src="/images/CapitalMarketHub.png"
-        alt="login"
+        alt="Capital Market Hub"
         width={400}
-        className="sticky top-0 p-2 mb-4 mx-auto bg-gray-800 w-full"
         height={100}
         priority
+        className="sticky top-0 p-2 mb-4 mx-auto bg-gray-800 w-full"
       />
+
+      {/* Main Menu */}
       <div>
         <h3 className="font-semibold text-blue-600">Capital Market Hub</h3>
-        <ul className="pl-4 clear-start text-lg">
+        <ul className="pl-2 text-lg">
           <li>
             <Link href="/dashboard" className="flex items-center gap-2 my-4">
               <GrHomeOption /> Dashboard
             </Link>
           </li>
+
+          {/* Trade Options with Submenu */}
           <li>
-            <Link
-              href="/dashboard/trade-options"
-              className="flex items-center gap-2 my-4"
+            <button
+              onClick={() => setOpenTradeOptions(!openTradeOptions)}
+              className="flex items-center justify-between w-full my-4"
             >
-              <MdStackedLineChart />
-              Trade Options
-            </Link>
+              <span className="flex items-center gap-2">
+                <MdStackedLineChart /> Trade Options
+              </span>
+              {openTradeOptions ? <IoChevronDown /> : <IoChevronForward />}
+            </button>
+            {openTradeOptions && (
+              <ul className="ml-8 mt-2 space-y-2 text-base text-gray-300">
+                <li>
+                  <Link href="/dashboard">- Trading Dashboard</Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/stocks">
+                    - Stock Trading Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/commodities">
+                    - Commodity Trading Dashboard
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
+
           <li>
             <Link
               href="/dashboard/copy-trading"
               className="flex items-center gap-2 my-4"
             >
-              <IoPeopleSharp />
-              Copy Trading
+              <IoPeopleSharp /> Copy Trading
             </Link>
           </li>
           <li>
-            <Link
-              href="/dashboard/my-wallet"
-              className="flex items-center gap-2 my-4"
-            >
-              <BsWallet2 />
-              My Wallet
+            <Link href="#" className="flex items-center gap-2 my-4">
+              <BsWallet2 /> My Wallet
             </Link>
           </li>
+
+          {/* Transactions with Submenu */}
           <li>
-            <Link
-              href="/dashboard/copy-trading"
-              className="flex items-center gap-2 my-4"
+            <button
+              onClick={() => setOpenTransactions(!openTransactions)}
+              className="flex items-center justify-between w-full my-4"
             >
-              <GrTransaction />
-              Transactions
-            </Link>
+              <span className="flex items-center gap-2">
+                <GrTransaction /> Transactions
+              </span>
+              {openTransactions ? <IoChevronDown /> : <IoChevronForward />}
+            </button>
+            {openTransactions && (
+              <ul className="ml-8 mt-2 space-y-2 text-base text-gray-300">
+                <li>
+                  <Link href="/dashboard/account-funding">
+                    - Account Funding
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/withdraw-my-funds">
+                    - Withdraw My Fund
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/withdrawal-history">
+                    - Withdrawal History
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
+
           <li>
             <Link
               href="/dashboard/buy-crypto"
               className="flex items-center gap-2 my-4"
             >
-              <IoCartOutline />
-              Buy crypto
+              <IoCartOutline /> Buy crypto
             </Link>
           </li>
+
+          {/* Packages with Submenu */}
           <li>
-            <Link
-              href="/dashboard/packages"
-              className="flex items-center gap-2 my-4"
+            <button
+              onClick={() => setOpenPackages(!openPackages)}
+              className="flex items-center justify-between w-full my-4"
             >
-              <FiPackage />
-              Packages
-            </Link>
+              <span className="flex items-center gap-2">
+                <FiPackage /> Packages
+              </span>
+              {openPackages ? <IoChevronDown /> : <IoChevronForward />}
+            </button>
+            {openPackages && (
+              <ul className="ml-8 mt-2 space-y-2 text-base text-gray-300">
+                <li>
+                  <Link href="/dashboard/packages">- Package</Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/upgrade-package">
+                    - Upgrade Package
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
+
+          {/* Trading Tools with Submenu */}
           <li>
-            <Link
-              href="/dashboard/trading-tools"
-              className="flex items-center gap-2 my-4"
+            <button
+              onClick={() => setOpenTradingTools(!openTradingTools)}
+              className="flex items-center justify-between w-full my-4"
             >
-              <IoSettingsOutline />
-              Trading tools
-            </Link>
+              <span className="flex items-center gap-2">
+                <IoSettingsOutline /> Trading Tools
+              </span>
+              {openTradingTools ? <IoChevronDown /> : <IoChevronForward />}
+            </button>
+            {openTradingTools && (
+              <ul className="ml-8 mt-2 space-y-2 text-base text-gray-300">
+                <li>
+                  <Link href="/dashboard/trading-tools/copy-trading">
+                    - Copy Trading
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/trading-tools/bot-trading">
+                    - Bot Trading
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/trading-tools/subscribed-bot">
+                    - Subscribed Bot
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/trading-tools/trading-signals">
+                    - Trading Signals
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/trading-tools/subscribed-signals">
+                    - Subscribed Signals
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
       </div>
+
+      {/* Support Section */}
       <div>
         <h3 className="font-semibold text-blue-600">Support Features</h3>
-        <ul className="pl-4 clear-start text-lg">
+        <ul className="pl-2 text-lg">
           <li>
             <Link
               href="/dashboard/educational-support"
@@ -115,15 +216,16 @@ function Aside() {
               href="/dashboard/live-chat"
               className="flex items-center gap-2 my-4"
             >
-              <LuMessageCircleMore />
-              Live Chat
+              <LuMessageCircleMore /> Live Chat
             </Link>
           </li>
         </ul>
       </div>
+
+      {/* Account Profile */}
       <div>
         <h3 className="font-semibold text-blue-600">Account Profile</h3>
-        <ul className="pl-4 clear-start text-lg">
+        <ul className="pl-2 text-lg">
           <li>
             <Link
               href="/dashboard/profile"
@@ -137,8 +239,7 @@ function Aside() {
               href="/dashboard/logout"
               className="flex items-center gap-2 my-4"
             >
-              <IoIosLogOut />
-              Logout
+              <IoIosLogOut /> Logout
             </Link>
           </li>
         </ul>
