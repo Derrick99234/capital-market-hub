@@ -1,8 +1,14 @@
+"use client";
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
+import { useUser } from "@/context/user-context";
+import { redirect } from "next/navigation";
 import React from "react";
 
 function Dashboard() {
+  const { user, loading } = useUser();
+  if (loading) return <p>Loading...</p>;
+  if (!user) redirect("/login");
   return (
     <>
       <Aside />
@@ -13,7 +19,9 @@ function Dashboard() {
           <div className="flex justify-between items-center bg-gray-900 p-4">
             <h1 className="text-xl font-semibold">Dashboard</h1>
             <div className="flex items-center gap-4">
-              <span className="text-sm">Carlos James</span>
+              <span className="text-sm">
+                {user.firstName + " " + user.lastName}
+              </span>
               <button className="px-3 py-1 border border-gray-700 rounded-lg hover:bg-gray-800">
                 + Add Task
               </button>

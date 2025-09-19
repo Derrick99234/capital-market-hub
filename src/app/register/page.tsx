@@ -11,7 +11,7 @@ export default function Register() {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     country: "",
     currency: "",
     password: "",
@@ -72,7 +72,7 @@ export default function Register() {
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",
+        phoneNumber: "",
         country: "",
         currency: "",
         password: "",
@@ -156,8 +156,8 @@ export default function Register() {
             />
             <input
               type="number"
-              name="phone"
-              value={form.phone}
+              name="phoneNumber"
+              value={form.phoneNumber}
               className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
               placeholder="Phone Number"
               onChange={handleOnchange}

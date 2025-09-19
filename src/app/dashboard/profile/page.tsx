@@ -1,17 +1,36 @@
 "use client";
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
+import { useUser } from "@/context/user-context";
 import Image from "next/image";
-import React, { useState } from "react";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 function ProfilePage() {
+  const { user, loading } = useUser();
+
   const [formData, setFormData] = useState({
-    email: "miguelsalvador304@gmail.com",
-    firstName: "Carlos",
-    lastName: "James",
+    email: "",
+    firstName: "",
+    lastName: "",
     phone: "",
-    country: "American Samoa",
+    amount: 0,
+    country: "",
   });
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        email: user.email,
+        country: user.country,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phoneNumber,
+        amount: user.balance,
+      });
+    }
+  }, [user]);
+  if (loading) return <p>Loading...</p>;
+  if (!user) redirect("/login");
   return (
     <>
       <Aside />
@@ -59,7 +78,8 @@ function ProfilePage() {
                   <span className="font-semibold">Email:</span> {formData.email}
                 </p>
                 <p>
-                  <span className="font-semibold">Account Balance:</span> $0.00
+                  <span className="font-semibold">Account Balance:</span> $
+                  {formData.amount.toFixed(2)}
                 </p>
                 <p>
                   <span className="font-semibold">Account Status:</span>
