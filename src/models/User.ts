@@ -1,17 +1,64 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose, { Schema, Document, models } from "mongoose";
 
-const userSchema = new Schema(
+export interface IUser extends Document {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  balance: number;
+  phoneNumber?: string;
+  country?: string;
+  currency: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const UserSchema = new Schema<IUser>(
   {
-    firstName: String,
-    lastName: String,
-    email: { type: String, unique: true },
-    password: String,
-    balance: Number,
-    phoneNumber: String,
-    country: String,
-    currency: String,
+    firstName: {
+      type: String,
+      required: [true, "First name is required"],
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, "Last name is required"],
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters"],
+    },
+    balance: {
+      type: Number,
+      default: 0,
+    },
+    phoneNumber: {
+      type: String,
+      trim: true,
+    },
+    country: {
+      type: String,
+      trim: true,
+    },
+    currency: {
+      type: String,
+      default: "USD",
+      uppercase: true,
+    },
   },
-  { timestamps: true }
+  { timestamps: true } // ✅ adds createdAt and updatedAt automatically
 );
 
-export default models.User || model("User", userSchema);
+// Avoid model overwrite issues in Next.js
+const User = models.User || mongoose.model<IUser>("User", UserSchema);
+
+export default User;
