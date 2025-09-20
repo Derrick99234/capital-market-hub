@@ -70,19 +70,19 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-500">
-      <div className="flex bg-white max-w-3xl w-full shadow-lg rounded-lg">
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 sm:p-12 md:p-24 bg-gray-500">
+      <div className="flex flex-col md:flex-row bg-white max-w-4xl w-full shadow-lg rounded-lg overflow-hidden">
         {/* Left Section */}
-        <div className="w-2/5 bg-gray-900 flex flex-col items-center justify-center">
+        <div className="w-full md:w-2/5 bg-gray-900 flex flex-col items-center justify-center p-6">
           <Image
             src="/images/CapitalMarketHub.png"
             alt="login"
-            width={300}
-            height={300}
+            width={250}
+            height={250}
             priority
-            className="mb-6"
+            className="mb-6 w-40 h-auto md:w-60"
           />
-          <div className="flex flex-col gap-4 px-8 w-full">
+          <div className="flex flex-col gap-4 w-full max-w-xs">
             <button
               className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-2 justify-center"
               onClick={() => router.push("/")}
@@ -99,9 +99,11 @@ function Login() {
         </div>
 
         {/* Right Section */}
-        <div className="w-3/5 p-8 px-10 text-center">
-          <h1 className="text-2xl font-bold mb-4">Login to your account</h1>
-          <p className="text-center">
+        <div className="w-full md:w-3/5 p-6 sm:p-8 md:px-10 text-center">
+          <h1 className="text-xl sm:text-2xl font-bold mb-4">
+            Login to your account
+          </h1>
+          <p className="text-center text-sm sm:text-base">
             Don’t have an account?{" "}
             <Link href="/register" className="text-blue-600">
               Sign Up Free
@@ -115,7 +117,7 @@ function Login() {
                 id="email"
                 value={form.email}
                 onChange={handleChange}
-                className="border-b-[3px] border-gray-700 p-2 w-full h-16 outline-none"
+                className="border-b-[3px] border-gray-700 p-2 w-full h-14 sm:h-16 outline-none"
                 placeholder="Email Address"
                 required
               />
@@ -125,22 +127,12 @@ function Login() {
             </div>
 
             <div className="mb-6">
-              {/* <input
-                type="password"
-                id="password"
-                value={form.password}
-                onChange={handleChange}
-                className="border-b-[3px] border-gray-700 p-2 w-full h-16 outline-none"
-                placeholder="Password"
-                required
-              /> */}
-              {/* Password with toggle */}
               <div className="relative w-full">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
                   value={form.password}
-                  className="border-b-[3px] border-gray-700 mb-8 mt-2 p-2 w-full h-16 outline-none pr-10"
+                  className="border-b-[3px] border-gray-700 mb-6 sm:mb-8 mt-2 p-2 w-full h-14 sm:h-16 outline-none pr-10"
                   placeholder="Password"
                   required
                   onChange={handleChange}
@@ -157,8 +149,8 @@ function Login() {
               )}
             </div>
 
-            <div className="flex justify-between my-5 text-sm">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:justify-between my-5 text-sm gap-3 sm:gap-0">
+              <div className="flex items-center">
                 <input type="checkbox" id="remember" />
                 <label htmlFor="remember" className="ml-2">
                   Remember me

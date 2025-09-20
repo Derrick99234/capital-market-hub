@@ -89,19 +89,19 @@ export default function Register() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-500">
-      <div className="flex bg-white max-w-3xl w-full shadow-lg rounded-lg">
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 sm:p-12 md:p-24 bg-gray-500">
+      <div className="flex flex-col md:flex-row bg-white max-w-4xl w-full shadow-lg rounded-lg overflow-hidden">
         {/* Left Section */}
-        <div className="w-2/5 bg-gray-900 flex flex-col items-center justify-center">
+        <div className="w-full md:w-2/5 bg-gray-900 flex flex-col items-center justify-center p-6">
           <Image
             src="/images/CapitalMarketHub.png"
             alt="login"
-            width={300}
-            height={300}
+            width={250}
+            height={250}
             priority
-            className="mb-6"
+            className="mb-6 w-40 h-auto md:w-60"
           />
-          <div className="flex flex-col gap-4 px-8 w-full">
+          <div className="flex flex-col gap-4 w-full max-w-xs">
             <button
               className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-2 justify-center"
               onClick={() => router.push("/")}
@@ -118,8 +118,10 @@ export default function Register() {
         </div>
 
         {/* Right Section */}
-        <div className="w-3/5 p-8 px-10 text-center max-h-[600px] overflow-y-auto">
-          <h1 className="text-2xl font-bold mb-4">Sign up for free!</h1>
+        <div className="w-full md:w-3/5 p-6 sm:p-8 md:px-10 text-center max-h-[600px] overflow-y-auto">
+          <h1 className="text-xl sm:text-2xl font-bold mb-4">
+            Sign up for free!
+          </h1>
 
           {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
           {serverMessage && (
@@ -131,7 +133,7 @@ export default function Register() {
               type="text"
               name="firstName"
               value={form.firstName}
-              className="border-b-[3px] border-gray-700 mt-8 mb-2 p-2 w-full h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mt-6 sm:mt-8 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
               placeholder="First Name"
               onChange={handleOnchange}
               required
@@ -140,7 +142,7 @@ export default function Register() {
               type="text"
               name="lastName"
               value={form.lastName}
-              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
               placeholder="Last Name"
               onChange={handleOnchange}
               required
@@ -149,7 +151,7 @@ export default function Register() {
               type="email"
               name="email"
               value={form.email}
-              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
               placeholder="Email Address"
               onChange={handleOnchange}
               required
@@ -158,7 +160,7 @@ export default function Register() {
               type="number"
               name="phoneNumber"
               value={form.phoneNumber}
-              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
               placeholder="Phone Number"
               onChange={handleOnchange}
               required
@@ -166,7 +168,7 @@ export default function Register() {
             <select
               name="country"
               value={form.country}
-              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
               required
               onChange={handleOnchange}
             >
@@ -178,7 +180,7 @@ export default function Register() {
             <select
               name="currency"
               value={form.currency}
-              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
               required
               onChange={handleOnchange}
             >
@@ -194,7 +196,7 @@ export default function Register() {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={form.password}
-                className="border-b-[3px] border-gray-700 mb-8 mt-2 p-2 w-full h-16 outline-none pr-10"
+                className="border-b-[3px] border-gray-700 mb-6 sm:mb-8 mt-2 p-2 w-full h-14 sm:h-16 outline-none pr-10"
                 placeholder="Password"
                 required
                 onChange={handleOnchange}
@@ -207,9 +209,9 @@ export default function Register() {
               </span>
             </div>
 
-            <div className="flex items-center gap-2 my-5 text-sm">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 my-5 text-sm">
               <input type="checkbox" id="remember" required />
-              <label htmlFor="remember">
+              <label htmlFor="remember" className="text-sm sm:text-base">
                 I agree to the{" "}
                 <Link href="/terms-conditions" className="text-blue-600">
                   Terms & Conditions
