@@ -187,29 +187,19 @@ function Aside() {
               {openTradingTools && (
                 <ul className="ml-8 mt-2 space-y-2 text-base text-gray-300">
                   <li>
-                    <Link href="/dashboard/trading-tools/copy-trading">
-                      - Copy Trading
-                    </Link>
+                    <Link href="/dashboard/copy-trading">- Copy Trading</Link>
                   </li>
                   <li>
-                    <Link href="/dashboard/trading-tools/bot-trading">
-                      - Bot Trading
-                    </Link>
+                    <Link href="#">- Bot Trading</Link>
                   </li>
                   <li>
-                    <Link href="/dashboard/trading-tools/subscribed-bot">
-                      - Subscribed Bot
-                    </Link>
+                    <Link href="#">- Subscribed Bot</Link>
                   </li>
                   <li>
-                    <Link href="/dashboard/trading-tools/trading-signals">
-                      - Trading Signals
-                    </Link>
+                    <Link href="#">- Trading Signals</Link>
                   </li>
                   <li>
-                    <Link href="/dashboard/trading-tools/subscribed-signals">
-                      - Subscribed Signals
-                    </Link>
+                    <Link href="#">- Subscribed Signals</Link>
                   </li>
                 </ul>
               )}
