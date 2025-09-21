@@ -21,13 +21,12 @@ export default function Accordion({
   return (
     <div className="w-full max-w-3xl mx-auto space-y-4">
       {accordionList.map((item, index) => (
-        <div
-          key={index}
-          className="border border-gray-200 rounded-xl overflow-hidden shadow-sm"
-        >
+        <div key={index} className="overflow-hidden shadow-sm">
           <button
             onClick={() => toggle(index)}
-            className="w-full flex justify-between items-center px-5 py-4 text-left text-lg font-medium text-gray-800 hover:bg-blue-50 transition"
+            className={`${
+              activeIndex === index ? "bg-gray-600" : ""
+            } w-full flex justify-between items-center px-5 py-4 text-left text-lg font-medium text-white bg-gray-900 hover:bg-gray-900 transition`}
           >
             <span>{item.question}</span>
             <FaChevronDown
@@ -37,9 +36,9 @@ export default function Accordion({
             />
           </button>
           <div
-            className={`px-5 pb-4 text-gray-600 text-base text-left leading-relaxed transition-all duration-300 ease-in-out ${
+            className={`text-white text-base text-left leading-relaxed transition-all duration-300 ease-in-out ${
               activeIndex === index
-                ? "max-h-96 opacity-100"
+                ? "max-h-96 opacity-100 px-5 py-4"
                 : "max-h-0 opacity-0 overflow-hidden"
             }`}
           >
