@@ -242,36 +242,42 @@ export default function Home() {
             Service we Provide
           </h2>
           <div className="flex gap-12 mt-12">
-            <div className="flex flex-col lg:flex-row md:justify-around  justify-center text-xl text-center min-h-[70vh]">
+            <div className="flex flex-col lg:flex-row md:justify-around  justify-center text-center min-h-[70vh]">
               <li className="flex flex-col gap-4 max-w-sm border-r border-gray-700 px-4">
                 &#9653;{" "}
-                <strong className="text-blue-700">Forex Trading:</strong>
-                Trade major, minor, and exotic currency pairs with competitive
-                spreads and leverage options.
+                <strong className="text-gray-400 text-xl uppercase">
+                  Customer Care Support 24/7
+                </strong>
+                We are Online 247.
                 <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
               </li>
               <li className="flex flex-col gap-4 max-w-sm self-center border-x border-gray-700 px-4">
                 &#9653;{" "}
-                <strong className="text-blue-700">Stock Trading:</strong>
-                Access a wide range of global stocks and shares, including
-                popular indices and ETFs.
+                <strong className="text-gray-400 text-xl uppercase">
+                  Payment Methods
+                </strong>
+                capital market hub Inc supports Bitcoin, Etheruem, Litecoin and
+                XRP. For any other preferred payment method kindly contact
+                support@capitalmarkethub.co
                 <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
               </li>
               {/* </div>
             <div className="flex flex-col lg:flex-row md:gap-8 md:justify-around  justify-center items-center text-center text-xl"> */}
               <li className="flex flex-col gap-4 max-w-sm self-end border-x border-gray-700 px-4">
                 &#9653;{" "}
-                <strong className="text-blue-700">
-                  Cryptocurrency Trading:
-                </strong>{" "}
-                Buy and sell popular cryptocurrencies like Bitcoin, Ethereum,
-                and more with ease.
+                <strong className="text-gray-400 text-xl uppercase">
+                  Secured Company
+                </strong>
+                capital market hub is inbuilt with a 2FA security to ensure the
+                maximum security and safety of your investments.
                 <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
               </li>
               <li className="flex flex-col gap-4 max-w-sm self-center border-l border-gray-700 px-4 md:mb-16">
-                &#9653; <strong className="text-blue-700">CFD Trading:</strong>{" "}
-                Trade Contracts for Difference (CFDs) on various assets,
-                including commodities, indices, and more.
+                &#9653;{" "}
+                <strong className="text-gray-400 text-xl uppercase">
+                  Cryptocurrency Investments
+                </strong>{" "}
+                Start Earning Now On capitalmarkethub.co
                 <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
               </li>
             </div>
@@ -288,43 +294,43 @@ export default function Home() {
             Here&apos;s how it works:
           </p>
           <ol className="flex flex-col gap-8 lg:flex-row lg:gap-6 items-center justify-center">
-            <li className="flex flex-col sm:flex-row gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
+            <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
               <p>
                 <strong>Sign Up:</strong> Create an account in minutes and
                 verify your identity.
               </p>
               <Image
-                src="/images/register.png"
+                src="/images/auth.svg"
                 alt="Sign Up"
                 width={200}
                 height={80}
-                className="rounded-lg"
+                className="rounded-lg size-72"
               />
             </li>
-            <li className="flex flex-col sm:flex-row gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
+            <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
               <p>
                 <strong>Fund Your Account:</strong> Deposit funds using various
                 payment methods.
               </p>
               <Image
-                src="/images/choose_a_plan.png"
+                src="/images/money.svg"
                 alt="Choose a Plan"
                 width={200}
                 height={80}
-                className="rounded-lg"
+                className="rounded-lg size-72"
               />
             </li>
-            <li className="flex flex-col sm:flex-row gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
+            <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
               <p>
                 <strong>Start Trading:</strong> Access our trading platform and
                 start trading a wide range of instruments.
               </p>
               <Image
-                src="/images/deposit.png"
+                src="/images/trading.svg"
                 alt="Deposit"
                 width={200}
                 height={80}
-                className="rounded-lg"
+                className="rounded-lg size-72 -[20rem]"
               />
             </li>
           </ol>
@@ -351,7 +357,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold mb-6">{plan.name}</h3>
 
                   {/* Features */}
-                  <ul className="space-y-3 text-sm md:text-base">
+                  <ul className="space-y-3 text-xl">
                     <li>
                       <span className="font-semibold">Minimum Deposit:</span>{" "}
                       {plan.minDeposit}
@@ -385,7 +391,7 @@ export default function Home() {
         </section>
 
         <section className="pt-10">
-          <h2 className="text-4xl text-center font-mono">
+          <h2 className="text-4xl text-center font-mono font-bold">
             At Capital hub Market <br /> We support
           </h2>
           <div className="min-h-[50vh] flex justify-center items-center">
@@ -433,8 +439,8 @@ export default function Home() {
               Frequently Asked Questions
             </h2>
             <p className="text-base sm:text-lg px-2 sm:px-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Below we’ve provided answers to the most frequently asked
+              questions. If you have any other questions, please get in touch.
             </p>
             <Accordion accordionList={accordionList} />
           </div>

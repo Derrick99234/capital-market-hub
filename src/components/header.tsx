@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { MdOutlineClose } from "react-icons/md";
+import TickerLive from "./live-price";
 
 function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white w-full border z-50">
+    <header className="fixed top-0 left-0 right-0 bg-white w-full z-50">
       <div className="flex justify-between items-center h-20 px-4 md:px-12">
         {/* Logo */}
         <Image
@@ -139,6 +140,7 @@ function Header() {
           </div>
         </div>
       )}
+      <TickerLive />
     </header>
   );
 }
