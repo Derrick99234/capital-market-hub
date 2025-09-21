@@ -7,6 +7,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import LogoLoop from "@/components/LogoLoop";
 import { RiVipDiamondLine } from "react-icons/ri";
 import { MdOutlineGridGoldenratio } from "react-icons/md";
+import Prism from "@/components/Prism";
 
 export default function Home() {
   const accordionList = [
@@ -129,30 +130,46 @@ export default function Home() {
       {/* bg-[#0a0a1a] */}
       <main className="bg-gray-800 text-white">
         {/* HERO SECTION */}
-        <section className="relative flex flex-col lg:flex-row items-center justify-center gap-8 bg-gray-900 min-h-screen px-6 lg:px-16 py-20">
-          <div className="max-w-2xl text-center lg:text-left">
-            <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold">
-              Multi-regulated Global Forex and Shares Broker
-            </h1>
-            <p className="text-white text-base sm:text-lg mt-6 mb-6 leading-relaxed">
-              Regulated Trading & Investment platform for cryptocurrencies,
-              Stocks, CFD that standarizes data & operations with blockchain
-              technology. We provide user-friendly, efficient and secure trading
-              & investment solutions utilizing blockchain technology.
-            </p>
-            <button className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
-              Get Started
-            </button>
-          </div>
-          <div className="max-w-xl w-full">
-            <Image
-              src="/images/hero-image.png"
-              alt="Hero Image"
-              width={800}
-              height={400}
-              priority
-              className="w-full h-auto"
+        <section className="min-h-screen">
+          <div className="relative w-full h-[58rem] md:h-[45rem]">
+            <Prism
+              animationType="rotate"
+              timeScale={0.5}
+              height={3.5}
+              baseWidth={5.5}
+              scale={3.6}
+              hueShift={0}
+              colorFrequency={1}
+              noise={0.5}
+              glow={1}
             />
+            <div className="absolute top-24 left-0 flex flex-col lg:flex-row items-center justify-center gap-8 px-6 lg:px-16 py-20">
+              <div className="max-w-2xl text-center lg:text-left">
+                <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold">
+                  Multi-regulated Global Forex and Shares Broker
+                </h1>
+                <p className="text-white text-base sm:text-lg mt-6 mb-6 leading-relaxed">
+                  Regulated Trading & Investment platform for cryptocurrencies,
+                  Stocks, CFD that standarizes data & operations with blockchain
+                  technology. We provide user-friendly, efficient and secure
+                  trading & investment solutions utilizing blockchain
+                  technology.
+                </p>
+                <button className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
+                  Get Started
+                </button>
+              </div>
+              <div className="max-w-xl w-full">
+                <Image
+                  src="/images/hero-image.png"
+                  alt="Hero Image"
+                  width={900}
+                  height={400}
+                  priority
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -469,7 +486,7 @@ export default function Home() {
         <footer>
           <div className="bg-black text-white text-center p-6 sm:p-10">
             <p className="text-sm sm:text-base">
-              &copy; 2024 Capital Market Hub. All rights reserved.
+              &copy; 2025Capital Market Hub. All rights reserved.
             </p>
           </div>
         </footer>
