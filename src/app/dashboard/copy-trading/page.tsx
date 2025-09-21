@@ -7,7 +7,7 @@ function CopyTrading() {
   return (
     <>
       <Aside />
-      <main className="min-h-screen max-w-4/5 ml-auto p-8 bg-black text-white">
+      <main className="flex flex-col md:flex-row min-h-screen md:ml-[20%] bg-black p-8 text-white">
         <h2 className="text-2xl font-semibold mb-4">Copy Trader</h2>
         <TickerLive />
         <div className="w-full gap-8 text-white flex flex-wrap mt-4">

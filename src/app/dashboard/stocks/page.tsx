@@ -7,7 +7,7 @@ function Stocks() {
   return (
     <>
       <Aside />
-      <main className="flex min-h-screen max-w-4/5 ml-auto p-8 bg-black">
+      <main className="flex flex-col md:flex-row min-h-screen md:ml-[20%] bg-black p-8">
         <div className="text-white w-full">
           <h2 className="text-3xl font-semibold">Stocks</h2>
           <TickerLive />

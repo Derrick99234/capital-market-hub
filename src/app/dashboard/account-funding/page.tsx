@@ -62,7 +62,7 @@ function AccountFunding() {
   return (
     <>
       <Aside />
-      <main className="flex min-h-screen max-w-4/5 ml-auto p-8 bg-black">
+      <main className="flex flex-col md:flex-row min-h-screen md:ml-[20%] bg-black p-8">
         <div className="w-full space-y-6 min-h-screen text-white">
           <TickerLive />
           <div className="flex justify-center flex-col items-center space-y-4">

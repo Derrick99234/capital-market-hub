@@ -17,6 +17,7 @@ function ProfilePage() {
     amount: 0,
     country: "",
   });
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -29,43 +30,46 @@ function ProfilePage() {
       });
     }
   }, [user]);
+
   if (loading) return <p>Loading...</p>;
   if (!user) redirect("/login");
+
   return (
     <>
       <Aside />
       <main>
-        <div className="flex min-h-screen max-w-4/5 ml-auto flex-col items-center justify-center p-8 bg-black">
+        <div className="flex min-h-screen w-full md:max-w-4/5 md:ml-auto flex-col items-center p-4 md:p-8 bg-black">
           <TickerLive />
-          <div className="bg-gray-800 rounded-lg p-6 flex gap-6 mb-8 w-full flex-col">
+
+          {/* Profile Card */}
+          <div className="bg-gray-800 rounded-lg p-4 md:p-6 flex flex-col gap-6 mb-8 w-full">
             <Image
-              src={
-                "https://cdn.pixabay.com/photo/2022/12/26/11/37/bitcoin-7678816_1280.jpg"
-              }
+              src="https://cdn.pixabay.com/photo/2022/12/26/11/37/bitcoin-7678816_1280.jpg"
               width={400}
               height={400}
-              className="w-full h-56 object-cover object- blur-[2.5px]"
-              alt="user profiel"
+              className="w-full h-40 md:h-56 object-cover blur-[2.5px] rounded-lg"
+              alt="user profile"
             />
-            <div className="flex gap-5">
-              <div className="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center text-3xl font-bold text-white">
+            <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-start">
+              <div className="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center text-2xl md:text-3xl font-bold text-white">
                 G
               </div>
-              <div>
-                <h2 className="text-2xl font-semibold text-purple-700">
+              <div className="text-center sm:text-left">
+                <h2 className="text-xl md:text-2xl font-semibold text-purple-700">
                   {formData.firstName} {formData.lastName}
                 </h2>
-                <p className="text-white">{formData.email}</p>
+                <p className="text-white break-words">{formData.email}</p>
                 <p className="text-sm text-gray-200">{formData.country}</p>
               </div>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          {/* Info + Form */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full">
             {/* Personal Info Card */}
-            <div className="bg-gray-800 p-6 rounded-lg space-y-4 text-white">
+            <div className="bg-gray-800 p-4 md:p-6 rounded-lg space-y-4 text-white">
               <h3 className="text-lg font-semibold">Personal Information</h3>
-              <div className="space-y-6 text-sm">
+              <div className="space-y-4 md:space-y-6 text-sm">
                 <p>
                   <span className="font-semibold">First Name:</span>{" "}
                   {formData.firstName}
@@ -93,9 +97,9 @@ function ProfilePage() {
                     Not Verified
                   </span>
                 </p>
-                <p>
+                <p className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold">Referred Code:</span> 1394199
-                  <button className="ml-2 px-2 py-1 bg-lime-400 text-black rounded text-xs">
+                  <button className="px-2 py-1 bg-lime-400 text-black rounded text-xs">
                     Copy
                   </button>
                 </p>
@@ -107,7 +111,7 @@ function ProfilePage() {
             </div>
 
             {/* Edit Form */}
-            <div className="bg-gray-800 p-6 rounded-lg">
+            <div className="bg-gray-800 p-4 md:p-6 rounded-lg">
               <form className="space-y-4">
                 <div>
                   <label className="block text-sm mb-1 text-white">Email</label>
@@ -120,7 +124,8 @@ function ProfilePage() {
                     className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm mb-1 text-white">
                       First Name
@@ -148,6 +153,7 @@ function ProfilePage() {
                     />
                   </div>
                 </div>
+
                 <div>
                   <label className="block text-sm mb-1 text-white">
                     Phone Number
@@ -161,6 +167,7 @@ function ProfilePage() {
                     className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm mb-1 text-white">
                     Country
@@ -174,6 +181,7 @@ function ProfilePage() {
                     className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm mb-2 text-white">
                     Upload ID (for verification)
@@ -183,9 +191,10 @@ function ProfilePage() {
                     className="w-full p-2 rounded bg-gray-400 border border-gray-700"
                   />
                 </div>
+
                 <button
                   type="submit"
-                  className="bg-lime-400 text-black px-4 py-2 rounded font-semibold"
+                  className="w-full bg-lime-400 text-black px-4 py-2 rounded font-semibold"
                 >
                   Save Changes
                 </button>

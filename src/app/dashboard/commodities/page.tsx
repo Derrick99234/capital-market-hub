@@ -62,7 +62,7 @@ function Commodities() {
   return (
     <>
       <Aside />
-      <main className="min-h-screen max-w-4/5 ml-auto p-8 bg-black text-white">
+      <main className="flex flex-col md:flex-row min-h-screen md:ml-[20%] bg-black p-8 text-white">
         <h2 className="text-2xl font-semibold">Commodities</h2>
         <TickerLive />
         <p className="mt-4 mb-2">
