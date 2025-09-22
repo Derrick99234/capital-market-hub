@@ -5,9 +5,10 @@ import { CgArrowLongUpR } from "react-icons/cg";
 import { BsQuestionLg } from "react-icons/bs";
 import { FaCheckCircle } from "react-icons/fa";
 import LogoLoop from "@/components/LogoLoop";
-import { RiVipDiamondLine } from "react-icons/ri";
 import { MdOutlineGridGoldenratio } from "react-icons/md";
-import Prism from "@/components/Prism";
+import Link from "next/link";
+import SplitText from "@/components/SplitText";
+import AnimatedContent from "@/components/AnimatedContent";
 
 export default function Home() {
   const accordionList = [
@@ -128,125 +129,247 @@ export default function Home() {
     <>
       <Header />
       {/* bg-[#0a0a1a] */}
-      <main className="bg-gray-800 text-white">
+      <main className="text-white">
         {/* HERO SECTION */}
-        <section className="min-h-screen">
-          <div className="relative w-full h-[58rem] md:h-[45rem]">
-            <Prism
-              animationType="rotate"
-              timeScale={0.5}
-              height={3.5}
-              baseWidth={5.5}
-              scale={3.6}
-              hueShift={0}
-              colorFrequency={1}
-              noise={0.5}
-              glow={1}
-            />
-            <div className="absolute top-24 left-0 flex flex-col lg:flex-row items-center justify-center gap-8 px-6 lg:px-16 py-20">
-              <div className="max-w-2xl text-center lg:text-left">
-                <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold">
-                  Multi-regulated Global Forex and Shares Broker
-                </h1>
-                <p className="text-white text-base sm:text-lg mt-6 mb-6 leading-relaxed">
-                  Regulated Trading & Investment platform for cryptocurrencies,
-                  Stocks, CFD that standarizes data & operations with blockchain
-                  technology. We provide user-friendly, efficient and secure
-                  trading & investment solutions utilizing blockchain
-                  technology.
-                </p>
-                <button className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
-                  Get Started
-                </button>
-              </div>
-              <div className="max-w-xl w-full">
-                <Image
-                  src="/images/hero-image.png"
-                  alt="Hero Image"
-                  width={900}
-                  height={400}
-                  priority
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
+        <section className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-8 px-6 lg:px-16 py-20 mt-10">
+          <div className="max-w-2xl text-center lg:text-left">
+            <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold">
+              <SplitText
+                text="Multi-regulated Global Forex and Shares Broker"
+                className="text-[#5479ff]"
+                delay={45}
+                duration={0.1}
+                ease="power3.out"
+                splitType="chars"
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.1}
+                rootMargin="-100px"
+                // textAlign=""
+                // onLetterAnimationComplete={handleAnimationComplete}
+              />
+            </h1>
+
+            <AnimatedContent
+              distance={150}
+              direction="vertical"
+              reverse={false}
+              duration={1.2}
+              ease="bounce.out"
+              initialOpacity={0.2}
+              animateOpacity
+              scale={1.1}
+              threshold={0.2}
+              delay={0.3}
+            >
+              <p className="text-white text-base sm:text-lg mt-6 mb-10 leading-relaxed">
+                Regulated Trading & Investment platform for cryptocurrencies,
+                Stocks, CFD that standarizes data & operations with blockchain
+                technology. We provide user-friendly, efficient and secure
+                trading & investment solutions utilizing blockchain technology.
+              </p>
+            </AnimatedContent>
+            <AnimatedContent
+              distance={150}
+              direction="horizontal"
+              reverse={false}
+              duration={1.7}
+              ease="power3.out"
+              initialOpacity={0.2}
+              animateOpacity
+              // scale={1.1}
+              threshold={0.2}
+              delay={0.4}
+            >
+              <Link
+                href="/register"
+                className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg"
+              >
+                Get Started
+              </Link>
+            </AnimatedContent>
+          </div>
+          <div className="max-w-xl w-full">
+            <AnimatedContent
+              distance={350}
+              direction="horizontal"
+              reverse={false}
+              duration={1.2}
+              ease="bounce.out"
+              initialOpacity={0.2}
+              animateOpacity
+              scale={1.1}
+              threshold={0.2}
+              delay={0.3}
+            >
+              <Image
+                src="/images/hero-image.png"
+                alt="Hero Image"
+                width={900}
+                height={400}
+                priority
+                className="w-full h-auto"
+              />
+            </AnimatedContent>
           </div>
         </section>
 
         {/* WHY CHOOSE US */}
         <section
-          className="flex flex-col lg:flex-row items-center justify-center gap-8 min-h-[80vh] px-6 lg:px-20 py-16"
+          className="flex flex-col lg:flex-row items-center justify-center gap-8 min-h-[70vh] px-6 lg:px-20 py-16"
           id="about"
         >
-          <div className="max-w-2xl text-center lg:text-left">
-            <h2 className="text-3xl sm:text-4xl font-bold">
-              About Capital Market Hub
-            </h2>
-            <p className="text-base sm:text-lg mt-6 mb-6 leading-relaxed">
-              We are committed to providing our clients with the best trading
-              experience possible. Our platform is designed to be user-friendly,
-              efficient, and secure. We offer a wide range of trading
-              instruments, including cryptocurrencies, stocks, and CFDs. Our
-              team of experienced professionals is dedicated to helping our
-              clients succeed in the financial markets.
-            </p>
-            <button className="bg-gray-900 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
-              Get Started &gt;
-            </button>
-          </div>
-          <div className="max-w-2xl">
-            <ul className="text-base sm:text-lg flex flex-col gap-4 list-none">
-              <li>
-                &#9653; Customer care support available 24/7 to assist you with
-                any queries or issues.
-              </li>
-              <li>
-                &#9653; Fast and secure transactions powered by advanced
-                technology.
-              </li>
-              <li>
-                &#9653; Enjoy low fees and tight spreads, maximizing your
-                potential returns and minimizing trading costs.
-              </li>
-              <li>
-                &#9653; Access advanced trading tools and analytics to optimize
-                your strategies.
-              </li>
-              <li>
-                &#9653; Trade on a regulated and secure platform that
-                prioritizes your safety.
-              </li>
-            </ul>
-          </div>
+          <AnimatedContent
+            distance={250}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="bounce.out"
+            initialOpacity={0.2}
+            animateOpacity
+            scale={1.1}
+            threshold={0.2}
+            delay={0.2}
+          >
+            <div className="max-w-2xl text-center lg:text-left">
+              <h2 className="text-3xl sm:text-4xl font-bold">
+                About Capital Market Hub
+              </h2>
+              <p className="text-base sm:text-lg mt-6 mb-6 leading-relaxed">
+                We are committed to providing our clients with the best trading
+                experience possible. Our platform is designed to be
+                user-friendly, efficient, and secure. We offer a wide range of
+                trading instruments, including cryptocurrencies, stocks, and
+                CFDs. Our team of experienced professionals is dedicated to
+                helping our clients succeed in the financial markets.
+              </p>
+              <Link
+                href="/register"
+                className="bg-gray-900 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg"
+              >
+                Get Started &gt;
+              </Link>
+            </div>
+          </AnimatedContent>
+          <AnimatedContent
+            distance={250}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="bounce.out"
+            initialOpacity={0.2}
+            animateOpacity
+            scale={1.1}
+            threshold={0.2}
+            // delay={0.1}
+          >
+            <div className="max-w-2xl">
+              <ul className="text-base sm:text-lg flex flex-col gap-4 list-none">
+                <li>
+                  &#9653; Customer care support available 24/7 to assist you
+                  with any queries or issues.
+                </li>
+                <li>
+                  &#9653; Fast and secure transactions powered by advanced
+                  technology.
+                </li>
+                <li>
+                  &#9653; Enjoy low fees and tight spreads, maximizing your
+                  potential returns and minimizing trading costs.
+                </li>
+                <li>
+                  &#9653; Access advanced trading tools and analytics to
+                  optimize your strategies.
+                </li>
+                <li>
+                  &#9653; Trade on a regulated and secure platform that
+                  prioritizes your safety.
+                </li>
+              </ul>
+            </div>
+          </AnimatedContent>
         </section>
 
         <section className="py-16 px-6 md:px-20 text-white relative overflow-hidden">
-          <h2 className="text-4xl md:text-4xl font-bold mb-6 text-center md:text-left">
-            Why Choose Us?
-          </h2>
-          <p className="text-gray-300 mb-6 text-center md:text-left">
-            capital market hub ?
-          </p>
+          <AnimatedContent
+            distance={150}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="bounce.out"
+            initialOpacity={0.1}
+            animateOpacity
+            scale={1.1}
+            threshold={0.01}
+            // delay={0.1}
+          >
+            <h2 className="text-4xl md:text-4xl font-bold mb-6 text-center md:text-left">
+              Why Choose Us?
+            </h2>
+          </AnimatedContent>
+          <AnimatedContent
+            distance={150}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="power3.out"
+            initialOpacity={0.1}
+            animateOpacity
+            scale={1.1}
+            threshold={0.01}
+            delay={0.2}
+          >
+            <p className="text-gray-300 mb-6 text-center md:text-left">
+              capital market hub ?
+            </p>
+          </AnimatedContent>
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             {/* Left - Image */}
-            <div className="relative">
-              <Image
-                src="https://cdn.prod.website-files.com/67c5ccce25ee4e53514167ac/68c12e5ca46b640e39bc2d63_67ebc0595811379a230664aa_support-%2526-resistance.webp"
-                alt="Trading Dashboard"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
+            <AnimatedContent
+              distance={150}
+              direction="vertical"
+              reverse={false}
+              duration={1.2}
+              ease="bounce.out"
+              initialOpacity={0.8}
+              animateOpacity
+              scale={1.1}
+              threshold={0.01}
+              delay={0.3}
+            >
+              <div className="relative">
+                <Image
+                  src="https://cdn.prod.website-files.com/67c5ccce25ee4e53514167ac/68c12e5ca46b640e39bc2d63_67ebc0595811379a230664aa_support-%2526-resistance.webp"
+                  alt="Trading Dashboard"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+            </AnimatedContent>
 
             {/* Right - Content */}
             <div>
               <ul className="space-y-6">
                 {features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3 text-xl">
-                    <FaCheckCircle className="text-gray-900 mt-1 text-4xl border-2 rounded-full border-l-gray-600 border-t-red-400 border-r-green-600 bg-teal-700 flex-shrink-0" />
-                    <span className="text-gray-200">{feature}</span>
-                  </li>
+                  <AnimatedContent
+                    key={i}
+                    distance={150}
+                    direction="vertical"
+                    reverse={false}
+                    duration={1.2}
+                    ease="power3.out"
+                    initialOpacity={0.8}
+                    animateOpacity
+                    scale={1.1}
+                    threshold={0.01}
+                    delay={i / 10}
+                  >
+                    <li className="flex items-start gap-3 text-xl">
+                      <FaCheckCircle className="text-gray-900 mt-1 text-4xl border-2 rounded-full border-l-gray-600 border-t-red-400 border-r-green-600 bg-teal-700 flex-shrink-0" />
+                      <span className="text-gray-200">{feature}</span>
+                    </li>
+                  </AnimatedContent>
                 ))}
               </ul>
             </div>
@@ -255,53 +378,80 @@ export default function Home() {
 
         {/* OUR SERVICES */}
         <section className="px-6 lg:px-20 py-16 min-h-[60vh]" id="investment">
-          <h2 className="text-3xl sm:text-5xl font-bold text-center">
-            Service we Provide
-          </h2>
-          <div className="flex gap-12 mt-12">
-            <div className="flex flex-col lg:flex-row md:justify-around  justify-center text-center min-h-[70vh]">
-              <li className="flex flex-col gap-4 max-w-sm border-r border-gray-700 px-4">
-                &#9653;{" "}
-                <strong className="text-gray-400 text-xl uppercase">
-                  Customer Care Support 24/7
-                </strong>
-                We are Online 247.
-                <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
-              </li>
-              <li className="flex flex-col gap-4 max-w-sm self-center border-x border-gray-700 px-4">
-                &#9653;{" "}
-                <strong className="text-gray-400 text-xl uppercase">
-                  Payment Methods
-                </strong>
-                capital market hub Inc supports Bitcoin, Etheruem, Litecoin and
-                XRP. For any other preferred payment method kindly contact
-                support@capitalmarkethub.co
-                <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
-              </li>
-              {/* </div>
+          <AnimatedContent
+            distance={150}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="power3.out"
+            initialOpacity={0.8}
+            animateOpacity
+            scale={1.1}
+            threshold={0.01}
+            // delay={0.1}
+          >
+            <h2 className="text-3xl sm:text-5xl font-bold text-center">
+              Service we Provide
+            </h2>
+          </AnimatedContent>
+          <AnimatedContent
+            distance={150}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="power3.out"
+            initialOpacity={0.8}
+            animateOpacity
+            scale={1.1}
+            threshold={0.01}
+            delay={0.2}
+          >
+            <div className="flex gap-12 mt-12">
+              <div className="flex flex-col lg:flex-row md:justify-around  justify-center text-center min-h-[70vh]">
+                <li className="flex flex-col gap-4 max-w-sm border-r border-gray-700 px-4">
+                  &#9653;{" "}
+                  <strong className="text-gray-400 text-xl uppercase">
+                    Customer Care Support 24/7
+                  </strong>
+                  We are Online 247.
+                  <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
+                </li>
+                <li className="flex flex-col gap-4 max-w-sm self-center border-x border-gray-700 px-4">
+                  &#9653;{" "}
+                  <strong className="text-gray-400 text-xl uppercase">
+                    Payment Methods
+                  </strong>
+                  capital market hub Inc supports Bitcoin, Etheruem, Litecoin
+                  and XRP. For any other preferred payment method kindly contact
+                  support@capitalmarkethub.co
+                  <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
+                </li>
+                {/* </div>
             <div className="flex flex-col lg:flex-row md:gap-8 md:justify-around  justify-center items-center text-center text-xl"> */}
-              <li className="flex flex-col gap-4 max-w-sm self-end border-x border-gray-700 px-4">
-                &#9653;{" "}
-                <strong className="text-gray-400 text-xl uppercase">
-                  Secured Company
-                </strong>
-                capital market hub is inbuilt with a 2FA security to ensure the
-                maximum security and safety of your investments.
-                <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
-              </li>
-              <li className="flex flex-col gap-4 max-w-sm self-center border-l border-gray-700 px-4 md:mb-16">
-                &#9653;{" "}
-                <strong className="text-gray-400 text-xl uppercase">
-                  Cryptocurrency Investments
-                </strong>{" "}
-                Start Earning Now On capitalmarkethub.co
-                <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
-              </li>
+                <li className="flex flex-col gap-4 max-w-sm self-end border-x border-gray-700 px-4">
+                  &#9653;{" "}
+                  <strong className="text-gray-400 text-xl uppercase">
+                    Secured Company
+                  </strong>
+                  capital market hub is inbuilt with a 2FA security to ensure
+                  the maximum security and safety of your investments.
+                  <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
+                </li>
+                <li className="flex flex-col gap-4 max-w-sm self-center border-l border-gray-700 px-4 md:mb-16">
+                  &#9653;{" "}
+                  <strong className="text-gray-400 text-xl uppercase">
+                    Cryptocurrency Investments
+                  </strong>{" "}
+                  Start Earning Now On capitalmarkethub.co
+                  <CgArrowLongUpR className="text-red-500 text-5xl mx-auto" />
+                </li>
+              </div>
             </div>
-          </div>
+          </AnimatedContent>
         </section>
 
         {/* HOW IT WORKS */}
+
         <section className="px-6 lg:px-20 py-16 min-h-[80vh]">
           <h2 className="text-4xl sm:text-4xl font-bold text-center lg:text-left">
             How It Works
@@ -310,46 +460,91 @@ export default function Home() {
             Our platform is designed to provide a seamless trading experience.
             Here&apos;s how it works:
           </p>
+
           <ol className="flex flex-col gap-8 lg:flex-row lg:gap-6 items-center justify-center">
-            <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
-              <p>
-                <strong>Sign Up:</strong> Create an account in minutes and
-                verify your identity.
-              </p>
-              <Image
-                src="/images/auth.svg"
-                alt="Sign Up"
-                width={200}
-                height={80}
-                className="rounded-lg size-72"
-              />
-            </li>
-            <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
-              <p>
-                <strong>Fund Your Account:</strong> Deposit funds using various
-                payment methods.
-              </p>
-              <Image
-                src="/images/money.svg"
-                alt="Choose a Plan"
-                width={200}
-                height={80}
-                className="rounded-lg size-72"
-              />
-            </li>
-            <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
-              <p>
-                <strong>Start Trading:</strong> Access our trading platform and
-                start trading a wide range of instruments.
-              </p>
-              <Image
-                src="/images/trading.svg"
-                alt="Deposit"
-                width={200}
-                height={80}
-                className="rounded-lg size-72 -[20rem]"
-              />
-            </li>
+            {/* Box 1 */}
+            <AnimatedContent
+              distance={150}
+              direction="vertical"
+              reverse={false}
+              duration={1.2}
+              ease="power3.out"
+              initialOpacity={0.8}
+              animateOpacity
+              scale={1.1}
+              threshold={0.01}
+              delay={0.2} // 👈 first box
+            >
+              <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
+                <p>
+                  <strong>Sign Up:</strong> Create an account in minutes and
+                  verify your identity.
+                </p>
+                <Image
+                  src="/images/auth.svg"
+                  alt="Sign Up"
+                  width={200}
+                  height={80}
+                  className="rounded-lg size-72"
+                />
+              </li>
+            </AnimatedContent>
+
+            {/* Box 2 */}
+            <AnimatedContent
+              distance={150}
+              direction="vertical"
+              reverse={false}
+              duration={1.2}
+              ease="power3.out"
+              initialOpacity={0.8}
+              animateOpacity
+              scale={1.1}
+              threshold={0.01}
+              delay={0.4} // 👈 little more delay
+            >
+              <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
+                <p>
+                  <strong>Fund Your Account:</strong> Deposit funds using
+                  various payment methods.
+                </p>
+                <Image
+                  src="/images/money.svg"
+                  alt="Choose a Plan"
+                  width={200}
+                  height={80}
+                  className="rounded-lg size-72"
+                />
+              </li>
+            </AnimatedContent>
+
+            {/* Box 3 */}
+            <AnimatedContent
+              distance={150}
+              direction="vertical"
+              reverse={false}
+              duration={1.2}
+              ease="power3.out"
+              initialOpacity={0.8}
+              animateOpacity
+              scale={1.1}
+              threshold={0.01}
+              delay={0.6}
+            >
+              <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
+                <p>
+                  <strong>Start Trading:</strong> Access our trading platform
+                  and start trading a wide range of instruments.
+                </p>
+                <Image
+                  src="/images/trading.svg"
+                  alt="Deposit"
+                  width={200}
+                  height={80}
+                  className="rounded-lg size-72"
+                />
+              </li>
+            </AnimatedContent>
           </ol>
         </section>
 
@@ -363,47 +558,73 @@ export default function Home() {
             {/* bg-[#1b1b2d] */}
             <div className="grid md:grid-cols-3 gap-10">
               {plans.map((plan, i) => (
-                <div
+                <AnimatedContent
+                  distance={150}
+                  direction="vertical"
+                  reverse={false}
+                  duration={1.2}
+                  ease="power3.out"
+                  initialOpacity={0.8}
+                  animateOpacity
+                  scale={1.1}
+                  threshold={0.01}
+                  delay={i / 10}
                   key={i}
-                  className="bg-gray-900 rounded-lg shadow-lg px-6 py-8 flex flex-col items-center hover:scale-105 transition-transform"
                 >
-                  {/* Plan Image */}
-                  <MdOutlineGridGoldenratio className="text-9xl my-3" />
+                  <div className="bg-gray-900 rounded-lg shadow-lg px-6 py-8 flex flex-col items-center hover:scale-105 transition-transform">
+                    {/* Plan Image */}
+                    <MdOutlineGridGoldenratio className="text-9xl my-3" />
 
-                  {/* Plan Name */}
-                  <h3 className="text-xl font-bold mb-6">{plan.name}</h3>
+                    {/* Plan Name */}
+                    <h3 className="text-xl font-bold mb-6">{plan.name}</h3>
 
-                  {/* Features */}
-                  <ul className="space-y-3 text-xl">
-                    <li>
-                      <span className="font-semibold">Minimum Deposit:</span>{" "}
-                      {plan.minDeposit}
-                    </li>
-                    <li>
-                      <span className="font-semibold">Maximum Deposit:</span>{" "}
-                      {plan.maxDeposit}
-                    </li>
-                    <li>Risk management</li>
-                    <li>Standard Options</li>
-                    <li>Account manager</li>
-                    <li>
-                      <span className="font-semibold">Contract Duration:</span>{" "}
-                      {plan.duration}
-                    </li>
-                  </ul>
-                </div>
+                    {/* Features */}
+                    <ul className="space-y-3 text-xl">
+                      <li>
+                        <span className="font-semibold">Minimum Deposit:</span>{" "}
+                        {plan.minDeposit}
+                      </li>
+                      <li>
+                        <span className="font-semibold">Maximum Deposit:</span>{" "}
+                        {plan.maxDeposit}
+                      </li>
+                      <li>Risk management</li>
+                      <li>Standard Options</li>
+                      <li>Account manager</li>
+                      <li>
+                        <span className="font-semibold">
+                          Contract Duration:
+                        </span>{" "}
+                        {plan.duration}
+                      </li>
+                    </ul>
+                  </div>
+                </AnimatedContent>
               ))}
             </div>
 
             {/* Call to Action */}
-            <div className="mt-12">
-              <a
-                href="#"
-                className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg"
-              >
-                SIGN UP FOR MORE HIGHER INVESTMENT PLANS TODAY
-              </a>
-            </div>
+            <AnimatedContent
+              distance={250}
+              direction="horizontal"
+              reverse={false}
+              duration={1.2}
+              ease="power3.out"
+              initialOpacity={0.8}
+              animateOpacity
+              scale={1.1}
+              threshold={0.01}
+              // delay={0,1}
+            >
+              <div className="mt-12">
+                <a
+                  href="#"
+                  className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg"
+                >
+                  SIGN UP FOR MORE HIGHER INVESTMENT PLANS TODAY
+                </a>
+              </div>
+            </AnimatedContent>
           </div>
         </section>
 
@@ -429,18 +650,31 @@ export default function Home() {
 
         {/* CTA */}
         <section>
-          <div className="bg-gray-900 text-white text-center p-10">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Ready to Get Started?
-            </h2>
-            <p className="text-base sm:text-lg mb-6">
-              Join thousands of traders and investors who trust us for their
-              trading needs.
-            </p>
-            <button className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
-              Sign Up Now
-            </button>
-          </div>
+          <AnimatedContent
+            distance={250}
+            direction="vertical"
+            reverse={false}
+            duration={1.2}
+            ease="power3.out"
+            initialOpacity={0.8}
+            animateOpacity
+            scale={1.1}
+            threshold={0.01}
+            // delay={0,1}
+          >
+            <div className=" text-white text-center p-10">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                Ready to Get Started?
+              </h2>
+              <p className="text-base sm:text-lg mb-6">
+                Join thousands of traders and investors who trust us for their
+                trading needs.
+              </p>
+              <button className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
+                Sign Up Now
+              </button>
+            </div>
+          </AnimatedContent>
         </section>
 
         {/* FAQ */}
@@ -449,7 +683,7 @@ export default function Home() {
           id="faq"
         >
           <div className="max-w-3xl text-center flex flex-col gap-6">
-            <span className="bg-gray-200 flex justify-center items-center text-xs p-2 rounded-lg text-green-700">
+            <span className="bg-gray-400 flex justify-center items-center text-xs p-2 text-gray-700">
               FAQ QUESTION <BsQuestionLg className="text-red-500 ml-1" />
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold">
@@ -464,10 +698,7 @@ export default function Home() {
         </section>
 
         {/* CONTACT */}
-        <section
-          className="px-6 lg:px-20 py-16 min-h-[60vh] bg-gray-900"
-          id="contact"
-        >
+        <section className="px-6 lg:px-20 py-16 min-h-[60vh]" id="contact">
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-bold">Contact Us</h2>
             <p className="text-base sm:text-lg mt-6 mb-6 leading-relaxed">
