@@ -33,7 +33,7 @@ export default function Accordion({
           animateOpacity
           scale={1.05}
           threshold={0.05}
-          delay={0.2 * index} // 👈 staggered animation
+          delay={0.2 * index}
         >
           <div className="overflow-hidden shadow-sm">
             <button

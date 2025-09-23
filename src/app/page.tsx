@@ -220,12 +220,12 @@ export default function Home() {
           id="about"
         >
           <AnimatedContent
-            distance={250}
+            distance={-150}
             direction="vertical"
             reverse={false}
             duration={1.2}
             ease="bounce.out"
-            initialOpacity={0.2}
+            initialOpacity={0}
             animateOpacity
             scale={1.1}
             threshold={0.2}
@@ -252,12 +252,12 @@ export default function Home() {
             </div>
           </AnimatedContent>
           <AnimatedContent
-            distance={250}
+            distance={-150}
             direction="vertical"
             reverse={false}
             duration={1.2}
             ease="bounce.out"
-            initialOpacity={0.2}
+            initialOpacity={0}
             animateOpacity
             scale={1.1}
             threshold={0.2}
