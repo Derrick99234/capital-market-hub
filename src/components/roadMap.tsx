@@ -38,12 +38,28 @@ export default function Roadmap({ roadmapData }: { roadmapData: any[] }) {
               className="text-center relative min-w-[300px] snap-center"
             >
               {/* Quarter */}
-              <p className="text-pink-500 font-semibold mb-8">{item.quarter}</p>
+              <p
+                className={`font-semibold mb-8 ${
+                  idx >= 5 ? "text-gray-200" : "text-pink-500"
+                }`}
+              >
+                {item.quarter}
+              </p>
 
               {/* Dot + Line */}
               <div className="relative">
-                <div className="w-full h-1 bg-pink-600"></div>
-                <div className="w-5 h-5 bg-pink-600 rounded-full mx-auto mb-6 border-2 border-white absolute left-1/2 -top-1.5"></div>
+                <div
+                  className={`w-full h-1 ${
+                    idx >= 5 ? "bg-gray-200" : "bg-pink-600"
+                  }`}
+                ></div>
+                <div
+                  className={`w-5 h-5 rounded-full mx-auto mb-6 border-2 ${
+                    idx < 5
+                      ? "border-white bg-pink-600"
+                      : "border-gray-200 bg-gray-700"
+                  } absolute left-1/2 -top-2`}
+                ></div>
               </div>
 
               <div className="px-5">

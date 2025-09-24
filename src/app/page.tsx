@@ -162,6 +162,12 @@ export default function Home() {
       period: "April - June 2019",
       description: "Launching advanced analytics and AI-driven trading tools.",
     },
+    {
+      quarter: "Q4 2018",
+      period: "October - December 2018",
+      description:
+        "Building of a consolidated market share running on a connected system.",
+    },
   ];
 
   return (
