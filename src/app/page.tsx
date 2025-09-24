@@ -9,6 +9,9 @@ import { MdOutlineGridGoldenratio } from "react-icons/md";
 import Link from "next/link";
 import SplitText from "@/components/SplitText";
 import AnimatedContent from "@/components/AnimatedContent";
+import Roadmap from "@/components/roadMap";
+import PartnersAndNews from "@/components/partnersAndNews";
+import RippleGrid from "@/components/RippleGrid";
 
 export default function Home() {
   const accordionList = [
@@ -125,6 +128,42 @@ export default function Home() {
     },
   ];
 
+  const roadmapData = [
+    {
+      quarter: "Q1 2018",
+      period: "January - March 2018",
+      description:
+        "We started capitalex and worked on creating a robust platform for efficient trading.",
+    },
+    {
+      quarter: "Q2 2018",
+      period: "April - June 2018",
+      description:
+        "Consolidating our holds in the market with major diversification into emerging currencies.",
+    },
+    {
+      quarter: "Q3 2018",
+      period: "July - September 2018",
+      description: "Capitalex kicks off its trading platform.",
+    },
+    {
+      quarter: "Q4 2018",
+      period: "October - December 2018",
+      description:
+        "Building of a consolidated market share running on a connected system.",
+    },
+    {
+      quarter: "Q1 2019",
+      period: "January - March 2019",
+      description: "Expansion into global markets with new partnerships.",
+    },
+    {
+      quarter: "Q2 2019",
+      period: "April - June 2019",
+      description: "Launching advanced analytics and AI-driven trading tools.",
+    },
+  ];
+
   return (
     <>
       <Header />
@@ -203,7 +242,7 @@ export default function Home() {
               delay={0.3}
             >
               <Image
-                src="/images/hero-image.png"
+                src="/images/heroImage.png"
                 alt="Hero Image"
                 width={900}
                 height={400}
@@ -452,7 +491,7 @@ export default function Home() {
 
         {/* HOW IT WORKS */}
 
-        <section className="px-6 lg:px-20 py-16 min-h-[80vh]">
+        {/* <section className="px-6 lg:px-20 py-16 min-h-[80vh]">
           <h2 className="text-4xl sm:text-4xl font-bold text-center lg:text-left">
             How It Works
           </h2>
@@ -462,7 +501,7 @@ export default function Home() {
           </p>
 
           <ol className="flex flex-col gap-8 lg:flex-row lg:gap-6 items-center justify-center">
-            {/* Box 1 */}
+      
             <AnimatedContent
               distance={150}
               direction="vertical"
@@ -473,7 +512,7 @@ export default function Home() {
               animateOpacity
               scale={1.1}
               threshold={0.01}
-              delay={0.2} // 👈 first box
+              delay={0.2} 
             >
               <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
                 <p>
@@ -490,7 +529,7 @@ export default function Home() {
               </li>
             </AnimatedContent>
 
-            {/* Box 2 */}
+  
             <AnimatedContent
               distance={150}
               direction="vertical"
@@ -501,7 +540,7 @@ export default function Home() {
               animateOpacity
               scale={1.1}
               threshold={0.01}
-              delay={0.4} // 👈 little more delay
+              delay={0.4} 
             >
               <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
                 <p>
@@ -518,7 +557,6 @@ export default function Home() {
               </li>
             </AnimatedContent>
 
-            {/* Box 3 */}
             <AnimatedContent
               distance={150}
               direction="vertical"
@@ -546,6 +584,73 @@ export default function Home() {
               </li>
             </AnimatedContent>
           </ol>
+        </section> */}
+
+        <section className="relative px-6 lg:px-20 py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
+          <div className="max-w-6xl mx-auto">
+            {/* Heading */}
+            <div className="text-center lg:text-left mb-14">
+              <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
+                How It Works
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 text-gray-300">
+                Our platform is designed to provide a seamless trading
+                experience. Here&apos;s how it works:
+              </p>
+            </div>
+
+            {/* Steps */}
+            <ol className="flex flex-col lg:flex-row gap-10 lg:gap-6 items-center lg:items-stretch justify-center">
+              {/* Step 1 */}
+              <li className="flex flex-col items-center lg:items-start gap-6 border border-gray-700 rounded-2xl p-8 bg-gray-900/70 hover:bg-gray-800/80 transition shadow-lg w-full max-w-sm">
+                <Image
+                  src="/images/auth.svg"
+                  alt="Sign Up"
+                  width={160}
+                  height={160}
+                  className="rounded-xl"
+                />
+                <p className="text-center lg:text-left text-base leading-relaxed">
+                  <strong className="block text-blue-400">Sign Up:</strong>
+                  Create an account in minutes and verify your identity.
+                </p>
+              </li>
+
+              {/* Step 2 */}
+              <li className="flex flex-col items-center lg:items-start gap-6 border border-gray-700 rounded-2xl p-8 bg-gray-900/70 hover:bg-gray-800/80 transition shadow-lg w-full max-w-sm">
+                <Image
+                  src="/images/money.svg"
+                  alt="Fund Account"
+                  width={160}
+                  height={160}
+                  className="rounded-xl"
+                />
+                <p className="text-center lg:text-left text-base leading-relaxed">
+                  <strong className="block text-green-400">
+                    Fund Your Account:
+                  </strong>
+                  Deposit funds easily using multiple payment methods.
+                </p>
+              </li>
+
+              {/* Step 3 */}
+              <li className="flex flex-col items-center lg:items-start gap-6 border border-gray-700 rounded-2xl p-8 bg-gray-900/70 hover:bg-gray-800/80 transition shadow-lg w-full max-w-sm">
+                <Image
+                  src="/images/trading.svg"
+                  alt="Start Trading"
+                  width={160}
+                  height={160}
+                  className="rounded-xl"
+                />
+                <p className="text-center lg:text-left text-base leading-relaxed">
+                  <strong className="block text-yellow-400">
+                    Start Trading:
+                  </strong>
+                  Access our platform and trade a wide range of instruments.
+                </p>
+              </li>
+            </ol>
+          </div>
         </section>
 
         <section className=" py-16 px-6 md:px-20 text-white">
@@ -628,7 +733,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="pt-10">
+        <Roadmap roadmapData={roadmapData} />
+        <PartnersAndNews />
+
+        <section className="pt-20">
           <h2 className="text-4xl text-center font-mono font-bold">
             At Capital hub Market <br /> We support
           </h2>
@@ -698,7 +806,29 @@ export default function Home() {
         </section>
 
         {/* CONTACT */}
-        <section className="px-6 lg:px-20 py-16 min-h-[60vh]" id="contact">
+        <section
+          className="flex justify-center items-center px-6 lg:px-20 py-16 min-h-[60vh]"
+          id="contact"
+        >
+          <div
+            style={{
+              position: "relative",
+              height: "500px",
+              overflow: "hidden",
+            }}
+          >
+            <RippleGrid
+              enableRainbow={false}
+              gridColor="#ffffff"
+              rippleIntensity={0.05}
+              gridSize={10}
+              gridThickness={15}
+              mouseInteraction={true}
+              mouseInteractionRadius={1.2}
+              opacity={0.8}
+            />
+          </div>
+
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-bold">Contact Us</h2>
             <p className="text-base sm:text-lg mt-6 mb-6 leading-relaxed">
