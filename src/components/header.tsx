@@ -12,7 +12,7 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white w-full z-50">
+    <header className="fixed top-0 left-0 right-0 bg-white w-full z-[100]">
       <div className="flex justify-between items-center h-20 px-4 md:px-12">
         {/* Logo */}
         <Image
@@ -78,7 +78,7 @@ function Header() {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="md:hidden bg-white border-t shadow-md"
+            className="md:hidden bg-white border-t shadow-md z-50"
             onClick={(e) => e.stopPropagation()}
           >
             <ul className="flex flex-col gap-4 p-4">

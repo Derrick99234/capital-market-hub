@@ -174,7 +174,7 @@ export default function Home() {
     <>
       <Header />
       {/* bg-[#0a0a1a] */}
-      <main className="text-white">
+      <main className="text-white overflow-hidden">
         {/* HERO SECTION */}
         <section className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-8 px-6 lg:px-16 py-20 mt-10">
           <div className="max-w-2xl text-center lg:text-left">
@@ -199,7 +199,7 @@ export default function Home() {
               distance={150}
               direction="vertical"
               reverse={false}
-              duration={1.2}
+              duration={0.5}
               ease="bounce.out"
               initialOpacity={0.2}
               animateOpacity
@@ -268,7 +268,7 @@ export default function Home() {
             distance={-150}
             direction="vertical"
             reverse={false}
-            duration={1.2}
+            duration={0.5}
             ease="bounce.out"
             initialOpacity={0}
             animateOpacity
@@ -300,7 +300,7 @@ export default function Home() {
             distance={-150}
             direction="vertical"
             reverse={false}
-            duration={1.2}
+            duration={0.5}
             ease="bounce.out"
             initialOpacity={0}
             animateOpacity
@@ -340,7 +340,7 @@ export default function Home() {
             distance={150}
             direction="vertical"
             reverse={false}
-            duration={1.2}
+            duration={0.5}
             ease="bounce.out"
             initialOpacity={0.1}
             animateOpacity
@@ -356,7 +356,7 @@ export default function Home() {
             distance={150}
             direction="vertical"
             reverse={false}
-            duration={1.2}
+            duration={0.5}
             ease="power3.out"
             initialOpacity={0.1}
             animateOpacity
@@ -374,7 +374,7 @@ export default function Home() {
               distance={150}
               direction="vertical"
               reverse={false}
-              duration={1.2}
+              duration={0.5}
               ease="bounce.out"
               initialOpacity={0.8}
               animateOpacity
@@ -402,7 +402,7 @@ export default function Home() {
                     distance={150}
                     direction="vertical"
                     reverse={false}
-                    duration={1.2}
+                    duration={0.5}
                     ease="power3.out"
                     initialOpacity={0.8}
                     animateOpacity
@@ -427,7 +427,7 @@ export default function Home() {
             distance={150}
             direction="vertical"
             reverse={false}
-            duration={1.2}
+            duration={0.5}
             ease="power3.out"
             initialOpacity={0.8}
             animateOpacity
@@ -443,7 +443,7 @@ export default function Home() {
             distance={150}
             direction="vertical"
             reverse={false}
-            duration={1.2}
+            duration={0.5}
             ease="power3.out"
             initialOpacity={0.8}
             animateOpacity
@@ -494,103 +494,6 @@ export default function Home() {
             </div>
           </AnimatedContent>
         </section>
-
-        {/* HOW IT WORKS */}
-
-        {/* <section className="px-6 lg:px-20 py-16 min-h-[80vh]">
-          <h2 className="text-4xl sm:text-4xl font-bold text-center lg:text-left">
-            How It Works
-          </h2>
-          <p className="text-base sm:text-lg mt-6 mb-6 leading-relaxed text-center lg:text-left">
-            Our platform is designed to provide a seamless trading experience.
-            Here&apos;s how it works:
-          </p>
-
-          <ol className="flex flex-col gap-8 lg:flex-row lg:gap-6 items-center justify-center">
-      
-            <AnimatedContent
-              distance={150}
-              direction="vertical"
-              reverse={false}
-              duration={1.2}
-              ease="power3.out"
-              initialOpacity={0.8}
-              animateOpacity
-              scale={1.1}
-              threshold={0.01}
-              delay={0.2} 
-            >
-              <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
-                <p>
-                  <strong>Sign Up:</strong> Create an account in minutes and
-                  verify your identity.
-                </p>
-                <Image
-                  src="/images/auth.svg"
-                  alt="Sign Up"
-                  width={200}
-                  height={80}
-                  className="rounded-lg size-72"
-                />
-              </li>
-            </AnimatedContent>
-
-  
-            <AnimatedContent
-              distance={150}
-              direction="vertical"
-              reverse={false}
-              duration={1.2}
-              ease="power3.out"
-              initialOpacity={0.8}
-              animateOpacity
-              scale={1.1}
-              threshold={0.01}
-              delay={0.4} 
-            >
-              <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
-                <p>
-                  <strong>Fund Your Account:</strong> Deposit funds using
-                  various payment methods.
-                </p>
-                <Image
-                  src="/images/money.svg"
-                  alt="Choose a Plan"
-                  width={200}
-                  height={80}
-                  className="rounded-lg size-72"
-                />
-              </li>
-            </AnimatedContent>
-
-            <AnimatedContent
-              distance={150}
-              direction="vertical"
-              reverse={false}
-              duration={1.2}
-              ease="power3.out"
-              initialOpacity={0.8}
-              animateOpacity
-              scale={1.1}
-              threshold={0.01}
-              delay={0.6}
-            >
-              <li className="flex flex-col gap-4 border p-5 rounded-lg max-w-lg w-full bg-gray-900">
-                <p>
-                  <strong>Start Trading:</strong> Access our trading platform
-                  and start trading a wide range of instruments.
-                </p>
-                <Image
-                  src="/images/trading.svg"
-                  alt="Deposit"
-                  width={200}
-                  height={80}
-                  className="rounded-lg size-72"
-                />
-              </li>
-            </AnimatedContent>
-          </ol>
-        </section> */}
 
         <section className="relative px-6 lg:px-20 py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
           <div className="max-w-6xl mx-auto">
@@ -793,7 +696,7 @@ export default function Home() {
 
         {/* FAQ */}
         <section
-          className="flex flex-col items-center py-16 gap-8 min-h-[80vh] px-6"
+          className="flex flex-col md:flex-row items-center py-16 gap-8 min-h-[80vh] px-6"
           id="faq"
         >
           <div className="max-w-3xl text-center flex flex-col gap-6">
@@ -813,7 +716,7 @@ export default function Home() {
 
         {/* CONTACT */}
         <section
-          className="flex justify-center items-center px-6 lg:px-20 py-16 min-h-[60vh]"
+          className="flex justify-center items-center flex-col md:flex-row px-6 lg:px-20 py-16 min-h-[60vh]"
           id="contact"
         >
           <div
