@@ -696,7 +696,7 @@ export default function Home() {
 
         {/* FAQ */}
         <section
-          className="flex flex-col md:flex-row items-center py-16 gap-8 min-h-[80vh] px-6"
+          className="flex flex-col md:flex- justify-center items-center py-16 gap-8 min-h-[80vh] px-6"
           id="faq"
         >
           <div className="max-w-3xl text-center flex flex-col gap-6">
@@ -716,7 +716,7 @@ export default function Home() {
 
         {/* CONTACT */}
         <section
-          className="flex justify-center items-center flex-col md:flex-row px-6 lg:px-20 py-16 min-h-[60vh]"
+          className="flex justify-center items-center flex-col-reverse md:flex-row px-6 lg:px-20 py-16 min-h-[60vh]"
           id="contact"
         >
           <div

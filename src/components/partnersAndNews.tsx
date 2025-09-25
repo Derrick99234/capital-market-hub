@@ -9,75 +9,75 @@ export default function PartnersAndNews() {
 
   const partners = [
     {
-      src: "https://www.capitalex.co/images/partners/a-light.png",
+      src: "/images/a-light.png",
       alt: "Tokenlot",
     },
     {
-      src: "https://www.capitalex.co/images/partners/b-light.png",
+      src: "/images/b-light.png",
       alt: "BlockEx",
     },
     {
-      src: "https://www.capitalex.co/images/partners/c-light.png",
+      src: "/images/c-light.png",
       alt: "BlockchainIL",
     },
     {
-      src: "https://www.capitalex.co/images/partners/d-light.png",
+      src: "/images/d-light.png",
       alt: "Bancor",
     },
     {
-      src: "https://www.capitalex.co/images/partners/e-light.png",
+      src: "/images/e-light.png",
       alt: "Stockholm Green Digital Finance",
     },
     {
-      src: "https://www.capitalex.co/images/partners/f-light.png",
+      src: "/images/f-light.png",
       alt: "Stockholm Green Digital Finance",
     },
     {
-      src: "https://www.capitalex.co/images/partners/b-light.png",
+      src: "/images/b-light.png",
       alt: "BlockEx",
     },
     {
-      src: "https://www.capitalex.co/images/partners/a-light.png",
+      src: "/images/a-light.png",
       alt: "Tokenlot",
     },
     {
-      src: "https://www.capitalex.co/images/partners/c-light.png",
+      src: "/images/c-light.png",
       alt: "BlockchainIL",
     },
     {
-      src: "https://www.capitalex.co/images/partners/a-light.png",
+      src: "/images/c-light.png",
+      alt: "BlockchainIL",
+    },
+    {
+      src: "/images/a-light.png",
       alt: "Tokenlot",
     },
     {
-      src: "https://www.capitalex.co/images/partners/c-light.png",
-      alt: "BlockchainIL",
-    },
-    {
-      src: "https://www.capitalex.co/images/partners/d-light.png",
+      src: "/images/d-light.png",
       alt: "Bancor",
     },
     {
-      src: "https://www.capitalex.co/images/partners/b-light.png",
+      src: "/images/b-light.png",
       alt: "BlockEx",
     },
     {
-      src: "https://www.capitalex.co/images/partners/e-light.png",
+      src: "/images/e-light.png",
       alt: "Stockholm Green Digital Finance",
     },
     {
-      src: "https://www.capitalex.co/images/partners/b-light.png",
+      src: "/images/b-light.png",
       alt: "BlockEx",
     },
     {
-      src: "https://www.capitalex.co/images/partners/a-light.png",
+      src: "/images/a-light.png",
       alt: "Tokenlot",
     },
     {
-      src: "https://www.capitalex.co/images/partners/c-light.png",
+      src: "/images/c-light.png",
       alt: "BlockchainIL",
     },
     {
-      src: "https://www.capitalex.co/images/partners/f-light.png",
+      src: "/images/f-light.png",
       alt: "Stockholm Green Digital Finance",
     },
   ];
