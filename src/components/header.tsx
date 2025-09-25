@@ -74,11 +74,11 @@ function Header() {
       {/* Mobile Dropdown Menu */}
       {isOpen && (
         <div
-          className="bg-black/50 fixed top-20 bottom-0 right-0 left-0"
+          className="bg-black/50 fixed top-20 bottom-0 right-0 left-0 z-50"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="md:hidden bg-white border-t shadow-md z-50"
+            className="md:hidden bg-white border-t shadow-md"
             onClick={(e) => e.stopPropagation()}
           >
             <ul className="flex flex-col gap-4 p-4">
@@ -112,13 +112,19 @@ function Header() {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <Link href="/login" onClick={() => setIsOpen(false)}>
+              <li className="flex gap-4 mt-4">
+                <Link
+                  href="/login"
+                  className="border border-red-600 text-red-500 px-8 sm:px-12 py-3 sm:py-4 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
                   login
                 </Link>
-              </li>
-              <li>
-                <Link href="/register" onClick={() => setIsOpen(false)}>
+                <Link
+                  href="/register"
+                  className="border border-red-600 text-red-500 px-8 sm:px-12 py-3 sm:py-4 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
                   Register
                 </Link>
               </li>
