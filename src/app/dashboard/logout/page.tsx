@@ -7,12 +7,21 @@ export default function Logout() {
   const router = useRouter();
 
   useEffect(() => {
-    // Clear tokens from storage
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
+    const doLogout = async () => {
+      try {
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include", // 👈 important to include cookies
+        });
+      } catch (e) {
+        console.error("Logout failed", e);
+      }
 
-    // Redirect to login page
-    router.push("/login");
+      // Redirect to login
+      router.push("/login");
+    };
+
+    doLogout();
   }, [router]);
 
   return (

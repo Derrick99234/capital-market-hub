@@ -631,12 +631,12 @@ export default function Home() {
               // delay={0,1}
             >
               <div className="mt-12">
-                <a
-                  href="#"
+                <Link
+                  href="/register"
                   className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg"
                 >
                   SIGN UP FOR MORE HIGHER INVESTMENT PLANS TODAY
-                </a>
+                </Link>
               </div>
             </AnimatedContent>
           </div>
@@ -687,9 +687,12 @@ export default function Home() {
                 Join thousands of traders and investors who trust us for their
                 trading needs.
               </p>
-              <button className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg">
+              <Link
+                href="/register"
+                className="bg-red-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg"
+              >
                 Sign Up Now
-              </button>
+              </Link>
             </div>
           </AnimatedContent>
         </section>
