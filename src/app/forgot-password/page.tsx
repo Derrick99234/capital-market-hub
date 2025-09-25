@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <main className="p-6">
+    <main className="p-6 text-white">
       <h1 className="text-2xl font-bold mb-4">Forgot Password</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input

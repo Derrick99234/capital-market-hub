@@ -9,6 +9,9 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
   await transporter.sendMail({

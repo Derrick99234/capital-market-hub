@@ -1,35 +1,59 @@
-// app/api/auth/reset-password/route.ts
 import { NextResponse } from "next/server";
+import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
-import crypto from "crypto";
-import { connectDB } from "@/lib/mongodb";
+import jwt from "jsonwebtoken";
 
 export async function POST(req: Request) {
-  await connectDB();
-  const { email, token, password } = await req.json();
+  try {
+    await connectDB();
+    const { email, password, token } = await req.json();
 
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+    if (!email || !password || !token) {
+      return NextResponse.json(
+        { error: "Email, password, and token are required" },
+        { status: 400 }
+      );
+    }
 
-  const user = await User.findOne({
-    email,
-    resetPasswordToken: hashedToken,
-    resetPasswordExpires: { $gt: new Date() }, // still valid
-  });
+    // 🔑 Verify token
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+        email: string;
+      };
 
-  if (!user) {
+      if (decoded.email !== email) {
+        return NextResponse.json(
+          { error: "Token does not match email" },
+          { status: 401 }
+        );
+      }
+    } catch (err) {
+      return NextResponse.json(
+        { error: "Invalid or expired token" },
+        { status: 401 }
+      );
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // ✅ Hash new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+
     return NextResponse.json(
-      { message: "Invalid or expired token" },
-      { status: 400 }
+      { message: "Password reset successful" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Reset password error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
     );
   }
-
-  // Update password
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(password, salt);
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpires = undefined;
-  await user.save();
-
-  return NextResponse.json({ message: "Password reset successful" });
 }
