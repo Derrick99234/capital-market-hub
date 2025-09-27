@@ -16,7 +16,7 @@ function Header() {
       <div className="flex justify-between items-center h-20 px-4 md:px-12">
         {/* Logo */}
         <Image
-          src="/images/capitalMarketHub.png"
+          src="/images/logo.png"
           alt="logo"
           width={120}
           height={150}
