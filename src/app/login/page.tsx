@@ -75,7 +75,7 @@ function Login() {
         {/* Left Section */}
         <div className="w-full md:w-2/5 bg-gray-900 flex flex-col items-center justify-center p-6">
           <Image
-            src="/images/CapitalMarketHub.png"
+            src="/images/logo.png"
             alt="login"
             width={250}
             height={250}
