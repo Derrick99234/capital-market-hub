@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script"; // ✅ import Script from next
+import Script from "next/script";
 import "./globals.css";
 import { UserProvider } from "@/context/user-context";
 import BackgroundVideo from "@/components/BackgroundVideo";
@@ -37,7 +37,7 @@ export default function RootLayout({
         <BackgroundVideo />
         <UserProvider>{children}</UserProvider>
 
-        {/* Google Translate Widget Container */}
+        {/* Google Translate Widget */}
         <div
           id="google_translate_element"
           style={{
@@ -48,7 +48,22 @@ export default function RootLayout({
           }}
         ></div>
 
-        {/* Init function */}
+        <Script id="tawkto" strategy="afterInteractive">
+          {`
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+              var s1=document.createElement("script"),
+                  s0=document.getElementsByTagName("script")[0];
+              s1.async=true;
+              s1.src='https://embed.tawk.to/68da62a1311aad1952561475/1j6ah2i1m';
+              s1.charset='UTF-8';
+              s1.setAttribute('crossorigin','*');
+              s0.parentNode.insertBefore(s1,s0);
+            })();
+          `}
+        </Script>
+
+        {/* ✅ Google Translate Init */}
         <Script id="google-translate-init" strategy="afterInteractive">
           {`
             function googleTranslateElementInit() {
@@ -63,23 +78,9 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <Script id="smartsupp" strategy="afterInteractive">
-          {`
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = "7b8fb2d7de2f8cd6c14defdb21c3ca82c28a65c8"; 
-            window.smartsupp||(function(d) {
-              var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-              s=d.getElementsByTagName("script")[0];c=d.createElement("script");
-              c.type="text/javascript";c.charset="utf-8";c.async=true;
-              c.src="https://www.smartsuppchat.com/loader.js?";
-              s.parentNode.insertBefore(c,s);
-            })(document);
-          `}
-        </Script>
 
-        {/* Load Google Translate API async */}
         <Script
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
           strategy="afterInteractive"
         />
       </body>
