@@ -172,3 +172,22 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+#google_translate_element {
+  background: white;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.goog-te-gadget {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  color: #333 !important;
+}
+
+.goog-te-gadget-simple {
+  border: none !important;
+  background: none !important;
+}
