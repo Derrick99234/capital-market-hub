@@ -1,11 +1,8 @@
-"use client";
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
-import { UserProvider } from "@/context/user-context";
-import BackgroundVideo from "@/components/BackgroundVideo";
-import { usePathname } from "next/navigation";
+import LayoutClient from "@/components/layout-client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,72 +27,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  if (pathname.startsWith("/dashboard")) {
-    return (
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-        </body>
-      </html>
-    );
-  }
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <BackgroundVideo />
-        <UserProvider>{children}</UserProvider>
-
-        {/* Google Translate Widget */}
-        <div
-          id="google_translate_element"
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            left: "20px",
-            zIndex: 9999,
-          }}
-        ></div>
-
-        <Script id="tawkto" strategy="afterInteractive">
-          {`
-            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-            (function(){
-              var s1=document.createElement("script"),
-                  s0=document.getElementsByTagName("script")[0];
-              s1.async=true;
-              s1.src='https://embed.tawk.to/68da62a1311aad1952561475/1j6ah2i1m';
-              s1.charset='UTF-8';
-              s1.setAttribute('crossorigin','*');
-              s0.parentNode.insertBefore(s1,s0);
-            })();
-          `}
-        </Script>
-
-        {/* ✅ Google Translate Init */}
-        <Script id="google-translate-init" strategy="afterInteractive">
-          {`
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement(
-                {
-                  pageLanguage: "en",
-                  layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                },
-                "google_translate_element"
-              );
-            }
-          `}
-        </Script>
-
-        <Script
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
+        <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
   );
