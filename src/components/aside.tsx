@@ -45,7 +45,7 @@ function Aside() {
       >
         {/* Logo */}
         <Image
-          src="/images/CapitalMarketHub.png"
+          src="/images/logo.png"
           alt="Capital Market Hub"
           width={400}
           height={100}
