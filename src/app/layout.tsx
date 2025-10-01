@@ -1,10 +1,11 @@
-// app/layout.tsx
+"use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { UserProvider } from "@/context/user-context";
 import BackgroundVideo from "@/components/BackgroundVideo";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) {
+    return (
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en">
       <body

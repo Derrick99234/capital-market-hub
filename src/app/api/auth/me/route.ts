@@ -1,5 +1,6 @@
 // app/api/auth/me/route.ts
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
@@ -10,8 +11,8 @@ export async function GET(req: Request) {
   try {
     await connectDB();
 
-    // Get token from cookies
-    const token = (req as any).cookies.get("token")?.value;
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

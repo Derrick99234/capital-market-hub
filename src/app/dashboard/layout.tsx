@@ -3,14 +3,5 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     router.push("/login");
-  //   }
-  // }, [router]);
-
   return <>{children}</>;
 }
