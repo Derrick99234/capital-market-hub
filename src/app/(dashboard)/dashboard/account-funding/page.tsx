@@ -1,8 +1,9 @@
+"use client";
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
 import DataTable from "@/components/Table";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 function AccountFunding() {
   const commodities = [
@@ -59,6 +60,33 @@ function AccountFunding() {
       ),
     },
   ];
+
+  const address = [
+    {
+      wallet: "bc1qw2ysdld5l0l82mu6euzlekhvlv5qhw9j6r85fm",
+      name: "btc",
+      image: "/images/btc-acct.jpg",
+    },
+    {
+      wallet: "0x4477CD5bDB3165CB3BfE44aE6F1d1a40eCD9cCC8",
+      name: "usdt-eth",
+      image: "/images/usdt_eth-acct.jpg",
+    },
+    {
+      wallet: "TXKo3hggzadyNq4vhpMbq4DfmCFQPMKMo8",
+      name: "usdt-trc",
+      image: "/images/usdt_trc-acct.jpg",
+    },
+    {
+      wallet: "0x4477CD5bDB3165CB3BfE44aE6F1d1a40eCD9cCC8",
+      name: "eth",
+      image: "/images/eth-acct.jpg",
+    },
+  ];
+
+  const [selectedAddress, setSelectedAddress] = useState("btc");
+
+  const currentAddress = address.find((item) => item.name === selectedAddress);
   return (
     <>
       <Aside />
@@ -66,23 +94,42 @@ function AccountFunding() {
         <div className="w-full space-y-6 min-h-screen text-white">
           <TickerLive />
           <div className="flex justify-center flex-col items-center space-y-4">
-            <button className="bg-lime-400 py-2 px-5">Cancel Txn</button>
+            <select
+              name="funding-account"
+              id=""
+              value={selectedAddress}
+              className="w-full py-2 px-4 rounded-md bg-black/70 border"
+              onChange={(e) => setSelectedAddress(e.target.value)}
+            >
+              <option value="usdt-eth">USDT (ETH)</option>
+              <option value="usdt-trc">USDT (TRC20)</option>
+              <option value="eth">ETH</option>
+              <option value="btc">BTC</option>
+            </select>
+            <input
+              type="text"
+              className="w-full py-2 px-4 border outline-none bg-black/90"
+              placeholder="Amount"
+            />
             <p className="text-sm font-semibold">
               KINDLY MAKE DEPOSIT TO THE FOLLOWING DETAILS BELOW ONLY
             </p>
             <Image
-              src="/images/log.png"
+              src={currentAddress?.image || ""}
               width={300}
               height={300}
               alt="wallet image"
             />
-            <p className="text-sm font-semibold">
+            {/* <p className="text-sm font-semibold">
               Amount: $67788 ( 67788 Ethereum )
-            </p>
+            </p> */}
             <hr />
             <p className="text-sm font-semibold">
-              Wallet Address: 0xEeD06ef23009A270779EdB36106EBDfF11d12903
+              Wallet Address: {currentAddress?.wallet}
             </p>
+            <button className="bg-lime-400 py-2 px-5 mt-4 cursor-pointer">
+              Deposit
+            </button>
             <hr />
             <DataTable data={commodities} columns={columns} />
           </div>
