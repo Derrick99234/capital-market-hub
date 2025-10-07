@@ -52,7 +52,7 @@ function Commodities() {
       render: (item: any) => (
         <button
           // onClick={() => alert(`Viewing ${item.name}`)}
-          className="bg-lime-400 text-black px-4 py-1 rounded hover:bg-lime-500 transition"
+          className="bg-lime-400 text-black px-4 py-1 rounded hover:bg-lime-500 transition cursor-pointer"
         >
           View
         </button>
@@ -62,7 +62,7 @@ function Commodities() {
   return (
     <>
       <Aside />
-      <main className="flex flex-col md:flex-row min-h-screen md:ml-[20%] bg-black p-8 text-white">
+      <main className="flex flex-col min-h-screen md:ml-[20%] bg-black p-8 text-white">
         <h2 className="text-2xl font-semibold">Commodities</h2>
         <TickerLive />
         <p className="mt-4 mb-2">

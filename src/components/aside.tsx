@@ -56,7 +56,7 @@ function Aside() {
         {/* Main Menu */}
         <div>
           <h3 className="font-semibold text-blue-600">Capital Market Hub</h3>
-          <ul className="pl-2 text-lg">
+          <ul className="pl-2">
             <li>
               <Link href="/dashboard" className="flex items-center gap-2 my-4">
                 <GrHomeOption /> Dashboard

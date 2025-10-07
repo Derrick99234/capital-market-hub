@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function PackageCard({
@@ -32,9 +33,12 @@ function PackageCard({
         </li>
       </ul>
       <div className="p-4 border-t border-gray-700">
-        <button className="w-full bg-lime-400 font-medium uppercase py-4">
+        <Link
+          href={"/dashboard/account-funding"}
+          className="w-full bg-lime-400 font-medium uppercase py-4 block text-center"
+        >
           Upgrade
-        </button>
+        </Link>
       </div>
     </div>
   );

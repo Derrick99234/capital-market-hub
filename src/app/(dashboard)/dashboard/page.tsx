@@ -3,12 +3,32 @@ import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
 import { useUser } from "@/context/user-context";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
+import { IoCheckmarkDone } from "react-icons/io5";
 
 function Dashboard() {
+  const [selectedAmountLevel, setSelectedAmountLevel] = useState(100);
   const { user, loading } = useUser();
+  const [error, setError] = useState({
+    status: false,
+    message: "",
+  });
   if (loading) return <p>Loading...</p>;
   if (!user) redirect("/login");
+
+  const handleClick = async () => {
+    if (user.balance < 1) {
+      setError({
+        status: true,
+        message:
+          "Warning! Your account balance is low. Please deposit and try the trade again",
+      });
+    }
+    setError({
+      status: true,
+      message: "Warning! Something went wrong please try again",
+    });
+  };
 
   return (
     <>
@@ -68,6 +88,15 @@ function Dashboard() {
             </div>
           </div>
 
+          {error.status && (
+            <div className="bg-red-500/30 flex gap-2 p-3 text-red-700 font-semibold">
+              <IoCheckmarkDone size={25} />
+              <span className="text-red-700 font-semibold">
+                {error.message}
+              </span>
+            </div>
+          )}
+
           {/* Trading Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Chart Placeholder */}
@@ -85,7 +114,10 @@ function Dashboard() {
             {/* Trade Form */}
             <div className="bg-gray-900 p-4 sm:p-6 rounded-lg space-y-4 text-white">
               <h2 className="text-lg font-semibold">
-                Balance - <span className="text-green-500">$100</span>
+                Balance -{" "}
+                <span className="text-green-500">
+                  ${user.balance.toFixed(2)}
+                </span>
               </h2>
 
               {/* Asset Class */}
@@ -129,10 +161,11 @@ function Dashboard() {
                       key={lvl}
                       type="button"
                       className={`px-3 sm:px-4 py-2 rounded font-bold ${
-                        100 === lvl
+                        selectedAmountLevel === lvl
                           ? "bg-green-400 text-black"
                           : "bg-gray-700 hover:bg-gray-600"
                       }`}
+                      onClick={() => setSelectedAmountLevel(lvl)}
                     >
                       {lvl}%
                     </button>
@@ -168,13 +201,15 @@ function Dashboard() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   type="button"
-                  className="flex-1 bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold"
+                  className="flex-1 bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold cursor-pointer"
+                  onClick={handleClick}
                 >
                   BUY
                 </button>
                 <button
                   type="button"
-                  className="flex-1 bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold"
+                  className="flex-1 bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold cursor-pointer"
+                  onClick={handleClick}
                 >
                   SELL
                 </button>

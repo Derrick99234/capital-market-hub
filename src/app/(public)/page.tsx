@@ -749,7 +749,7 @@ export default function Home() {
             </p>
             <ul className="text-base sm:text-lg flex flex-col gap-3 list-none">
               <li>&#9653; Email: support@capitalmarkethub.com</li>
-              <li>&#9653; Phone: +1 (800) 123-4567</li>
+              <li>&#9653; Phone: +1-380-263-8028</li>
               <li>&#9653; Live Chat: Available on our website</li>
             </ul>
           </div>
