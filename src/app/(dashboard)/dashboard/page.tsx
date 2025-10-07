@@ -23,10 +23,16 @@ function Dashboard() {
         message:
           "Warning! Your account balance is low. Please deposit and try the trade again",
       });
+    } else {
+      setError({
+        status: true,
+        message: "Warning! Something went wrong please try again",
+      });
     }
-    setError({
-      status: true,
-      message: "Warning! Something went wrong please try again",
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Optional: makes the scroll smooth
     });
   };
 

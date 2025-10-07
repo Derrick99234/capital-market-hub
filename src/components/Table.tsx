@@ -15,7 +15,7 @@ const DataTable = <T extends { id: number | string }>({
   columns,
 }: DataTableProps<T>) => {
   return (
-    <div className="bg-[#1e1e1e] text-white p-4 rounded-md w-full max-h-max">
+    <div className="bg-[#1e1e1e] text-white p-4 rounded-md w-full max-h-max text-sm">
       <div className="overflow-x-auto">
         <table className="w-full border border-gray-700 rounded-md">
           <thead>

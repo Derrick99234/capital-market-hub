@@ -39,7 +39,7 @@ export default function UpdateBalancePage() {
   const submit = async () => {
     if (!selected) return;
     setSaving(true);
-    const res = await fetch("/api/update-balance", {
+    const res = await fetch("/api/user/update-balance", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: selected._id, amount: Number(amount) }),
@@ -120,7 +120,7 @@ export default function UpdateBalancePage() {
               </button>
               <button
                 onClick={submit}
-                className="px-3 py-1 bg-green-600 text-white rounded"
+                className="px-3 py-1 bg-green-600 text-white rounded  cursor-pointer"
                 disabled={saving}
               >
                 {saving ? "Saving..." : "Save"}

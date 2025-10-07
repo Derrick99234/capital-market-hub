@@ -2,65 +2,30 @@
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
 import DataTable from "@/components/Table";
+import { useUser } from "@/context/user-context";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+// Helper function to fetch pending payments
+async function fetchPayments() {
+  const response = await fetch("/api/payments");
+  if (!response.ok) {
+    throw new Error("Failed to fetch payments");
+  }
+  return await response.json();
+}
 
 function AccountFunding() {
-  const commodities = [
-    {
-      id: 1,
-      name: "Gold",
-      image: "/images/btc.png",
-      symbol: "GOLD",
-      price: 16.464,
-    },
-    {
-      id: 2,
-      name: "Silver",
-      image: "/images/etc.png",
-      symbol: "SILV",
-      price: 12.23,
-    },
-  ];
-  const columns = [
-    { key: "id", label: "S/N" },
-    { key: "name", label: "Commodity Name" },
-    {
-      key: "image",
-      label: "Image",
-      render: (item: any) =>
-        item.image ? (
-          <Image
-            src={item.image}
-            alt={item.name}
-            width={24}
-            height={24}
-            className="mx-auto"
-          />
-        ) : (
-          "-"
-        ),
-    },
-    { key: "symbol", label: "Symbol" },
-    {
-      key: "price",
-      label: "Price",
-      render: (item: any) => `$${item.price}`,
-    },
-    {
-      key: "action",
-      label: "Action",
-      render: (item: any) => (
-        <button
-          // onClick={() => alert(`Viewing ${item.name}`)}
-          className="bg-lime-400 text-black px-4 py-1 rounded hover:bg-lime-500 transition"
-        >
-          View
-        </button>
-      ),
-    },
-  ];
+  // State for payments and form data
+  const [payments, setPayments] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
+  const { user } = useUser();
+
+  // State for selected address and account types
+  const [selectedAddress, setSelectedAddress] = useState("btc");
+
+  const [amount, setAmount] = useState(0);
   const address = [
     {
       wallet: "bc1qw2ysdld5l0l82mu6euzlekhvlv5qhw9j6r85fm",
@@ -84,9 +49,84 @@ function AccountFunding() {
     },
   ];
 
-  const [selectedAddress, setSelectedAddress] = useState("btc");
-
+  // Find current wallet address based on selection
   const currentAddress = address.find((item) => item.name === selectedAddress);
+
+  // Helper function to add a new payment
+  async function addPayment(amount: number) {
+    const response = await fetch("/api/payments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount,
+        userId: user?._id,
+        method: selectedAddress,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add payment");
+    }
+    return await response.json();
+  }
+  // Fetch payments on component mount
+  useEffect(() => {
+    const loadPayments = async () => {
+      try {
+        const data = await fetchPayments();
+
+        // Assuming data.payments is an array of payment objects
+        setPayments(
+          Array.isArray(data.payments)
+            ? data.payments.map((payment: any, idx: number) => ({
+                id: idx + 1,
+                time: payment.createdAt,
+                status: payment.status,
+                userId: payment.userId,
+                method: payment.method,
+                amount: payment.amount,
+              }))
+            : []
+        );
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to load payments:", err);
+        setLoading(false);
+      }
+    };
+
+    loadPayments();
+  }, []);
+
+  // Handle submitting the new payment form
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await addPayment(amount);
+      const data = await fetchPayments();
+      setPayments(
+        Array.isArray(data.payments)
+          ? data.payments.map((payment: any, idx: number) => ({
+              id: idx + 1,
+              time: payment.createdAt,
+              status: payment.status,
+              userId: payment.userId,
+              method: payment.method,
+              amount: payment.amount,
+            }))
+          : []
+      );
+    } catch (err) {
+      console.error("Error adding payment:", err);
+    }
+  };
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Aside />
@@ -94,9 +134,9 @@ function AccountFunding() {
         <div className="w-full space-y-6 min-h-screen text-white">
           <TickerLive />
           <div className="flex justify-center flex-col items-center space-y-4">
+            {/* Wallet Address Selector */}
             <select
               name="funding-account"
-              id=""
               value={selectedAddress}
               className="w-full py-2 px-4 rounded-md bg-black/70 border"
               onChange={(e) => setSelectedAddress(e.target.value)}
@@ -106,11 +146,18 @@ function AccountFunding() {
               <option value="eth">ETH</option>
               <option value="btc">BTC</option>
             </select>
+
+            {/* Amount Input */}
             <input
               type="text"
+              name="amount"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
               className="w-full py-2 px-4 border outline-none bg-black/90"
               placeholder="Amount"
             />
+
+            {/* Deposit Instructions */}
             <p className="text-sm font-semibold">
               KINDLY MAKE DEPOSIT TO THE FOLLOWING DETAILS BELOW ONLY
             </p>
@@ -120,18 +167,31 @@ function AccountFunding() {
               height={300}
               alt="wallet image"
             />
-            {/* <p className="text-sm font-semibold">
-              Amount: $67788 ( 67788 Ethereum )
-            </p> */}
             <hr />
             <p className="text-sm font-semibold">
               Wallet Address: {currentAddress?.wallet}
             </p>
-            <button className="bg-lime-400 py-2 px-5 mt-4 cursor-pointer">
+
+            {/* Deposit Button */}
+            <button
+              onClick={handleSubmit}
+              className="bg-lime-400 py-2 px-5 mt-4 cursor-pointer"
+            >
               Deposit
             </button>
+
             <hr />
-            <DataTable data={commodities} columns={columns} />
+            {/* Payments Data Table */}
+            <DataTable
+              data={payments}
+              columns={[
+                { key: "id", label: "S/N" },
+                { key: "time", label: "Time" },
+                { key: "method", label: "Method" },
+                { key: "amount", label: "Amount" },
+                { key: "status", label: "Status" },
+              ]}
+            />
           </div>
         </div>
       </main>

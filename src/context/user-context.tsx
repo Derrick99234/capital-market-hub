@@ -1,7 +1,8 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 type User = {
-  id: string;
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -24,12 +25,17 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User>(null);
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+
   // Fetch user from /api/auth/me
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/auth/me");
-        if (!res.ok) throw new Error("Not authenticated");
+        if (!res.ok) {
+          router.push("/login");
+          throw new Error("Failed to fetch user");
+        }
 
         const data = await res.json();
         setUser(data.user); // { user: { firstName, lastName, ... } }
