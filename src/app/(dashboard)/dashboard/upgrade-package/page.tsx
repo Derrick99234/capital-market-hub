@@ -1,5 +1,6 @@
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
+import Link from "next/link";
 import React from "react";
 
 function UpgradePackage() {
@@ -23,12 +24,12 @@ function UpgradePackage() {
               id=""
               className="w-full my-3 py-2.5 outline-none px-4 bg-gray-600"
             >
-              <option value="account-tier-1">Acoount Tier 1</option>
-              <option value="account-tier-2">Acoount Tier 2</option>
-              <option value="account-tier-3">Acoount Tier 3</option>
-              <option value="account-tier-4">Acoount Tier 4</option>
-              <option value="account-tier-5">Acoount Tier 5</option>
-              <option value="account-tier-6">Acoount Tier 6</option>
+              <option value="account-tier-1">Account Tier 1</option>
+              <option value="account-tier-2">Account Tier 2</option>
+              <option value="account-tier-3">Account Tier 3</option>
+              <option value="account-tier-4">Account Tier 4</option>
+              <option value="account-tier-5">Account Tier 5</option>
+              <option value="account-tier-6">Account Tier 6</option>
             </select>
             <label htmlFor="package-plan" className="text-gray-400">
               Add Comment
@@ -37,9 +38,12 @@ function UpgradePackage() {
               type="text"
               className="h-16 border border-gray-400 w-full px-4 py-2 rounded mt-2 outline-none"
             />
-            <button className="bg-lime-400 px-4 py-2 rounded cursor-pointer mt-5">
+            <Link
+              href={"/dashboard/account-funding"}
+              className="bg-lime-400 px-4 py-2 rounded cursor-pointer mt-5 inline-block"
+            >
               Submit
-            </button>
+            </Link>
           </form>
         </div>
         ;

@@ -33,7 +33,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const res = await fetch("/api/auth/me");
         if (!res.ok) {
-          router.push("/login");
           throw new Error("Failed to fetch user");
         }
 

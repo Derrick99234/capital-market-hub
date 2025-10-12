@@ -38,7 +38,7 @@ export default function RootLayout({
         <UserProvider>{children}</UserProvider>
 
         {/* Google Translate Widget */}
-        <div
+        {/* <div
           id="google_translate_element"
           style={{
             position: "fixed",
@@ -46,7 +46,7 @@ export default function RootLayout({
             left: "20px",
             zIndex: 9999,
           }}
-        ></div>
+        ></div> */}
 
         <Script id="tawkto" strategy="afterInteractive">
           {`
@@ -64,7 +64,7 @@ export default function RootLayout({
         </Script>
 
         {/* ✅ Google Translate Init */}
-        <Script id="google-translate-init" strategy="afterInteractive">
+        {/* <Script id="google-translate-init" strategy="afterInteractive">
           {`
             function googleTranslateElementInit() {
               new google.translate.TranslateElement(
@@ -81,7 +81,7 @@ export default function RootLayout({
         <Script
           src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
           strategy="afterInteractive"
-        />
+        /> */}
       </body>
     </html>
   );

@@ -67,7 +67,16 @@ function WithdrawalHistory() {
           <h2 className="text-2xl font-semibold">Withdrawal History</h2>
           <TickerLive />
 
-          <DataTable data={commodities} columns={columns} />
+          <DataTable
+            data={[]}
+            columns={[
+              { key: "id", label: "S/N" },
+              { key: "time", label: "Time" },
+              { key: "method", label: "Method" },
+              { key: "amount", label: "Amount" },
+              { key: "status", label: "Status" },
+            ]}
+          />
         </div>
       </main>
     </>
