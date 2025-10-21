@@ -17,19 +17,43 @@ export default function UpdateBalancePage() {
   const [amount, setAmount] = useState<number>(0);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await fetch("/api/user");
-      const { users } = await res.json();
-      setUsers(users);
-      setLoading(false);
+  // 🔐 password modal states
+  const [authorized, setAuthorized] = useState(false);
+  const [adminPassword, setAdminPassword] = useState("");
+  const [error, setError] = useState("");
 
-      // .then((d) => setUsers(d.users || []))
-      // .catch((e) => console.error(e))
-      // .finally(() => setLoading(false));
+  // Hardcoded password (you can change this)
+  const CORRECT_PASSWORD = "Tru$ted#Gate2025";
+
+  useEffect(() => {
+    const access = sessionStorage.getItem("adminUsersAccess");
+    if (access === "granted") {
+      setAuthorized(true);
+    }
+    if (!authorized) return;
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/user");
+        const { users } = await res.json();
+        setUsers(users);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchUser();
-  }, []);
+  }, [authorized]);
+
+  const handlePasswordSubmit = () => {
+    if (adminPassword === CORRECT_PASSWORD) {
+      setAuthorized(true);
+      sessionStorage.setItem("adminUsersAccess", "granted");
+      setError("");
+    } else {
+      setError("Incorrect password. Try again.");
+    }
+  };
 
   const openEdit = (u: User) => {
     setSelected(u);
@@ -48,7 +72,6 @@ export default function UpdateBalancePage() {
     if (!res.ok) alert(data.error || "Update failed");
     else {
       alert("Balance updated");
-      // update local UI
       setUsers(
         (prev) =>
           prev?.map((u) =>
@@ -60,7 +83,36 @@ export default function UpdateBalancePage() {
     setSaving(false);
   };
 
-  if (loading) return <p>Loading users...</p>;
+  if (!authorized) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+        <div className="bg-white p-6 rounded-md w-[350px] shadow-lg">
+          <h2 className="text-xl font-semibold mb-3 text-center">
+            Admin Authentication
+          </h2>
+          <p className="text-gray-600 mb-4 text-sm text-center">
+            Enter your admin password to continue.
+          </p>
+          <input
+            type="password"
+            value={adminPassword}
+            onChange={(e) => setAdminPassword(e.target.value)}
+            placeholder="Enter password"
+            className="w-full border p-2 rounded mb-3"
+          />
+          {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+          <button
+            onClick={handlePasswordSubmit}
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) return <p className="p-6">Loading users...</p>;
 
   return (
     <div className="p-6">
@@ -95,9 +147,9 @@ export default function UpdateBalancePage() {
         )}
       </div>
 
-      {/* simple modal */}
+      {/* Edit Modal */}
       {selected && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/60">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-40">
           <div className="bg-white p-6 rounded w-[420px]">
             <h2 className="text-lg font-semibold mb-3">
               Update Balance for {selected.firstName} {selected.lastName}
@@ -108,7 +160,7 @@ export default function UpdateBalancePage() {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
-                className="w-full p-2 border"
+                className="w-full p-2 border rounded"
               />
             </div>
             <div className="flex justify-end gap-2">
@@ -120,7 +172,7 @@ export default function UpdateBalancePage() {
               </button>
               <button
                 onClick={submit}
-                className="px-3 py-1 bg-green-600 text-white rounded  cursor-pointer"
+                className="px-3 py-1 bg-green-600 text-white rounded cursor-pointer"
                 disabled={saving}
               >
                 {saving ? "Saving..." : "Save"}

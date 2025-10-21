@@ -104,13 +104,12 @@ function Dashboard() {
           )}
 
           {/* Trading Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-4">
             {/* Chart Placeholder */}
-            <div className="bg-gray-900 p-4 rounded-lg">
-              <h2 className="text-sm text-gray-400 mb-2">USDCAD Chart</h2>
-              <div className="h-[20rem] sm:h-[30rem] lg:h-[35rem] bg-gray-800 rounded-lg">
+            <div className="bg-gray-900 rounded-lg">
+              <div className="h-[20rem] sm:h-[30rem] lg:h-[42rem] bg-gray-800 rounded-lg">
                 <iframe
-                  src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_advanced&symbol=OANDA:USDCAD&interval=1&theme=dark&style=1&toolbarbg=f1f3f6&studies=MACD%40tv-basicstudies%2CBollingerBands%40tv-basicstudies%2CMoneyFlowIndex%40tv-basicstudies&hide_side_toolbar=false&withdateranges=true&allow_symbol_change=true"
+                  src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_advanced&symbol=OANDA:USDCAD&interval=1&theme=dark&style=1&toolbarbg=f1f3f6&studies=MACD%40tv-basicstudies%2CBollingerBands%40tv-basicstudies%2CMoneyFlowIndex%40tv-basicstudies&hide_side_toolbar=false&withdateranges=true&allow_symbol_change=true&hotlist=true&calendar=1&news=1&details=1&hideideas=false&show_popup_button=true&popup_width=1000&popup_height=650&locale=en&utm_source=www.example.com&utm_medium=widget_new&utm_campaign=chart&utm_term=OANDA%3AUSDCAD"
                   className="h-full w-full rounded"
                   allowFullScreen
                 ></iframe>
@@ -118,7 +117,7 @@ function Dashboard() {
             </div>
 
             {/* Trade Form */}
-            <div className="bg-gray-900 p-4 sm:p-6 rounded-lg space-y-4 text-white">
+            <div className="bg-gray-900 p-2 sm:p-4 rounded-lg space-y-4 text-white">
               <h2 className="text-lg font-semibold">
                 Balance -{" "}
                 <span className="text-green-500">

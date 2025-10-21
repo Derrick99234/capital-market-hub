@@ -17,16 +17,61 @@ type User = {
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    fetch("/api/user")
-      .then((r) => r.json())
-      .then((d) => {
-        setUsers(d.users || []);
-      })
-      .catch((e) => console.error(e))
-      .finally(() => setLoading(false));
+    // If you want to persist access for this session only
+    const access = sessionStorage.getItem("adminUsersAccess");
+    if (access === "granted") {
+      setAuthorized(true);
+    }
   }, []);
+
+  useEffect(() => {
+    if (authorized) {
+      fetch("/api/user")
+        .then((r) => r.json())
+        .then((d) => {
+          setUsers(d.users || []);
+        })
+        .catch((e) => console.error(e))
+        .finally(() => setLoading(false));
+    }
+  }, [authorized]);
+
+  const handlePasswordSubmit = () => {
+    const correctPassword = "Tru$ted#Gate2025"; // 🔐 change this to your real admin password
+    if (password === correctPassword) {
+      setAuthorized(true);
+      sessionStorage.setItem("adminUsersAccess", "granted");
+    } else {
+      alert("Incorrect password");
+    }
+  };
+
+  if (!authorized) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+        <div className="bg-white p-6 rounded w-[360px] text-center">
+          <h2 className="text-lg font-semibold mb-3">Enter Admin Password</h2>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full border p-2 rounded mb-4"
+          />
+          <button
+            onClick={handlePasswordSubmit}
+            className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer w-full"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) return <p>Loading users...</p>;
 

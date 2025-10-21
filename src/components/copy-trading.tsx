@@ -1,10 +1,13 @@
 import React from "react";
 
-function CopyTradingCard() {
+function CopyTradingCard({ onClick }: { onClick: () => void }) {
   return (
-    <div className="flex border w-86 rounded-lg flex-col overflow-hidden h-[15rem] pt-10 bg-gray-800 border-gray-400 items-center gap-6">
+    <div className="flex border w-80 rounded-lg flex-col overflow-hidden h-[15rem] pt-10 bg-gray-800 border-gray-400 items-center gap-6">
       <h2 className="text-2xl text-center">Stephanie Link</h2>
-      <button className="px-8 py-2 text-xl rounded-lg bg-lime-400">
+      <button
+        className="px-8 py-2 text-xl rounded-lg bg-lime-400 cursor-pointer"
+        onClick={onClick}
+      >
         Trade
       </button>
       <div className="w-full border-t border-gray-400 flex justify-evenly">
