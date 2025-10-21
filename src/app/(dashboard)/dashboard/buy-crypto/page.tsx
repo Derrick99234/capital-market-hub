@@ -18,7 +18,7 @@ export default function BuyCryptoPage() {
               minPurchase="$10"
               maxDeposit="$1,000"
               rating={5}
-              buttonLink="/buy/coinmama"
+              buttonLink="https://www.coingecko.com/"
             />
 
             <ExchangeCard
@@ -28,7 +28,7 @@ export default function BuyCryptoPage() {
               minPurchase="$10"
               maxDeposit="$1,000"
               rating={4}
-              buttonLink="/buy/abra"
+              buttonLink="https://www.coingecko.com/"
             />
 
             <ExchangeCard
@@ -38,7 +38,7 @@ export default function BuyCryptoPage() {
               minPurchase="$10"
               maxDeposit="$1,000"
               rating={5}
-              buttonLink="/buy/changelly"
+              buttonLink="https://www.coingecko.com/"
             />
           </div>
         </div>
