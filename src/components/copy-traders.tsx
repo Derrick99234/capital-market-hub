@@ -1,5 +1,7 @@
 "use client";
 
+import { useUser } from "@/context/user-context";
+import { u } from "framer-motion/client";
 import React, { useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
 
@@ -88,7 +90,6 @@ const TradeStatus = ({ status }: { status: string }) => {
 // --- Main Dashboard Component ---
 
 export default function CopyTradingDashboard() {
-  const initialBalance = 0.0;
   const initialData = {
     traderName: "Daily FX",
     totalTrades: "4000",
@@ -107,11 +108,13 @@ export default function CopyTradingDashboard() {
     date: string;
   }
 
-  const [balance, setBalance] = useState(initialBalance);
   const [formData, setFormData] = useState(initialData);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isTrading, setIsTrading] = useState(false);
 
+  const { user } = useUser();
+
+  const [balance, setBalance] = useState(user?.balance || 0.0);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));

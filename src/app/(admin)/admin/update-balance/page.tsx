@@ -14,7 +14,7 @@ export default function UpdateBalancePage() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<User | null>(null);
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState("");
   const [saving, setSaving] = useState(false);
 
   // 🔐 password modal states
@@ -57,7 +57,7 @@ export default function UpdateBalancePage() {
 
   const openEdit = (u: User) => {
     setSelected(u);
-    setAmount(u.balance || 0);
+    setAmount(u.balance?.toString() || "");
   };
 
   const submit = async () => {
@@ -159,7 +159,7 @@ export default function UpdateBalancePage() {
               <input
                 type="number"
                 value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
+                onChange={(e) => setAmount(e.target.value)}
                 className="w-full p-2 border rounded"
               />
             </div>

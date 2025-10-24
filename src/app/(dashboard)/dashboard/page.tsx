@@ -62,7 +62,9 @@ function Dashboard() {
               <h2 className="text-xs sm:text-sm text-gray-400">
                 Total Balance USD
               </h2>
-              <p className="text-base sm:text-lg font-bold">$0.00</p>
+              <p className="text-base sm:text-lg font-bold">
+                ${user.balance.toFixed(2)}
+              </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">BTC Balance</h2>
@@ -72,7 +74,9 @@ function Dashboard() {
               <h2 className="text-xs sm:text-sm text-gray-400">
                 Deposited Amount
               </h2>
-              <p className="text-base sm:text-lg font-bold">$0.00</p>
+              <p className="text-base sm:text-lg font-bold">
+                ${user.balance.toFixed(2)}
+              </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">
