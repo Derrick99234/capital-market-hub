@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-type Payment = {
+type Withdrawal = {
   _id: string;
   userId:
     | { _id: string; firstName: string; lastName: string; email: string }
@@ -15,64 +15,64 @@ type Payment = {
 };
 
 export default function AdminPaymentsPage() {
-  const [payments, setPayments] = useState<Payment[] | null>(null);
+  const [Withdrawal, setWithdrawal] = useState<Withdrawal[] | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchPayments = async () => {
+  const fetchWithdwals = async () => {
     setLoading(true);
-    const res = await fetch("/api/payments");
+    const res = await fetch("/api/withdrawal");
     const data = await res.json();
-    setPayments(data.payments || []);
+    setWithdrawal(data.withdrawals || []);
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchPayments();
+    fetchWithdwals();
   }, []);
 
-  const handleApprove = async (paymentId: string) => {
-    if (!confirm("Approve this payment?")) return;
-    await fetch("/api/payments/approve", {
+  const handleApprove = async (withdrawalID: string) => {
+    if (!confirm("Approve this withdrawal?")) return;
+    await fetch("/api/withdrawal/approve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paymentId }),
+      body: JSON.stringify({ withdrawalID }),
     });
-    fetchPayments();
+    fetchWithdwals();
   };
 
-  const handleReject = async (paymentId: string) => {
+  const handleReject = async (withdrawalID: string) => {
     const reason =
       prompt("Reason for rejection (optional):") || "Rejected by admin";
-    await fetch("/api/payments/reject", {
+    await fetch("/api/withdrawal/reject", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paymentId, reason }),
+      body: JSON.stringify({ withdrawalID, reason }),
     });
-    fetchPayments();
+    fetchWithdwals();
   };
 
-  const handlePending = async (paymentId: string) => {
+  const handlePending = async (withdrawalID: string) => {
     const reason =
       prompt("Reason for holding payment (optional):") || "Held by admin";
-    await fetch("/api/payments/pending", {
+    await fetch("/api/withdrawal/pending", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paymentId, reason }),
+      body: JSON.stringify({ withdrawalID, reason }),
     });
-    fetchPayments();
+    fetchWithdwals();
   };
 
-  if (loading) return <p>Loading payments...</p>;
+  if (loading) return <p>Loading withdrawals...</p>;
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Payments</h1>
-      {payments && payments.length ? (
-        payments.map((p) => {
-          const user = typeof p.userId === "string" ? null : p.userId;
+      <h1 className="text-2xl font-bold mb-4">Withdrawals</h1>
+      {Withdrawal && Withdrawal.length ? (
+        Withdrawal.map((w) => {
+          const user = typeof w.userId === "string" ? null : w.userId;
           return (
             <div
-              key={p._id}
+              key={w._id}
               className="p-4 bg-gray-800 text-white rounded mb-3 flex justify-between items-center"
             >
               <div>
@@ -83,14 +83,14 @@ export default function AdminPaymentsPage() {
                   {user?.email || "-"}
                 </div>
                 <div className="text-sm text-gray-200 mt-1">
-                  Amount: ${p.amount.toFixed(2)} {p.currency}
+                  Amount: ${w.amount.toFixed(2)} {w.currency}
                 </div>
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => handlePending(p._id)}
+                  onClick={() => handlePending(w._id)}
                   className={`px-3 py-1 border border-yellow-600 rounded ${
-                    p.status === "pending"
+                    w.status === "pending"
                       ? "opacity-50 cursor-not-allowed"
                       : ""
                   }`}
@@ -98,9 +98,9 @@ export default function AdminPaymentsPage() {
                   Pending
                 </button>
                 <button
-                  onClick={() => handleApprove(p._id)}
+                  onClick={() => handleApprove(w._id)}
                   className={`px-3 py-1 border border-green-600 rounded ${
-                    p.status === "approved"
+                    w.status === "approved"
                       ? "opacity-50 cursor-not-allowed"
                       : ""
                   }`}
@@ -108,9 +108,9 @@ export default function AdminPaymentsPage() {
                   Approve
                 </button>
                 <button
-                  onClick={() => handleReject(p._id)}
+                  onClick={() => handleReject(w._id)}
                   className={`px-3 py-1 border border-red-600 rounded ${
-                    p.status === "rejected"
+                    w.status === "rejected"
                       ? "opacity-50 cursor-not-allowed"
                       : ""
                   }`}
@@ -122,7 +122,7 @@ export default function AdminPaymentsPage() {
           );
         })
       ) : (
-        <p>No payments.</p>
+        <p>No withdrawals.</p>
       )}
     </div>
   );

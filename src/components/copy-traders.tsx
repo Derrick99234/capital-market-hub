@@ -114,7 +114,7 @@ export default function CopyTradingDashboard() {
 
   const { user } = useUser();
 
-  const [balance, setBalance] = useState(user?.balance || 0.0);
+  const [balance, setBalance] = useState(user?.balance.totalBalance || 0.0);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));

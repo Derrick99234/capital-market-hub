@@ -1,8 +1,9 @@
+"use client";
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
 import DataTable from "@/components/Table";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 function WithdrawalHistory() {
   const commodities = [
@@ -59,6 +60,32 @@ function WithdrawalHistory() {
       ),
     },
   ];
+
+  const [withdrawals, setWithdrawals] = useState<any[]>([]);
+
+  async function fetchWithdrawals() {
+    const res = await fetch("/api/withdrawal");
+    const data = await res.json();
+
+    setWithdrawals(
+      Array.isArray(data.withdrawals)
+        ? data.withdrawals.map((w: any, i: number) => ({
+            id: i + 1,
+            time: new Date(w.createdAt).toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            }),
+            method: w.method,
+            amount: w.amount,
+            status: w.status,
+          }))
+        : []
+    );
+  }
+
+  React.useEffect(() => {
+    fetchWithdrawals();
+  }, []);
   return (
     <>
       <Aside />
@@ -68,7 +95,7 @@ function WithdrawalHistory() {
           <TickerLive />
 
           <DataTable
-            data={[]}
+            data={withdrawals}
             columns={[
               { key: "id", label: "S/N" },
               { key: "time", label: "Time" },

@@ -21,15 +21,15 @@ async function requireAdmin(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const { WithdrawalID } = await req.json();
-    if (!WithdrawalID)
+    const { withdrawalID } = await req.json();
+    if (!withdrawalID)
       return NextResponse.json(
         { error: "WithdrawalID required" },
         { status: 400 }
       );
 
     await connectDB();
-    const withdrawal = await Withdrawal.findById(WithdrawalID);
+    const withdrawal = await Withdrawal.findById(withdrawalID);
     if (!withdrawal)
       return NextResponse.json(
         { error: "Withdrawal not found" },

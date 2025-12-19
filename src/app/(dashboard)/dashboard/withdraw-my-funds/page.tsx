@@ -14,28 +14,65 @@ function WithdrawMyFunds() {
     status: false,
     message: "",
   });
-  if (loading) return <p>Loading...</p>;
-  if (!user) redirect("/login");
+
+  const [withdrawals, setWithdrawals] = useState<any[]>([]);
+  const [method, setMethod] = useState("bitcoin");
+  const [amount, setAmount] = useState(0);
+  const [address, setAddress] = useState("");
+
+  async function fetchWithdrawals() {
+    const res = await fetch("/api/withdrawal");
+    const data = await res.json();
+
+    setWithdrawals(
+      Array.isArray(data.withdrawals)
+        ? data.withdrawals.map((w: any, i: number) => ({
+            id: i + 1,
+            time: new Date(w.createdAt).toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            }),
+            method: w.method,
+            amount: w.amount,
+            status: w.status,
+          }))
+        : []
+    );
+  }
+
+  React.useEffect(() => {
+    fetchWithdrawals();
+  }, []);
+
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (user.balance.totalBalance < 1) {
+
+    if (amount > (user?.balance?.totalBalance ?? 0)) {
       setError({
         status: true,
-        message:
-          "Warning! Your account balance is low. Please deposit and try the trade again",
+        message: "Insufficient balance",
       });
-    } else {
-      setError({
-        status: true,
-        message: "Warning! Something went wrong please try again",
-      });
+      return;
     }
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Optional: makes the scroll smooth
+    await fetch("/api/withdrawal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user?._id,
+        amount,
+        method,
+      }),
     });
+
+    await fetchWithdrawals();
+
+    setAmount(0);
+    setAddress("");
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) redirect("/login");
 
   return (
     <>
@@ -62,6 +99,9 @@ function WithdrawMyFunds() {
                 <select
                   name=""
                   required
+                  id=""
+                  value={method}
+                  onChange={(e) => setMethod(e.target.value)}
                   className="bg-black/10 w-full border outline-none border-gray-400 py-2 px-4 rounded"
                 >
                   <option value="bitcoin" className="bg-black">
@@ -76,19 +116,20 @@ function WithdrawMyFunds() {
                   <option value="bitcoin-cash" className="bg-black">
                     Bitcoin Cash
                   </option>
-                  <option value="bank" className="bg-black">
-                    Bank
-                  </option>
                 </select>
                 <input
                   type="number"
                   required
                   className="border w-full my-4 border-gray-400 py-2 px-4 rounded"
                   placeholder="Enter Amount"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
                 />
                 <input
                   required
                   type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   className="border w-full my-4 border-gray-400 py-2 px-4 rounded"
                   placeholder="Wallet Address/Email"
                 />
@@ -101,7 +142,7 @@ function WithdrawMyFunds() {
               </form>
             </div>
             <DataTable
-              data={[]}
+              data={withdrawals}
               columns={[
                 { key: "id", label: "S/N" },
                 { key: "time", label: "Time" },
