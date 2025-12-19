@@ -18,7 +18,7 @@ function WithdrawMyFunds() {
   if (!user) redirect("/login");
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (user.balance < 1) {
+    if (user.balance.totalBalance < 1) {
       setError({
         status: true,
         message:

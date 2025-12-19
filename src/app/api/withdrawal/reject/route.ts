@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
-import Payment from "@/models/payment";
+import Withdrawal from "@/models/withdrawal";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -21,23 +21,26 @@ async function requireAdmin(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const { paymentId, reason } = await req.json();
-    if (!paymentId)
+    const { withdrawalID, reason } = await req.json();
+    if (!withdrawalID)
       return NextResponse.json(
-        { error: "paymentId required" },
+        { error: "withdrawalID required" },
         { status: 400 }
       );
 
     await connectDB();
-    const payment = await Payment.findById(paymentId);
-    if (!payment)
-      return NextResponse.json({ error: "Payment not found" }, { status: 404 });
+    const withdrawal = await Withdrawal.findById(withdrawalID);
+    if (!withdrawal)
+      return NextResponse.json(
+        { error: "Withdrawal not found" },
+        { status: 404 }
+      );
 
-    payment.status = "pending";
-    payment.note = reason || "held by admin";
-    await payment.save();
+    withdrawal.status = "rejected";
+    withdrawal.note = reason || "Rejected by admin";
+    await withdrawal.save();
 
-    return NextResponse.json({ message: "Payment held", payment });
+    return NextResponse.json({ message: "Withdrawal rejected", withdrawal });
   } catch (err: any) {
     const status =
       err.message === "Unauthorized"

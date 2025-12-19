@@ -83,7 +83,11 @@ function AccountFunding() {
           Array.isArray(data.payments)
             ? data.payments.map((payment: any, idx: number) => ({
                 id: idx + 1,
-                time: payment.createdAt,
+                time: new Date(payment.createdAt).toLocaleString("en-US", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }),
+
                 status: payment.status,
                 userId: payment.userId,
                 method: payment.method,
@@ -111,7 +115,10 @@ function AccountFunding() {
         Array.isArray(data.payments)
           ? data.payments.map((payment: any, idx: number) => ({
               id: idx + 1,
-              time: payment.createdAt,
+              time: new Date(payment.createdAt).toLocaleString("en-US", {
+                dateStyle: "medium",
+                timeStyle: "short",
+              }),
               status: payment.status,
               userId: payment.userId,
               method: payment.method,

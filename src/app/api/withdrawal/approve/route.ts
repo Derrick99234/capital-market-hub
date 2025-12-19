@@ -1,10 +1,10 @@
-// app/api/admin/payments/reject/route.ts
+// app/api/admin/payments/approve/route.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
-import Payment from "@/models/payment";
+import Withdrawal from "@/models/withdrawal";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -21,23 +21,38 @@ async function requireAdmin(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const { paymentId, reason } = await req.json();
-    if (!paymentId)
+    const { WithdrawalID } = await req.json();
+    if (!WithdrawalID)
       return NextResponse.json(
-        { error: "paymentId required" },
+        { error: "WithdrawalID required" },
         { status: 400 }
       );
 
     await connectDB();
-    const payment = await Payment.findById(paymentId);
-    if (!payment)
-      return NextResponse.json({ error: "Payment not found" }, { status: 404 });
+    const withdrawal = await Withdrawal.findById(WithdrawalID);
+    if (!withdrawal)
+      return NextResponse.json(
+        { error: "Withdrawal not found" },
+        { status: 404 }
+      );
+    if (withdrawal.status !== "pending")
+      return NextResponse.json(
+        { error: "Withdrawal not pending" },
+        { status: 400 }
+      );
 
-    payment.status = "pending";
-    payment.note = reason || "held by admin";
-    await payment.save();
+    // Approve: update user balance
+    const user = await User.findById(withdrawal.userId);
+    if (!user)
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    return NextResponse.json({ message: "Payment held", payment });
+    user.balance.totalBalance =
+      (user.balance.totalBalance || 0) - withdrawal.amount;
+    await user.save();
+
+    withdrawal.status = "approved";
+    await withdrawal.save();
+    return NextResponse.json({ message: "Withdrawal approved", withdrawal });
   } catch (err: any) {
     const status =
       err.message === "Unauthorized"
