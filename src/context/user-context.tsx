@@ -9,7 +9,14 @@ type User = {
   phoneNumber: string;
   country: string;
   currency: string;
-  balance: number;
+  balance: {
+    totalBalance: number;
+    BTC: number;
+    depositBalance: number;
+    referralBalance: number;
+  };
+  createdAt: string;
+  updatedAt: string;
 } | null;
 
 type UserContextType = {

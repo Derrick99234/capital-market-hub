@@ -5,7 +5,12 @@ export interface IUser extends Document {
   lastName: string;
   email: string;
   password: string;
-  balance: number;
+  balance: {
+    totalBalance: number;
+    BTC: number;
+    depositBalance: number;
+    referralBalance: number;
+  };
   phoneNumber?: string;
   country?: string;
   currency: string;
@@ -38,8 +43,10 @@ const UserSchema = new Schema<IUser>(
       minlength: [6, "Password must be at least 6 characters"],
     },
     balance: {
-      type: Number,
-      default: 0,
+      totalBalance: { type: Number, default: 0 },
+      BTC: { type: Number, default: 0 },
+      depositBalance: { type: Number, default: 0 },
+      referralBalance: { type: Number, default: 0 },
     },
     phoneNumber: {
       type: String,

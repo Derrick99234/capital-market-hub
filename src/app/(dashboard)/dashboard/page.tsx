@@ -17,7 +17,7 @@ function Dashboard() {
   if (!user) redirect("/login");
 
   const handleClick = async () => {
-    if (user.balance < 1) {
+    if (user.balance.totalBalance < 1) {
       setError({
         status: true,
         message:
@@ -63,26 +63,30 @@ function Dashboard() {
                 Total Balance USD
               </h2>
               <p className="text-base sm:text-lg font-bold">
-                ${user.balance.toFixed(2)}
+                ${user.balance.totalBalance.toFixed(2)}
               </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">BTC Balance</h2>
-              <p className="text-base sm:text-lg font-bold">0.00000000</p>
+              <p className="text-base sm:text-lg font-bold">
+                ${user.balance.BTC.toFixed(8)}
+              </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">
                 Deposited Amount
               </h2>
               <p className="text-base sm:text-lg font-bold">
-                ${user.balance.toFixed(2)}
+                ${user.balance.depositBalance.toFixed(2)}
               </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">
                 Referral Bonus
               </h2>
-              <p className="text-base sm:text-lg font-bold">$0.00</p>
+              <p className="text-base sm:text-lg font-bold">
+                ${user.balance.referralBalance.toFixed(2)}
+              </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">
@@ -125,7 +129,7 @@ function Dashboard() {
               <h2 className="text-lg font-semibold">
                 Balance -{" "}
                 <span className="text-green-500">
-                  ${user.balance.toFixed(2)}
+                  ${user.balance.totalBalance.toFixed(2)}
                 </span>
               </h2>
 

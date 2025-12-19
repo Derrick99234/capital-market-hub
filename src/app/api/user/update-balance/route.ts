@@ -20,10 +20,10 @@ async function requireAdmin(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const { userId, amount } = await req.json();
-    if (!userId || typeof amount !== "number")
+    const { userId, balance } = await req.json();
+    if (!userId || !balance)
       return NextResponse.json(
-        { error: "userId and numeric amount required" },
+        { error: "userId and numeric balance required" },
         { status: 400 }
       );
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     if (!user)
       return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    user.balance = amount;
+    user.balance = balance;
     await user.save();
 
     return NextResponse.json({

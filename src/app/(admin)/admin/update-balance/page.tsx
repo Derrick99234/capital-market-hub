@@ -7,14 +7,25 @@ type User = {
   firstName: string;
   lastName: string;
   email: string;
-  balance?: number;
+  balance?: {
+    totalBalance: number;
+    BTC: number;
+    depositBalance: number;
+    referralBalance: number;
+  };
 };
 
 export default function UpdateBalancePage() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<User | null>(null);
-  const [amount, setAmount] = useState("");
+  const [balances, setBalances] = useState({
+    totalBalance: "",
+    BTC: "",
+    depositBalance: "",
+    referralBalance: "",
+  });
+
   const [saving, setSaving] = useState(false);
 
   // 🔐 password modal states
@@ -57,29 +68,50 @@ export default function UpdateBalancePage() {
 
   const openEdit = (u: User) => {
     setSelected(u);
-    setAmount(u.balance?.toString() || "");
+    setBalances({
+      totalBalance: String(u.balance?.totalBalance ?? 0),
+      BTC: String(u.balance?.BTC ?? 0),
+      depositBalance: String(u.balance?.depositBalance ?? 0),
+      referralBalance: String(u.balance?.referralBalance ?? 0),
+    });
   };
 
   const submit = async () => {
     if (!selected) return;
     setSaving(true);
+
+    const payload = {
+      userId: selected._id,
+      balance: {
+        totalBalance: Number(balances.totalBalance),
+        BTC: Number(balances.BTC),
+        depositBalance: Number(balances.depositBalance),
+        referralBalance: Number(balances.referralBalance),
+      },
+    };
+
     const res = await fetch("/api/user/update-balance", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: selected._id, amount: Number(amount) }),
+      body: JSON.stringify(payload),
     });
+
     const data = await res.json();
-    if (!res.ok) alert(data.error || "Update failed");
-    else {
+
+    if (!res.ok) {
+      alert(data.error || "Update failed");
+    } else {
       alert("Balance updated");
+
       setUsers(
-        (prev) =>
-          prev?.map((u) =>
-            u._id === selected._id ? { ...u, balance: Number(amount) } : u
-          ) || null
+        users?.map((u) =>
+          u._id === selected._id ? { ...u, balance: payload.balance } : u
+        ) || null
       );
+
       setSelected(null);
     }
+
     setSaving(false);
   };
 
@@ -114,6 +146,27 @@ export default function UpdateBalancePage() {
 
   if (loading) return <p className="p-6">Loading users...</p>;
 
+  function Input({
+    label,
+    value,
+    onChange,
+  }: {
+    label: string;
+    value: string;
+    onChange: (v: string) => void;
+  }) {
+    return (
+      <div>
+        <label className="block text-sm mb-1 font-medium">{label}</label>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+    );
+  }
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Update User Balance</h1>
@@ -132,7 +185,9 @@ export default function UpdateBalancePage() {
                 <div className="text-sm text-gray-300">{u.email}</div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="font-mono">${(u.balance || 0).toFixed(2)}</div>
+                <div className="font-mono">
+                  ${(u.balance?.totalBalance || 0).toFixed(2)}
+                </div>
                 <button
                   onClick={() => openEdit(u)}
                   className="px-3 py-1 bg-yellow-500 text-black rounded"
@@ -150,20 +205,39 @@ export default function UpdateBalancePage() {
       {/* Edit Modal */}
       {selected && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-40">
-          <div className="bg-white p-6 rounded w-[420px]">
-            <h2 className="text-lg font-semibold mb-3">
-              Update Balance for {selected.firstName} {selected.lastName}
+          <div className="bg-white p-6 rounded w-[440px]">
+            <h2 className="text-lg font-semibold mb-4">
+              Update Balance - {selected.firstName} {selected.lastName}
             </h2>
-            <div className="mb-3">
-              <label className="block text-sm mb-1">Amount (USD)</label>
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="w-full p-2 border rounded"
+
+            <div className="grid gap-3">
+              <Input
+                label="Total Balance (USD)"
+                value={balances.totalBalance}
+                onChange={(v) => setBalances({ ...balances, totalBalance: v })}
+              />
+              <Input
+                label="BTC Balance"
+                value={balances.BTC}
+                onChange={(v) => setBalances({ ...balances, BTC: v })}
+              />
+              <Input
+                label="Deposit Balance"
+                value={balances.depositBalance}
+                onChange={(v) =>
+                  setBalances({ ...balances, depositBalance: v })
+                }
+              />
+              <Input
+                label="Referral Balance"
+                value={balances.referralBalance}
+                onChange={(v) =>
+                  setBalances({ ...balances, referralBalance: v })
+                }
               />
             </div>
-            <div className="flex justify-end gap-2">
+
+            <div className="flex justify-end gap-2 mt-5">
               <button
                 onClick={() => setSelected(null)}
                 className="px-3 py-1 border rounded"
@@ -172,10 +246,10 @@ export default function UpdateBalancePage() {
               </button>
               <button
                 onClick={submit}
-                className="px-3 py-1 bg-green-600 text-white rounded cursor-pointer"
+                className="px-3 py-1 bg-green-600 text-white rounded"
                 disabled={saving}
               >
-                {saving ? "Saving..." : "Save"}
+                {saving ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </div>

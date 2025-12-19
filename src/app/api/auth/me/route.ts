@@ -21,10 +21,12 @@ export async function GET(req: Request) {
     const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
 
     // Find user
-    const user = await User.findById(decoded.id).select("-password"); // don’t send password
+    const user = await User.findById(decoded.id).select("-password").lean();
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    console.log("Fetch user:", user);
 
     return NextResponse.json({ user });
   } catch (error) {
