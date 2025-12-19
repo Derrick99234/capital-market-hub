@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
     if (!payment)
       return NextResponse.json({ error: "Payment not found" }, { status: 404 });
 
-    payment.status = "rejected";
-    payment.note = reason || "Rejected by admin";
+    payment.status = "pending";
+    payment.note = reason || "held by admin";
     await payment.save();
 
     return NextResponse.json({ message: "Payment rejected", payment });

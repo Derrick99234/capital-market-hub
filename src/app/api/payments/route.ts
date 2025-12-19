@@ -23,7 +23,7 @@ async function requireAdmin(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const payments = await Payment.find({ status: "pending" })
+    const payments = await Payment.find()
       .populate("userId", "firstName lastName email")
       .lean();
     return NextResponse.json({ payments });

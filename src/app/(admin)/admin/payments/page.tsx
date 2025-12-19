@@ -32,7 +32,7 @@ export default function AdminPaymentsPage() {
 
   const handleApprove = async (paymentId: string) => {
     if (!confirm("Approve this payment?")) return;
-    await fetch("/api/admin/payments/approve", {
+    await fetch("/api/payments/approve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ paymentId }),
@@ -43,7 +43,18 @@ export default function AdminPaymentsPage() {
   const handleReject = async (paymentId: string) => {
     const reason =
       prompt("Reason for rejection (optional):") || "Rejected by admin";
-    await fetch("/api/admin/payments/reject", {
+    await fetch("/api/payments/reject", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paymentId, reason }),
+    });
+    fetchPayments();
+  };
+
+  const handlePending = async (paymentId: string) => {
+    const reason =
+      prompt("Reason for holding payment (optional):") || "Held by admin";
+    await fetch("/api/payments/pending", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ paymentId, reason }),
@@ -77,14 +88,32 @@ export default function AdminPaymentsPage() {
               </div>
               <div className="flex gap-2">
                 <button
+                  onClick={() => handlePending(p._id)}
+                  className={`px-3 py-1 border border-yellow-600 rounded ${
+                    p.status === "pending"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+                >
+                  Pending
+                </button>
+                <button
                   onClick={() => handleApprove(p._id)}
-                  className="px-3 py-1 bg-green-600 rounded"
+                  className={`px-3 py-1 border border-green-600 rounded ${
+                    p.status === "approved"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   Approve
                 </button>
                 <button
                   onClick={() => handleReject(p._id)}
-                  className="px-3 py-1 bg-red-600 rounded"
+                  className={`px-3 py-1 border border-red-600 rounded ${
+                    p.status === "rejected"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   Reject
                 </button>

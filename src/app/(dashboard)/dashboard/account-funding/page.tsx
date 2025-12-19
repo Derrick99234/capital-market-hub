@@ -3,6 +3,7 @@ import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
 import DataTable from "@/components/Table";
 import { useUser } from "@/context/user-context";
+import { set } from "mongoose";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
@@ -118,6 +119,8 @@ function AccountFunding() {
             }))
           : []
       );
+      setAmount(0);
+      setSelectedAddress("btc");
     } catch (err) {
       console.error("Error adding payment:", err);
     }

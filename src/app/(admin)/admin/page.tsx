@@ -10,7 +10,12 @@ type User = {
   phoneNumber?: string;
   country?: string;
   currency?: string;
-  balance?: number;
+  balance: {
+    totalBalance: number;
+    BTC: number;
+    depositBalance: number;
+    referralBalance: number;
+  };
   role?: string;
 };
 
@@ -95,7 +100,9 @@ export default function AdminUsersPage() {
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-mono">${(u.balance || 0).toFixed(2)}</div>
+                <div className="font-mono">
+                  ${(u.balance.totalBalance || 0).toFixed(2)}
+                </div>
                 <div className="text-sm text-gray-400">
                   {u.currency || "USD"}
                 </div>
