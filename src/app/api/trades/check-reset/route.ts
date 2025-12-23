@@ -23,12 +23,12 @@ export async function GET(req: Request) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
-  const RESET_DURATION = 1 * 60 * 1000;
+  const RESET_DURATION = 24 * 60 * 60 * 1000;
   // user.lastTradeReset = new Date();
   // await user.save();
 
   if (hasTimePassed(user.lastTradeReset, RESET_DURATION)) {
-    user.dailyTradeLeft += 5;
+    user.dailyTradeLeft = 5;
     user.lastTradeReset = new Date();
     await user.save();
   }

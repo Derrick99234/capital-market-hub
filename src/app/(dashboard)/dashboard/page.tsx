@@ -9,7 +9,8 @@ import { IoCheckmarkDone } from "react-icons/io5";
 
 function Dashboard() {
   const [selectedAmountLevel, setSelectedAmountLevel] = useState(100);
-  const { user, loading, setLoading, setUser } = useUser();
+  const [amount, setAmount] = useState("");
+  const { user, loading } = useUser();
   const [error, setError] = useState({
     status: false,
     message: "",
@@ -120,7 +121,7 @@ function Dashboard() {
     }
 
     // ✅ Calculate trade amount HERE
-    const tradeAmount = (selectedAmountLevel / 100) * user.balance.totalBalance;
+    // const tradeAmount = (selectedAmountLevel / 100) * user.balance.totalBalance;
 
     // ✅ Payload matching your DB table
     const tradePayload = {
@@ -128,7 +129,7 @@ function Dashboard() {
       assetClass,
       userId: user._id,
       assetTicker,
-      tradeAmount,
+      tradeAmount: amount,
       duration,
       profitLoss: 0, // default (calculated later)
       status: "PENDING", // default
@@ -149,7 +150,7 @@ function Dashboard() {
       // Success handling
       setError({
         status: true,
-        message: "Trade submitted successfully",
+        message: "Trade submitted successfully, Please refresh the page.",
       });
     } catch (err) {
       setError({
@@ -304,6 +305,11 @@ function Dashboard() {
                 <input
                   type="number"
                   placeholder="Enter Amount in USD"
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                    setSelectedAmountLevel(0);
+                  }}
                   className="w-full p-2 bg-gray-800 rounded"
                 />
               </div>
@@ -321,7 +327,12 @@ function Dashboard() {
                           ? "bg-green-400 text-black"
                           : "bg-gray-700 hover:bg-gray-600"
                       }`}
-                      onClick={() => setSelectedAmountLevel(lvl)}
+                      onClick={() => {
+                        setSelectedAmountLevel(lvl);
+                        const tradeAmount =
+                          (lvl / 100) * user.balance.totalBalance;
+                        setAmount(tradeAmount.toFixed(2));
+                      }}
                     >
                       {lvl}%
                     </button>
