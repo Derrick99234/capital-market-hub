@@ -9,6 +9,7 @@ type User = {
   phoneNumber: string;
   country: string;
   currency: string;
+  dailyTradeLeft: number;
   balance: {
     totalBalance: number;
     BTC: number;
@@ -22,6 +23,7 @@ type User = {
 type UserContextType = {
   user: User;
   loading: boolean;
+  setLoading: (loading: boolean) => void;
   setUser: (user: User) => void;
   logout: () => void;
 };
@@ -34,6 +36,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const router = useRouter();
 
+  const checkReset = async () => {
+    setLoading(true);
+
+    const res = await fetch("/api/trades/check-reset");
+    const data = await res.json();
+    setUser(data);
+  };
   // Fetch user from /api/auth/me
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,6 +54,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
         const data = await res.json();
         setUser(data.user); // { user: { firstName, lastName, ... } }
+        checkReset();
       } catch (err) {
         setUser(null);
       } finally {
@@ -62,7 +72,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, loading, setUser, logout }}>
+    <UserContext.Provider
+      value={{ user, loading, setUser, logout, setLoading }}
+    >
       {children}
     </UserContext.Provider>
   );

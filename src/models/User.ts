@@ -5,6 +5,7 @@ export interface IUser extends Document {
   lastName: string;
   email: string;
   password: string;
+  dailyTradeLeft: number;
   balance: {
     totalBalance: number;
     BTC: number;
@@ -16,6 +17,7 @@ export interface IUser extends Document {
   currency: string;
   createdAt: Date;
   updatedAt: Date;
+  lastTradeReset: Date;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -51,6 +53,14 @@ const UserSchema = new Schema<IUser>(
     phoneNumber: {
       type: String,
       trim: true,
+    },
+    dailyTradeLeft: {
+      type: Number,
+      default: 5,
+    },
+    lastTradeReset: {
+      type: Date,
+      default: () => new Date(),
     },
     country: {
       type: String,

@@ -1,39 +1,164 @@
 "use client";
 import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
+import DataTable from "@/components/Table";
 import { useUser } from "@/context/user-context";
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
 
 function Dashboard() {
   const [selectedAmountLevel, setSelectedAmountLevel] = useState(100);
-  const { user, loading } = useUser();
+  const { user, loading, setLoading, setUser } = useUser();
   const [error, setError] = useState({
     status: false,
     message: "",
   });
+
+  const noTradesLeft = (user?.dailyTradeLeft ?? 0) <= 0;
+  const [assetClass, setAssetClass] = useState("");
+  const [assetTicker, setAssetTicker] = useState("");
+
+  const [duration, setDuration] = useState("5 min");
+  // const [tradeType, setTradeType] = useState<"BUY" | "SELL" | "">("");
+
+  const assetTickers: Record<string, string[]> = {
+    Forex: [
+      "EUR/USD",
+      "GBP/USD",
+      "USD/JPY",
+      "AUD/USD",
+      "USD/CAD",
+      "USD/CNY",
+      "USD/CHF",
+      "EUR/GBP",
+      "USD/HKD",
+      "USD/KRW",
+      "NZD/USD",
+    ],
+    Crypto: [
+      "BTC/USDT",
+      "SOL/USDT",
+      "ETH/USDT",
+      "LTC/USDT",
+      "XRP/USDT",
+      "BTC/BUSD",
+      "MATIC/USDT",
+      "ADA/USDT",
+      "FIL/USDT",
+      "ATOM/USDT",
+      "BCH/BTC",
+      "NEO/USDT",
+      "WAVES/USDT",
+      "XRP/BTC",
+      "ENJ/USDT",
+      "BNB/USDT",
+      "BNB/BTC",
+      "XLM/BTC",
+      "ETH/BCH",
+      "ETH/DOGE",
+      "ETH/ADA",
+      "AAVE/BTC",
+      "APE/BTC",
+    ],
+    Stocks: ["S&P500", "SPY", "AAPL"],
+  };
+
+  const [trades, setTrades] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchTrades = async () => {
+      try {
+        const res = await fetch(`/api/trades/user?userId=${user._id}`);
+        const data = await res.json();
+        setTrades(
+          Array.isArray(data)
+            ? data.map((w: any, i: number) => ({
+                id: i + 1,
+                type: w.type,
+                "asset-class": w.assetClass,
+                "asset-ticker": w.assetTicker,
+                "trade-amount": `$${w.tradeAmount.toFixed(2)}`,
+                durations: w.duration,
+                "profit-loss": `$${w.profitLoss.toFixed(2)}`,
+                status: w.status,
+              }))
+            : []
+        );
+      } catch (err) {
+        console.error("Failed to fetch trades");
+      }
+    };
+
+    fetchTrades();
+  }, [user]);
+
   if (loading) return <p>Loading...</p>;
   if (!user) redirect("/login");
 
-  const handleClick = async () => {
+  const handleSubmitTrade = async (type: "BUY" | "SELL") => {
+    // setTradeType(type);
+
+    // Basic validation
+    if (!assetClass || !assetTicker) {
+      setError({
+        status: true,
+        message: "Please select asset class and ticker",
+      });
+      return;
+    }
+
     if (user.balance.totalBalance < 1) {
       setError({
         status: true,
         message:
-          "Warning! Your account balance is low. Please deposit and try the trade again",
+          "Warning! Your account balance is low. Please deposit and try again",
       });
-    } else {
+      return;
+    }
+
+    // ✅ Calculate trade amount HERE
+    const tradeAmount = (selectedAmountLevel / 100) * user.balance.totalBalance;
+
+    // ✅ Payload matching your DB table
+    const tradePayload = {
+      type, // BUY or SELL
+      assetClass,
+      userId: user._id,
+      assetTicker,
+      tradeAmount,
+      duration,
+      profitLoss: 0, // default (calculated later)
+      status: "PENDING", // default
+    };
+
+    // Send to backend
+    try {
+      const res = await fetch("/api/trades", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tradePayload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Trade submission failed");
+      }
+
+      // Success handling
       setError({
         status: true,
-        message: "Warning! Something went wrong please try again",
+        message: "Trade submitted successfully",
+      });
+    } catch (err) {
+      setError({
+        status: true,
+        message: "Something went wrong. Please try again",
       });
     }
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Optional: makes the scroll smooth
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -92,7 +217,9 @@ function Dashboard() {
               <h2 className="text-xs sm:text-sm text-gray-400">
                 Daily Trades Left
               </h2>
-              <p className="text-base sm:text-lg font-bold">6</p>
+              <p className="text-base sm:text-lg font-bold">
+                {user.dailyTradeLeft}
+              </p>
             </div>
             <div className="bg-gray-900 p-4 rounded-lg text-center">
               <h2 className="text-xs sm:text-sm text-gray-400">
@@ -103,11 +230,9 @@ function Dashboard() {
           </div>
 
           {error.status && (
-            <div className="bg-red-500/30 flex gap-2 p-3 text-red-700 font-semibold">
+            <div className="bg-slate-300/30 flex gap-2 p-3 text-white font-semibold">
               <IoCheckmarkDone size={25} />
-              <span className="text-red-700 font-semibold">
-                {error.message}
-              </span>
+              <span className="text-white font-semibold">{error.message}</span>
             </div>
           )}
 
@@ -134,25 +259,43 @@ function Dashboard() {
               </h2>
 
               {/* Asset Class */}
-              <div>
-                <label className="block text-sm mb-1">Asset Class</label>
-                <select className="w-full p-2 bg-gray-800 rounded">
-                  <option value="">Select Asset Class</option>
-                  <option value="Forex">Forex</option>
-                  <option value="Crypto">Crypto</option>
-                  <option value="Stocks">Stocks</option>
-                </select>
-              </div>
+              <div className="space-y-4">
+                {/* Asset Class */}
+                <div>
+                  <label className="block text-sm mb-1">Asset Class</label>
+                  <select
+                    className="w-full p-2 bg-gray-800 rounded"
+                    value={assetClass}
+                    onChange={(e) => {
+                      setAssetClass(e.target.value);
+                      setAssetTicker(""); // reset ticker when class changes
+                    }}
+                  >
+                    <option value="">Select Asset Class</option>
+                    <option value="Forex">Forex</option>
+                    <option value="Crypto">Crypto</option>
+                    <option value="Stocks">Stocks</option>
+                  </select>
+                </div>
 
-              {/* Asset Ticker */}
-              <div>
-                <label className="block text-sm mb-1">Asset Ticker</label>
-                <select className="w-full p-2 bg-gray-800 rounded">
-                  <option value="">Select Asset Ticker</option>
-                  <option value="USDCAD">USDCAD</option>
-                  <option value="BTCUSD">BTCUSD</option>
-                  <option value="AAPL">AAPL</option>
-                </select>
+                {/* Asset Ticker */}
+                <div>
+                  <label className="block text-sm mb-1">Asset Ticker</label>
+                  <select
+                    className="w-full p-2 bg-gray-800 rounded"
+                    value={assetTicker}
+                    onChange={(e) => setAssetTicker(e.target.value)}
+                    disabled={!assetClass}
+                  >
+                    <option value="">Select Asset Ticker</option>
+                    {assetClass &&
+                      assetTickers[assetClass]?.map((ticker) => (
+                        <option key={ticker} value={ticker}>
+                          {ticker}
+                        </option>
+                      ))}
+                  </select>
+                </div>
               </div>
 
               {/* Amount */}
@@ -202,7 +345,11 @@ function Dashboard() {
               {/* Time Allocated */}
               <div>
                 <label className="block text-sm mb-1">Time Allocated</label>
-                <select className="w-full p-2 bg-gray-800 rounded">
+                <select
+                  className="w-full p-2 bg-gray-800 rounded"
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                >
                   <option value="5 min">5 min</option>
                   <option value="15 min">15 min</option>
                   <option value="1 hr">1 hr</option>
@@ -214,21 +361,52 @@ function Dashboard() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   type="button"
-                  className="flex-1 bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold cursor-pointer"
-                  onClick={handleClick}
+                  disabled={noTradesLeft}
+                  className={`flex-1 px-4 py-2 rounded font-bold cursor-pointer
+    ${
+      noTradesLeft
+        ? "bg-gray-600 cursor-not-allowed opacity-60"
+        : "bg-green-600 hover:bg-green-700"
+    }`}
+                  onClick={() => handleSubmitTrade("BUY")}
                 >
                   BUY
                 </button>
+
                 <button
                   type="button"
-                  className="flex-1 bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold cursor-pointer"
-                  onClick={handleClick}
+                  disabled={noTradesLeft}
+                  className={`flex-1 px-4 py-2 rounded font-bold cursor-pointer
+    ${
+      noTradesLeft
+        ? "bg-gray-600 cursor-not-allowed opacity-60"
+        : "bg-red-600 hover:bg-red-700"
+    }`}
+                  onClick={() => handleSubmitTrade("SELL")}
                 >
                   SELL
                 </button>
               </div>
+              {noTradesLeft && (
+                <p className="text-sm text-red-400 font-semibold">
+                  Daily trade limit reached. Try again tomorrow.
+                </p>
+              )}
             </div>
           </div>
+          <DataTable
+            data={trades}
+            columns={[
+              { key: "id", label: "S/N" },
+              { key: "type", label: "Type" },
+              { key: "asset-class", label: "Asset Class" },
+              { key: "asset-ticker", label: "Asset Ticker" },
+              { key: "trade-amount", label: "Trade Amount" },
+              { key: "durations", label: "Duration" },
+              { key: "profit-loss", label: "Profit/Loss" },
+              { key: "status", label: "Status" },
+            ]}
+          />
         </div>
       </main>
     </>
