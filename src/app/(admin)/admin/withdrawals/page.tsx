@@ -62,67 +62,72 @@ export default function AdminPaymentsPage() {
     fetchWithdwals();
   };
 
-  if (loading) return <p>Loading withdrawals...</p>;
+  if (loading) return <p className="p-4 text-center">Loading withdrawals...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Withdrawals</h1>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">Withdrawals</h1>
       {Withdrawal && Withdrawal.length ? (
-        Withdrawal.map((w) => {
-          const user = typeof w.userId === "string" ? null : w.userId;
-          return (
-            <div
-              key={w._id}
-              className="p-4 bg-gray-800 text-white rounded mb-3 flex justify-between items-center"
-            >
-              <div>
-                <div className="font-semibold">
-                  {user ? `${user.firstName} ${user.lastName}` : "User"}
+        <div className="space-y-3 sm:space-y-4">
+          {Withdrawal.map((w) => {
+            const user = typeof w.userId === "string" ? null : w.userId;
+            return (
+              <div
+                key={w._id}
+                className="p-3 sm:p-4 bg-gray-800 text-white rounded-lg shadow-sm flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4"
+              >
+                <div className="flex-1">
+                  <div className="font-semibold text-sm sm:text-base">
+                    {user ? `${user.firstName} ${user.lastName}` : "User"}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300 mt-1">
+                    {user?.email || "-"}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-200 mt-1">
+                    Amount: ${w.amount.toFixed(2)} {w.currency}
+                  </div>
+                  <div className="text-xs text-gray-400 mt-1">
+                    Status: <span className="capitalize">{w.status}</span>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-300">
-                  {user?.email || "-"}
-                </div>
-                <div className="text-sm text-gray-200 mt-1">
-                  Amount: ${w.amount.toFixed(2)} {w.currency}
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 w-full sm:w-auto">
+                  <button
+                    onClick={() => handlePending(w._id)}
+                    className={`px-3 py-1.5 text-xs sm:text-sm border border-yellow-600 rounded-md transition-colors ${
+                      w.status === "pending"
+                        ? "opacity-50 cursor-not-allowed bg-yellow-600/20"
+                        : "hover:bg-yellow-600/20"
+                    }`}
+                  >
+                    Pending
+                  </button>
+                  <button
+                    onClick={() => handleApprove(w._id)}
+                    className={`px-3 py-1.5 text-xs sm:text-sm border border-green-600 rounded-md transition-colors ${
+                      w.status === "approved"
+                        ? "opacity-50 cursor-not-allowed bg-green-600/20"
+                        : "hover:bg-green-600/20"
+                    }`}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() => handleReject(w._id)}
+                    className={`px-3 py-1.5 text-xs sm:text-sm border border-red-600 rounded-md transition-colors ${
+                      w.status === "rejected"
+                        ? "opacity-50 cursor-not-allowed bg-red-600/20"
+                        : "hover:bg-red-600/20"
+                    }`}
+                  >
+                    Reject
+                  </button>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handlePending(w._id)}
-                  className={`px-3 py-1 border border-yellow-600 rounded ${
-                    w.status === "pending"
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                >
-                  Pending
-                </button>
-                <button
-                  onClick={() => handleApprove(w._id)}
-                  className={`px-3 py-1 border border-green-600 rounded ${
-                    w.status === "approved"
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => handleReject(w._id)}
-                  className={`px-3 py-1 border border-red-600 rounded ${
-                    w.status === "rejected"
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                >
-                  Reject
-                </button>
-              </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       ) : (
-        <p>No withdrawals.</p>
+        <p className="text-center text-gray-400 py-8">No withdrawals found.</p>
       )}
     </div>
   );

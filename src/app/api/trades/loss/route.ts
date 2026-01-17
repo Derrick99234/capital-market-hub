@@ -21,20 +21,30 @@ async function requireAdmin(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const { tradeId, reason } = await req.json();
+    const { tradeId, lossAmount, reason } = await req.json();
     if (!tradeId)
       return NextResponse.json({ error: "tradeId required" }, { status: 400 });
+    if (!lossAmount || lossAmount <= 0)
+      return NextResponse.json({ error: "Valid loss amount required" }, { status: 400 });
 
     await connectDB();
     const trade = await Trades.findById(tradeId);
     if (!trade)
       return NextResponse.json({ error: "Trade not found" }, { status: 404 });
 
+    // Update trade with loss and status
     trade.status = "LOSS";
-    trade.note = reason || "Rejected by admin";
+    trade.profitLoss = -lossAmount; // Store negative loss amount
+    trade.note = reason || "Trade resulted in loss";
     await trade.save();
 
-    return NextResponse.json({ message: "Trade rejected", trade });
+    // Note: Loss amount is recorded but NOT deducted from user balance
+    // This is safer and more common in trading platforms
+
+    return NextResponse.json({
+      message: "Trade recorded as loss",
+      trade
+    });
   } catch (err: any) {
     const status =
       err.message === "Unauthorized"

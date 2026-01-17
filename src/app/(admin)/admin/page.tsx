@@ -93,7 +93,6 @@ export default function AdminUsersPage() {
               <div>
                 <div className="font-semibold">
                   {u.firstName} {u.lastName}{" "}
-                  <span className="text-sm text-gray-400">({u.role})</span>
                 </div>
                 <div className="text-sm text-gray-300">
                   {u.email} • {u.phoneNumber || "—"} • {u.country || "—"}
@@ -101,7 +100,7 @@ export default function AdminUsersPage() {
               </div>
               <div className="text-right">
                 <div className="font-mono">
-                  ${(u.balance.totalBalance || 0).toFixed(2)}
+                  ${(u.balance?.totalBalance || 0).toFixed(2)}
                 </div>
                 <div className="text-sm text-gray-400">
                   {u.currency || "USD"}

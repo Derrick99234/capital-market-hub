@@ -20,9 +20,11 @@ async function requireAdmin(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // await requireAdmin(req);
-    const { tradeId } = await req.json();
+    const { tradeId, profitAmount } = await req.json();
     if (!tradeId)
       return NextResponse.json({ error: "TradeID required" }, { status: 400 });
+    if (!profitAmount || profitAmount <= 0)
+      return NextResponse.json({ error: "Valid profit amount required" }, { status: 400 });
 
     await connectDB();
     const trade = await Trades.findById(tradeId);
@@ -31,14 +33,24 @@ export async function POST(req: NextRequest) {
     if (trade.status !== "PENDING")
       return NextResponse.json({ error: "Trade not pending" }, { status: 400 });
 
-    // Approve: update user balance
+    // Update trade with profit and status
     const user = await User.findById(trade.userId);
     if (!user)
       return NextResponse.json({ error: "User not found" }, { status: 404 });
 
     trade.status = "WIN";
+    trade.profitLoss = profitAmount; // Store positive profit amount
     await trade.save();
-    return NextResponse.json({ message: "Trade approved", trade });
+
+    // Add profit to user balance
+    user.balance.totalBalance += profitAmount;
+    await user.save();
+
+    return NextResponse.json({
+      message: "Trade approved with profit",
+      trade,
+      user: { id: user._id, balance: user.balance }
+    });
   } catch (err: any) {
     const status =
       err.message === "Unauthorized"

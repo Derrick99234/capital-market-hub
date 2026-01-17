@@ -1,4 +1,5 @@
 // app/(dashboard)/dashboard/layout.tsx
+import AdminSidebar from "@/components/AdminSidebar";
 import "../../globals.css";
 
 export default function DashboardLayout({
@@ -8,7 +9,10 @@ export default function DashboardLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AdminSidebar />
+        {children}
+      </body>
     </html>
   );
 }
