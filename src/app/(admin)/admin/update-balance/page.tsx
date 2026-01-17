@@ -15,6 +15,28 @@ type User = {
   };
 };
 
+const Input = function Input({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-sm mb-1 font-medium">{label}</label>
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full p-2 border rounded"
+      />
+    </div>
+  );
+};
+
 export default function UpdateBalancePage() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -146,27 +168,6 @@ export default function UpdateBalancePage() {
 
   if (loading) return <p className="p-6">Loading users...</p>;
 
-  function Input({
-    label,
-    value,
-    onChange,
-  }: {
-    label: string;
-    value: string;
-    onChange: (v: string) => void;
-  }) {
-    return (
-      <div>
-        <label className="block text-sm mb-1 font-medium">{label}</label>
-        <input
-          type="number"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-    );
-  }
   return (
     <div className="p-6 lg:p-8 md:flex-row min-h-screen max-[500px]:mt-12">
       <h1 className="text-2xl font-bold mb-4 text-white">
@@ -207,7 +208,7 @@ export default function UpdateBalancePage() {
       {/* Edit Modal */}
       {selected && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-40">
-          <div className="bg-white p-6 rounded w-110]">
+          <div className="bg-white p-6 rounded max-w-150 w-full shadow-lg">
             <h2 className="text-lg font-semibold mb-4">
               Update Balance - {selected.firstName} {selected.lastName}
             </h2>
