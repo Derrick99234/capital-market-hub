@@ -105,8 +105,8 @@ export default function UpdateBalancePage() {
 
       setUsers(
         users?.map((u) =>
-          u._id === selected._id ? { ...u, balance: payload.balance } : u
-        ) || null
+          u._id === selected._id ? { ...u, balance: payload.balance } : u,
+        ) || null,
       );
 
       setSelected(null);
@@ -168,7 +168,7 @@ export default function UpdateBalancePage() {
     );
   }
   return (
-    <div className="p-6">
+    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
       <h1 className="text-2xl font-bold mb-4">Update User Balance</h1>
 
       <div className="grid gap-3">

@@ -30,8 +30,6 @@ export async function POST(req: NextRequest) {
     const trade = await Trades.findById(tradeId);
     if (!trade)
       return NextResponse.json({ error: "Trade not found" }, { status: 404 });
-    if (trade.status !== "PENDING")
-      return NextResponse.json({ error: "Trade not pending" }, { status: 400 });
 
     // Update trade with profit and status
     const user = await User.findById(trade.userId);

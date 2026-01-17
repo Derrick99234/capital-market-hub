@@ -62,11 +62,20 @@ export default function AdminPaymentsPage() {
     fetchWithdwals();
   };
 
-  if (loading) return <p className="p-4 text-center">Loading withdrawals...</p>;
+  if (loading) {
+    return (
+      <div className="p-4 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+        <p className="text-gray-400 text-center">Loading withdrawals...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
-      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">Withdrawals</h1>
+    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
+      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
+        Withdrawals
+      </h1>
       {Withdrawal && Withdrawal.length ? (
         <div className="space-y-3 sm:space-y-4">
           {Withdrawal.map((w) => {

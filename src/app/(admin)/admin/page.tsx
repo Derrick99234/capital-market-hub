@@ -78,17 +78,24 @@ export default function AdminUsersPage() {
     );
   }
 
-  if (loading) return <p>Loading users...</p>;
+  if (loading) {
+    return (
+      <div className="p-4 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <p className="text-gray-400 text-center">Loading users...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-6">
+    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
       <h1 className="text-2xl font-bold mb-4">All Users</h1>
       <div className="space-y-3">
         {users && users.length ? (
           users.map((u) => (
             <div
               key={u._id}
-              className="p-4 bg-gray-800 text-white rounded flex justify-between"
+              className="p-4 bg-black text-white rounded flex justify-between"
             >
               <div>
                 <div className="font-semibold">

@@ -103,14 +103,20 @@ const ProfitLossModal = ({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gray-900 rounded-2xl p-6 w-full max-w-md border border-gray-700">
         <div className="flex items-center gap-3 mb-4">
-          <div className={`p-2 rounded-full ${type === "win" ? "bg-green-500/20" : "bg-red-500/20"}`}>
-            <DollarSign className={`w-5 h-5 ${type === "win" ? "text-green-400" : "text-red-400"}`} />
+          <div
+            className={`p-2 rounded-full ${type === "win" ? "bg-green-500/20" : "bg-red-500/20"}`}
+          >
+            <DollarSign
+              className={`w-5 h-5 ${type === "win" ? "text-green-400" : "text-red-400"}`}
+            />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-white">
               {type === "win" ? "Record Trade Win" : "Record Trade Loss"}
             </h3>
-            <p className="text-sm text-gray-400">Enter the {type === "win" ? "profit" : "loss"} amount</p>
+            <p className="text-sm text-gray-400">
+              Enter the {type === "win" ? "profit" : "loss"} amount
+            </p>
           </div>
         </div>
 
@@ -118,10 +124,23 @@ const ProfitLossModal = ({
           <div className="bg-gray-800 rounded-lg p-3">
             <div className="text-sm text-gray-400">Trade Details</div>
             <div className="text-sm text-white mt-1">
-              <div>User: {user ? `${user.firstName} ${user.lastName}` : "Unknown"}</div>
-              <div>Asset: {trade.assetTicker} ({trade.assetClass})</div>
+              <div>
+                User: {user ? `${user.firstName} ${user.lastName}` : "Unknown"}
+              </div>
+              <div>
+                Asset: {trade.assetTicker} ({trade.assetClass})
+              </div>
               <div>Trade Amount: ${trade.tradeAmount.toFixed(2)}</div>
-              <div>Type: <span className={trade.type === "BUY" ? "text-green-400" : "text-red-400"}>{trade.type}</span></div>
+              <div>
+                Type:{" "}
+                <span
+                  className={
+                    trade.type === "BUY" ? "text-green-400" : "text-red-400"
+                  }
+                >
+                  {trade.type}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -161,7 +180,9 @@ const ProfitLossModal = ({
                   : "bg-red-600 hover:bg-red-700 text-white"
               }`}
             >
-              {processing ? "Processing..." : `Confirm ${type === "win" ? "Win" : "Loss"}`}
+              {processing
+                ? "Processing..."
+                : `Confirm ${type === "win" ? "Win" : "Loss"}`}
             </button>
           </div>
         </div>
@@ -213,14 +234,17 @@ export default function AdminTradesPage() {
   };
 
   const handleModalConfirm = async () => {
-    if (!selectedTrade || !modalType || !amount || parseFloat(amount) <= 0) return;
+    if (!selectedTrade || !modalType || !amount || parseFloat(amount) <= 0)
+      return;
 
     setProcessing(true);
     try {
-      const endpoint = modalType === "win" ? "/api/trades/win" : "/api/trades/loss";
-      const body = modalType === "win"
-        ? { tradeId: selectedTrade._id, profitAmount: parseFloat(amount) }
-        : { tradeId: selectedTrade._id, lossAmount: parseFloat(amount) };
+      const endpoint =
+        modalType === "win" ? "/api/trades/win" : "/api/trades/loss";
+      const body =
+        modalType === "win"
+          ? { tradeId: selectedTrade._id, profitAmount: parseFloat(amount) }
+          : { tradeId: selectedTrade._id, lossAmount: parseFloat(amount) };
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -265,21 +289,28 @@ export default function AdminTradesPage() {
   };
 
   if (loading) {
-    return <p className="p-4 sm:p-6 text-gray-400 text-center">Loading trades...</p>;
+    return (
+      <div className="p-4 sm:p-6 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <p className="text-gray-400 text-center">Loading trades...</p>
+      </div>
+    );
   }
 
   return (
-    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
-        <h1 className="text-xl sm:text-2xl font-bold">Trades Management</h1>
+        <h1 className="text-xl sm:text-2xl font-bold mb-4">
+          Trades Management
+        </h1>
         <span className="text-sm text-gray-400">
           Total Trades: {trades.length}
         </span>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto bg-gray-900 rounded-2xl shadow">
+      <div className="overflow-x-auto bg-black rounded-2xl shadow">
         <table className="min-w-full text-xs sm:text-sm text-gray-200">
           <thead className="bg-gray-800 text-gray-400">
             <tr>
@@ -287,7 +318,9 @@ export default function AdminTradesPage() {
               <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Asset</th>
               <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Type</th>
               <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Amount</th>
-              <th className="px-2 sm:px-4 py-2 sm:py-3 text-left hidden sm:table-cell">Duration</th>
+              <th className="px-2 sm:px-4 py-2 sm:py-3 text-left hidden sm:table-cell">
+                Duration
+              </th>
               <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Status</th>
               <th className="px-2 sm:px-4 py-2 sm:py-3 text-right">Actions</th>
             </tr>
@@ -314,7 +347,9 @@ export default function AdminTradesPage() {
                   </td>
 
                   <td className="px-2 sm:px-4 py-2 sm:py-3">
-                    <div className="font-semibold text-xs sm:text-sm">{trade.assetTicker}</div>
+                    <div className="font-semibold text-xs sm:text-sm">
+                      {trade.assetTicker}
+                    </div>
                     <div className="text-xs text-gray-400">
                       {trade.assetClass}
                     </div>
@@ -328,9 +363,13 @@ export default function AdminTradesPage() {
                     )}
                   </td>
 
-                  <td className="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">${trade.tradeAmount.toFixed(2)}</td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
+                    ${trade.tradeAmount.toFixed(2)}
+                  </td>
 
-                  <td className="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">{trade.duration}</td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">
+                    {trade.duration}
+                  </td>
 
                   <td className="px-2 sm:px-4 py-2 sm:py-3">
                     <StatusPill status={trade.status} />
@@ -343,18 +382,18 @@ export default function AdminTradesPage() {
                       disabled={trade.status === "PENDING"}
                       onClick={() => handlePending(trade._id)}
                     />
-                     <ActionButton
-                       label="Win"
-                       variant="approve"
-                       disabled={trade.status === "WIN"}
-                       onClick={() => handleApprove(trade)}
-                     />
-                     <ActionButton
-                       label="Loss"
-                       variant="reject"
-                       disabled={trade.status === "LOSS"}
-                       onClick={() => handleReject(trade)}
-                     />
+                    <ActionButton
+                      label="Win"
+                      variant="approve"
+                      disabled={false} // Allow updating to WIN anytime
+                      onClick={() => handleApprove(trade)}
+                    />
+                    <ActionButton
+                      label="Loss"
+                      variant="reject"
+                      disabled={false} // Allow updating to LOSS anytime
+                      onClick={() => handleReject(trade)}
+                    />
                   </td>
                 </tr>
               );

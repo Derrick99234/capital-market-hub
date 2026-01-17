@@ -6,6 +6,7 @@ export interface ITrade extends Document {
   assetClass: string;
   assetTicker: string;
   tradeAmount: number;
+  profitAmount: number;
   duration: string;
   profitLoss: number;
   status: "PENDING" | "WIN" | "LOSS";
@@ -41,6 +42,10 @@ const TradeSchema = new Schema<ITrade>(
       type: String,
       required: true,
     },
+    profitAmount: {
+      type: Number,
+      default: 0,
+    },
     profitLoss: {
       type: Number,
       default: 0,
@@ -51,7 +56,7 @@ const TradeSchema = new Schema<ITrade>(
       default: "PENDING",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.models.Trade ||
