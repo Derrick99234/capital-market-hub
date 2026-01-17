@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { error: "Invalid credentials" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     if (!isPasswordValid) {
       return NextResponse.json(
         { error: "Invalid credentials" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,8 +34,11 @@ export async function POST(req: Request) {
 
     // Return response with HttpOnly cookie
     const res = NextResponse.json(
-      { message: "Login successful" },
-      { status: 200 }
+      {
+        message: "Login successful",
+        user: { email: user.email, role: user.role },
+      },
+      { status: 200 },
     );
     res.cookies.set("token", token, {
       httpOnly: true,
@@ -50,7 +53,7 @@ export async function POST(req: Request) {
     console.error("Login error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

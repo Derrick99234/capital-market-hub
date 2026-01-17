@@ -5,6 +5,7 @@ export interface IUser extends Document {
   lastName: string;
   email: string;
   password: string;
+  role?: string;
   dailyTradeLeft: number;
   balance: {
     totalBalance: number;
@@ -54,6 +55,10 @@ const UserSchema = new Schema<IUser>(
       type: String,
       trim: true,
     },
+    role: {
+      type: String,
+      trim: true,
+    },
     dailyTradeLeft: {
       type: Number,
       default: 5,
@@ -72,7 +77,7 @@ const UserSchema = new Schema<IUser>(
       uppercase: true,
     },
   },
-  { timestamps: true } // ✅ adds createdAt and updatedAt automatically
+  { timestamps: true }, // ✅ adds createdAt and updatedAt automatically
 );
 
 // Avoid model overwrite issues in Next.js

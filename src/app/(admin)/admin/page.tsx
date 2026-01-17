@@ -2,7 +2,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, AlertCircle, Users, TrendingUp, DollarSign, Clock } from "lucide-react";
+import {
+  Shield,
+  AlertCircle,
+  Users,
+  TrendingUp,
+  DollarSign,
+  Clock,
+} from "lucide-react";
 
 type User = {
   _id: string;
@@ -83,7 +90,7 @@ export default function AdminUsersPage() {
 
   if (checkingAuth) {
     return (
-      <div className="p-4 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+      <div className="p-4 flex flex-col items-center justify-center min-h-100 space-y-4">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         <p className="text-gray-400 text-center">Verifying admin access...</p>
       </div>
@@ -96,7 +103,7 @@ export default function AdminUsersPage() {
 
   if (loading) {
     return (
-      <div className="p-4 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+      <div className="p-4 flex flex-col items-center justify-center min-h-100 space-y-4">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         <p className="text-gray-400 text-center">Loading users...</p>
       </div>
@@ -104,9 +111,11 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div className="p-4 sm:p-6 lg:p-8 max-[500px]:mt-12">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">All Users</h1>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
+          All Users
+        </h1>
         <span className="text-sm text-gray-400">
           Total Users: {users?.length || 0}
         </span>
@@ -126,7 +135,7 @@ export default function AdminUsersPage() {
                   {u.email}
                 </div>
                 <div className="text-xs sm:text-sm text-gray-200 mt-1">
-                  Balance: ${u.balance.totalBalance.toFixed(2)} {u.currency}
+                  Balance: ${u.balance?.totalBalance.toFixed(2)} {u.currency}
                 </div>
                 <div className="text-xs sm:text-sm text-gray-200 mt-1">
                   Daily Trades Left: {u.dailyTradeLeft}
@@ -147,13 +156,13 @@ export default function AdminUsersPage() {
                 <div className="text-right">
                   <div className="text-xs text-gray-400">Total Balance</div>
                   <div className="text-sm sm:text-base font-semibold text-green-400">
-                    ${u.balance.totalBalance.toFixed(2)}
+                    ${u.balance?.totalBalance.toFixed(2)}
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-gray-400">Deposits</div>
                   <div className="text-sm sm:text-base font-semibold text-blue-400">
-                    ${u.balance.depositBalance.toFixed(2)}
+                    ${u.balance?.depositBalance.toFixed(2)}
                   </div>
                 </div>
               </div>

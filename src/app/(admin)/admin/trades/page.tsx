@@ -290,7 +290,7 @@ export default function AdminTradesPage() {
 
   if (loading) {
     return (
-      <div className="p-4 sm:p-6 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+      <div className="p-4 sm:p-6 flex flex-col items-center justify-center min-h-100 space-y-4">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         <p className="text-gray-400 text-center">Loading trades...</p>
       </div>
@@ -298,7 +298,7 @@ export default function AdminTradesPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%] max-[500px]:mt-12">
+    <div className="p-6 lg:p-8 md:flex-row min-h-screen max-[500px]:mt-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
         <h1 className="text-xl sm:text-2xl font-bold mb-4">

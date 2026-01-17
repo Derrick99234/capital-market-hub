@@ -11,9 +11,7 @@ export default function AdminLayout({
     <html lang="en">
       <body>
         <AdminSidebar />
-        <main className="md:ml-[20%] min-h-screen bg-black">
-          {children}
-        </main>
+        <main className="md:ml-[20%] min-h-screen bg-black">{children}</main>
       </body>
     </html>
   );

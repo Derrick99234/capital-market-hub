@@ -80,7 +80,9 @@ export default function AdminLoginPage() {
             <Shield className="h-8 w-8 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">Admin Access</h2>
-          <p className="text-gray-400">Enter your credentials to access the admin panel</p>
+          <p className="text-gray-400">
+            Enter your credentials to access the admin panel
+          </p>
         </div>
 
         {/* Login Form */}
@@ -88,7 +90,10 @@ export default function AdminLoginPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
                 Email Address
               </label>
               <input
@@ -105,7 +110,10 @@ export default function AdminLoginPage() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
                 Password
               </label>
               <div className="relative">
@@ -125,7 +133,11 @@ export default function AdminLoginPage() {
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
                   disabled={loading}
                 >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -160,9 +172,12 @@ export default function AdminLoginPage() {
             <div className="flex items-start gap-3">
               <Shield className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="text-sm font-medium text-blue-400 mb-1">Secure Access</h3>
+                <h3 className="text-sm font-medium text-blue-400 mb-1">
+                  Secure Access
+                </h3>
                 <p className="text-xs text-blue-300">
-                  This area is restricted to authorized administrators only. All access attempts are logged for security purposes.
+                  This area is restricted to authorized administrators only. All
+                  access attempts are logged for security purposes.
                 </p>
               </div>
             </div>

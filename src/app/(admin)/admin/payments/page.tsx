@@ -64,7 +64,7 @@ export default function AdminPaymentsPage() {
 
   if (loading) {
     return (
-      <div className="p-4 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+      <div className="p-4 flex flex-col items-center justify-center min-h-100 space-y-4">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
         <p className="text-gray-400 text-center">Loading payments...</p>
       </div>
@@ -72,8 +72,8 @@ export default function AdminPaymentsPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%] max-[500px]:mt-12">
-      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
+    <div className="p-6 lg:p-8 md:flex-row min-h-screen max-[500px]:mt-12">
+      <h1 className="text-xl sm:text-2xl text-white lg:text-3xl font-bold mb-4 sm:mb-6">
         Payments
       </h1>
       {payments && payments.length ? (
@@ -83,7 +83,7 @@ export default function AdminPaymentsPage() {
             return (
               <div
                 key={p._id}
-                className="p-3 sm:p-4 bg-black text-white rounded-lg shadow-sm flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4"
+                className="p-3 sm:p-4 bg-gray-800 text-white rounded-lg shadow-sm flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4"
               >
                 <div className="flex-1">
                   <div className="font-semibold text-sm sm:text-base">

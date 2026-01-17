@@ -118,7 +118,7 @@ export default function UpdateBalancePage() {
   if (!authorized) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-        <div className="bg-white p-6 rounded-md w-[350px] shadow-lg">
+        <div className="bg-white p-6 rounded-md w-87.5 shadow-lg">
           <h2 className="text-xl font-semibold mb-3 text-center">
             Admin Authentication
           </h2>
@@ -168,8 +168,10 @@ export default function UpdateBalancePage() {
     );
   }
   return (
-    <div className="p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%] max-[500px]:mt-12">
-      <h1 className="text-2xl font-bold mb-4">Update User Balance</h1>
+    <div className="p-6 lg:p-8 md:flex-row min-h-screen max-[500px]:mt-12">
+      <h1 className="text-2xl font-bold mb-4 text-white">
+        Update User Balance
+      </h1>
 
       <div className="grid gap-3">
         {users && users.length ? (
@@ -205,7 +207,7 @@ export default function UpdateBalancePage() {
       {/* Edit Modal */}
       {selected && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-40">
-          <div className="bg-white p-6 rounded w-[440px]">
+          <div className="bg-white p-6 rounded w-110]">
             <h2 className="text-lg font-semibold mb-4">
               Update Balance - {selected.firstName} {selected.lastName}
             </h2>
