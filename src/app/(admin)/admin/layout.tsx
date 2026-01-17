@@ -1,8 +1,8 @@
-// app/(dashboard)/dashboard/layout.tsx
+// app/(admin)/admin/layout.tsx
 import AdminSidebar from "@/components/AdminSidebar";
 import "../../globals.css";
 
-export default function DashboardLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -11,7 +11,9 @@ export default function DashboardLayout({
     <html lang="en">
       <body>
         <AdminSidebar />
-        {children}
+        <main className="md:ml-[20%] min-h-screen bg-black">
+          {children}
+        </main>
       </body>
     </html>
   );

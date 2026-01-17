@@ -298,7 +298,7 @@ export default function AdminTradesPage() {
   }
 
   return (
-    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
+    <div className="p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%] max-[500px]:mt-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
         <h1 className="text-xl sm:text-2xl font-bold mb-4">

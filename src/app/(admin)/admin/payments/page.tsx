@@ -72,7 +72,7 @@ export default function AdminPaymentsPage() {
   }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
+    <div className="p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%] max-[500px]:mt-12">
       <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
         Payments
       </h1>

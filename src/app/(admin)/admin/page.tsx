@@ -1,6 +1,8 @@
 // app/admin/users/page.tsx
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Shield, AlertCircle, Users, TrendingUp, DollarSign, Clock } from "lucide-react";
 
 type User = {
   _id: string;
@@ -9,73 +11,87 @@ type User = {
   email: string;
   phoneNumber?: string;
   country?: string;
-  currency?: string;
+  currency: string;
   balance: {
     totalBalance: number;
     BTC: number;
     depositBalance: number;
     referralBalance: number;
   };
-  role?: string;
+  dailyTradeLeft: number;
+  createdAt: string;
 };
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
-  const [password, setPassword] = useState("");
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    // If you want to persist access for this session only
-    const access = sessionStorage.getItem("adminUsersAccess");
-    if (access === "granted") {
-      setAuthorized(true);
-    }
+    checkAdminAuth();
   }, []);
 
-  useEffect(() => {
-    if (authorized) {
-      fetch("/api/user")
-        .then((r) => r.json())
-        .then((d) => {
-          setUsers(d.users || []);
-        })
-        .catch((e) => console.error(e))
-        .finally(() => setLoading(false));
-    }
-  }, [authorized]);
+  const checkAdminAuth = async () => {
+    try {
+      // Check if user is authenticated and is admin
+      const res = await fetch("/api/auth/me", {
+        method: "GET",
+        credentials: "include",
+      });
 
-  const handlePasswordSubmit = () => {
-    const correctPassword = "Tru$ted#Gate2025"; // 🔐 change this to your real admin password
-    if (password === correctPassword) {
-      setAuthorized(true);
-      sessionStorage.setItem("adminUsersAccess", "granted");
-    } else {
-      alert("Incorrect password");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.user?.role === "admin") {
+          // Also check sessionStorage for additional admin access
+          const adminAccess = sessionStorage.getItem("adminUsersAccess");
+          if (adminAccess === "granted") {
+            setAuthorized(true);
+            return;
+          }
+        }
+      }
+
+      // Not authenticated or not admin, redirect to login
+      router.push("/admin/login");
+    } catch (error) {
+      console.error("Auth check error:", error);
+      router.push("/admin/login");
+    } finally {
+      setCheckingAuth(false);
     }
   };
 
-  if (!authorized) {
+  useEffect(() => {
+    if (authorized) {
+      fetchUsers();
+    }
+  }, [authorized]);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch("/api/user");
+      const data = await res.json();
+      setUsers(data.users || []);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (checkingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
-        <div className="bg-white p-6 rounded w-[360px] text-center">
-          <h2 className="text-lg font-semibold mb-3">Enter Admin Password</h2>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full border p-2 rounded mb-4"
-          />
-          <button
-            onClick={handlePasswordSubmit}
-            className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer w-full"
-          >
-            Submit
-          </button>
-        </div>
+      <div className="p-4 flex flex-col items-center justify-center min-h-[400px] space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <p className="text-gray-400 text-center">Verifying admin access...</p>
       </div>
     );
+  }
+
+  if (!authorized) {
+    return null; // Will redirect in checkAdminAuth
   }
 
   if (loading) {
@@ -88,29 +104,57 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
-      <h1 className="text-2xl font-bold mb-4">All Users</h1>
-      <div className="space-y-3">
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">All Users</h1>
+        <span className="text-sm text-gray-400">
+          Total Users: {users?.length || 0}
+        </span>
+      </div>
+      <div className="space-y-3 sm:space-y-4">
         {users && users.length ? (
           users.map((u) => (
             <div
               key={u._id}
-              className="p-4 bg-black text-white rounded flex justify-between"
+              className="p-3 sm:p-4 bg-gray-800 text-white rounded-lg shadow-sm flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4"
             >
-              <div>
-                <div className="font-semibold">
-                  {u.firstName} {u.lastName}{" "}
+              <div className="flex-1">
+                <div className="font-semibold text-sm sm:text-base">
+                  {u.firstName} {u.lastName}
                 </div>
-                <div className="text-sm text-gray-300">
-                  {u.email} • {u.phoneNumber || "—"} • {u.country || "—"}
+                <div className="text-xs sm:text-sm text-gray-300 mt-1">
+                  {u.email}
                 </div>
+                <div className="text-xs sm:text-sm text-gray-200 mt-1">
+                  Balance: ${u.balance.totalBalance.toFixed(2)} {u.currency}
+                </div>
+                <div className="text-xs sm:text-sm text-gray-200 mt-1">
+                  Daily Trades Left: {u.dailyTradeLeft}
+                </div>
+                {u.phoneNumber && (
+                  <div className="text-xs text-gray-400 mt-1">
+                    Phone: {u.phoneNumber}
+                  </div>
+                )}
+                {u.country && (
+                  <div className="text-xs text-gray-400 mt-1">
+                    Country: {u.country}
+                  </div>
+                )}
               </div>
-              <div className="text-right">
-                <div className="font-mono">
-                  ${(u.balance?.totalBalance || 0).toFixed(2)}
+
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <div className="text-right">
+                  <div className="text-xs text-gray-400">Total Balance</div>
+                  <div className="text-sm sm:text-base font-semibold text-green-400">
+                    ${u.balance.totalBalance.toFixed(2)}
+                  </div>
                 </div>
-                <div className="text-sm text-gray-400">
-                  {u.currency || "USD"}
+                <div className="text-right">
+                  <div className="text-xs text-gray-400">Deposits</div>
+                  <div className="text-sm sm:text-base font-semibold text-blue-400">
+                    ${u.balance.depositBalance.toFixed(2)}
+                  </div>
                 </div>
               </div>
             </div>

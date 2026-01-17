@@ -168,7 +168,7 @@ export default function UpdateBalancePage() {
     );
   }
   return (
-    <div className="sm:p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%]">
+    <div className="p-6 lg:p-8 md:flex-row min-h-screen md:ml-[20%] max-[500px]:mt-12">
       <h1 className="text-2xl font-bold mb-4">Update User Balance</h1>
 
       <div className="grid gap-3">
