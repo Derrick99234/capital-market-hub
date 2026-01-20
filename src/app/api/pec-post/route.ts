@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log(`PEC DATA: ${data}`);
+    console.log(`PEC DATA: ${JSON.stringify(data, null, 2)}`);
     // Forward to Google Apps Script
     const googleRes = await fetch(
       "https://script.google.com/macros/s/AKfycby-wkkrSqOiUXtJIhSxiHk9ilgz3uiuJhYZ7Y_WrQZTQZ_STob8Q6LNw88_V_EVItYN/exec",
