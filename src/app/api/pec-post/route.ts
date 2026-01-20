@@ -1,4 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
+import { PECApplication } from "@/models/PECApplication";
 import { NextRequest, NextResponse } from "next/server";
 
 const ALLOWED_ORIGIN = "https://macwealth.org";
@@ -30,57 +31,55 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Not allowed", { status: 403 });
     }
 
-    // Connect DB (safe even if unused for now)
     await connectDB();
 
     // Parse FormData
     const formData = await req.formData();
-    const data: Record<string, string> = {};
+    const data: Record<string, any> = {};
 
     for (const [key, value] of formData.entries()) {
-      data[key] = String(value);
+      // Convert arrays to comma-separated strings if needed
+      if (Array.isArray(value)) {
+        data[key] = value.join(", ");
+      } else {
+        data[key] = String(value);
+      }
     }
 
-    // Basic validation
+    // Convert booleans
+    if (
+      data.agreeToDeclaration === "true" ||
+      data.agreeToDeclaration === true
+    ) {
+      data.agreeToDeclaration = true;
+    } else {
+      data.agreeToDeclaration = false;
+    }
+
+    // Validate required fields
     if (!data.fullName || !data.phoneNumber) {
       return NextResponse.json(
         { message: "Missing required fields" },
         {
           status: 400,
-          headers: {
-            "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-          },
+          headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
         },
       );
     }
 
-    console.log(`PEC DATA: ${JSON.stringify(data, null, 2)}`);
-    // Forward to Google Apps Script
-    const googleRes = await fetch(
-      "https://script.google.com/macros/s/AKfycby-wkkrSqOiUXtJIhSxiHk9ilgz3uiuJhYZ7Y_WrQZTQZ_STob8Q6LNw88_V_EVItYN/exec",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      },
-    );
+    // Save to MongoDB
+    const newApplication = await PECApplication.create({
+      ...data,
+      submittedAt: new Date(),
+    });
 
-    if (!googleRes.ok) {
-      throw new Error("Google Script failed");
-    }
+    console.log("PEC Application saved:", newApplication._id);
 
     return NextResponse.json(
-      {
-        success: true,
-        message: "Application submitted successfully",
-      },
+      { success: true, message: "Application submitted successfully" },
       {
         status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-        },
+        headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
       },
     );
   } catch (error) {
@@ -90,9 +89,7 @@ export async function POST(req: NextRequest) {
       { message: "Internal server error" },
       {
         status: 500,
-        headers: {
-          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-        },
+        headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
       },
     );
   }
