@@ -26,7 +26,7 @@ function ProfilePage() {
         firstName: user.firstName,
         lastName: user.lastName,
         phone: user.phoneNumber,
-        amount: user.balance.totalBalance,
+        amount: user.balance?.totalBalance,
       });
     }
   }, [user]);

@@ -111,7 +111,7 @@ function Dashboard() {
       return;
     }
 
-    if (user.balance.totalBalance < 1) {
+    if (user.balance?.totalBalance < 1) {
       setError({
         status: true,
         message:
@@ -255,7 +255,7 @@ function Dashboard() {
               <h2 className="text-lg font-semibold">
                 Balance -{" "}
                 <span className="text-green-500">
-                  ${user.balance.totalBalance.toFixed(2)}
+                  ${user.balance?.totalBalance.toFixed(2)}
                 </span>
               </h2>
 
@@ -330,7 +330,7 @@ function Dashboard() {
                       onClick={() => {
                         setSelectedAmountLevel(lvl);
                         const tradeAmount =
-                          (lvl / 100) * user.balance.totalBalance;
+                          (lvl / 100) * user.balance?.totalBalance;
                         setAmount(tradeAmount.toFixed(2));
                       }}
                     >
