@@ -52,53 +52,53 @@ export default function Home() {
 
   const imageLogos = [
     {
-      src: "https://www.capitalex.co/coin/eth.png",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Ethereum-icon-purple.svg/1280px-Ethereum-icon-purple.svg.png",
       alt: "Company 1",
       href: "https://company1.com",
     },
     {
-      src: "https://www.capitalex.co/coin/bch.png",
+      src: "https://play-lh.googleusercontent.com/tXIplBXe_r0MXWFm78wa5eltr8v3s3_Woyq6RJNyI4jeaLA30l9uh24SdslffMoSuHNq=w240-h480-rw",
       alt: "Company 2",
       href: "https://company2.com",
     },
     {
-      src: "https://www.capitalex.co/coin/lit.png",
+      src: "https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=040",
       size: "100",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/tet.png",
+      src: "https://static.vecteezy.com/system/resources/previews/021/628/132/non_2x/threshold-t-coin-stacks-cryptocurrency-3d-render-illustration-free-png.png",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/shib.png",
+      src: "https://cryptologos.cc/logos/polygon-matic-logo.png?v=040",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/doge.png",
+      src: "https://cryptologos.cc/logos/versions/dogecoin-doge-logo-alternative.svg?v=040",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/bnb.png",
+      src: "https://cryptologos.cc/logos/shiba-inu-shib-logo.png?v=040",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/sol.png",
+      src: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=040",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/crypto.png",
+      src: "https://cryptologos.cc/logos/trinity-network-credit-tnc-logo.png?v=040",
       alt: "Company 3",
       href: "https://company3.com",
     },
     {
-      src: "https://www.capitalex.co/coin/cad.png",
+      src: "https://cryptologos.cc/logos/pancakeswap-cake-logo.png?v=040",
       alt: "Company 3",
       href: "https://company3.com",
     },

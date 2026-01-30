@@ -9,7 +9,7 @@ import React, { useState, useEffect } from "react";
 
 // Helper function to fetch pending payments
 async function fetchPayments() {
-  const response = await fetch("/api/payments");
+  const response = await fetch("/api/payments/user");
   if (!response.ok) {
     throw new Error("Failed to fetch payments");
   }
@@ -93,7 +93,7 @@ function AccountFunding() {
                 method: payment.method,
                 amount: payment.amount,
               }))
-            : []
+            : [],
         );
         setLoading(false);
       } catch (err) {
@@ -124,7 +124,7 @@ function AccountFunding() {
               method: payment.method,
               amount: payment.amount,
             }))
-          : []
+          : [],
       );
       setAmount(0);
       setSelectedAddress("btc");

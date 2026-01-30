@@ -52,7 +52,10 @@ function Header() {
             >
               LOGIN
             </button>
-            <button className="bg-red-600 text-white px-6 py-2 rounded-lg cursor-pointer">
+            <button
+              onClick={() => router.push("/registers")}
+              className="bg-red-600 text-white px-6 py-2 rounded-lg cursor-pointer"
+            >
               REGISTER
             </button>
           </div>
