@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import Withdrawal from "@/models/withdrawal";
+import sendNotificationEmail from "@/lib/send-notification";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -52,6 +53,19 @@ export async function POST(req: NextRequest) {
 
     withdrawal.status = "approved";
     await withdrawal.save();
+
+    // Send withdrawal completion email notification
+    try {
+      await sendNotificationEmail("withdrawalCompleted", user.email, `${user.firstName} ${user.lastName}`, {
+        amount: withdrawal.amount,
+        method: withdrawal.method || "Bank Transfer",
+        transactionId: withdrawal._id.toString(),
+      });
+    } catch (emailError) {
+      console.error("Failed to send withdrawal completion email:", emailError);
+      // Continue even if email fails
+    }
+
     return NextResponse.json({ message: "Withdrawal approved", withdrawal });
   } catch (err: any) {
     const status =

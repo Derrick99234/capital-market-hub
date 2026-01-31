@@ -77,15 +77,15 @@ function Dashboard() {
         setTrades(
           Array.isArray(data)
             ? data.map((w: any, i: number) => ({
-                id: i + 1,
-                type: w.type,
-                "asset-class": w.assetClass,
-                "asset-ticker": w.assetTicker,
-                "trade-amount": `$${w.tradeAmount.toFixed(2)}`,
-                durations: w.duration,
-                "profit-loss": `$${w.profitLoss.toFixed(2)}`,
-                status: w.status,
-              }))
+              id: i + 1,
+              type: w.type,
+              "asset-class": w.assetClass,
+              "asset-ticker": w.assetTicker,
+              "trade-amount": `$${w.tradeAmount.toFixed(2)}`,
+              durations: w.duration,
+              "profit-loss": `$${w.profitLoss.toFixed(2)}`,
+              status: w.status,
+            }))
             : [],
         );
       } catch (err) {
@@ -322,11 +322,10 @@ function Dashboard() {
                     <button
                       key={lvl}
                       type="button"
-                      className={`px-3 sm:px-4 py-2 rounded font-bold ${
-                        selectedAmountLevel === lvl
+                      className={`px-3 sm:px-4 py-2 rounded font-bold ${selectedAmountLevel === lvl
                           ? "bg-green-400 text-black"
                           : "bg-gray-700 hover:bg-gray-600"
-                      }`}
+                        }`}
                       onClick={() => {
                         setSelectedAmountLevel(lvl);
                         const tradeAmount =
@@ -364,6 +363,10 @@ function Dashboard() {
                   <option value="5 min">5 min</option>
                   <option value="15 min">15 min</option>
                   <option value="1 hr">1 hr</option>
+                  <option value="2 hr">2 hr</option>
+                  <option value="3 hr">3 hr</option>
+                  <option value="4 hr">4 hr</option>
+                  <option value="5 hr">5 hr</option>
                   <option value="1 day">1 day</option>
                 </select>
               </div>
@@ -374,11 +377,10 @@ function Dashboard() {
                   type="button"
                   disabled={noTradesLeft}
                   className={`flex-1 px-4 py-2 rounded font-bold cursor-pointer
-    ${
-      noTradesLeft
-        ? "bg-gray-600 cursor-not-allowed opacity-60"
-        : "bg-green-600 hover:bg-green-700"
-    }`}
+    ${noTradesLeft
+                      ? "bg-gray-600 cursor-not-allowed opacity-60"
+                      : "bg-green-600 hover:bg-green-700"
+                    }`}
                   onClick={() => handleSubmitTrade("BUY")}
                 >
                   BUY
@@ -388,11 +390,10 @@ function Dashboard() {
                   type="button"
                   disabled={noTradesLeft}
                   className={`flex-1 px-4 py-2 rounded font-bold cursor-pointer
-    ${
-      noTradesLeft
-        ? "bg-gray-600 cursor-not-allowed opacity-60"
-        : "bg-red-600 hover:bg-red-700"
-    }`}
+    ${noTradesLeft
+                      ? "bg-gray-600 cursor-not-allowed opacity-60"
+                      : "bg-red-600 hover:bg-red-700"
+                    }`}
                   onClick={() => handleSubmitTrade("SELL")}
                 >
                   SELL

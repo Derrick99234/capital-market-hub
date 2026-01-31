@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
+import sendNotificationEmail from "@/lib/send-notification";
 
 export async function POST(req: Request) {
   try {
@@ -48,6 +49,14 @@ export async function POST(req: Request) {
       currency: currency || "USD", // default currency if not provided
       balance: 0, // default starting balance
     });
+
+    // Send welcome email
+    try {
+      await sendNotificationEmail("registration", email, `${firstName} ${lastName}`);
+    } catch (emailError) {
+      console.error("Failed to send welcome email:", emailError);
+      // Continue with registration even if email fails
+    }
 
     return NextResponse.json(
       {

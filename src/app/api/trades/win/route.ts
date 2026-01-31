@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import Trades from "@/models/Trades";
+import sendNotificationEmail from "@/lib/send-notification";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -43,6 +44,20 @@ export async function POST(req: NextRequest) {
     // Add profit to user balance
     user.balance.totalBalance += profitAmount;
     await user.save();
+
+    // Send trade won notification email
+    try {
+      await sendNotificationEmail("tradeWon", user.email, `${user.firstName} ${user.lastName}`, {
+        tradeType: trade.type,
+        asset: trade.assetTicker,
+        amount: trade.tradeAmount,
+        profit: profitAmount,
+        newBalance: user.balance.totalBalance,
+      });
+    } catch (emailError) {
+      console.error("Failed to send trade won email:", emailError);
+      // Continue even if email fails
+    }
 
     return NextResponse.json({
       message: "Trade approved with profit",

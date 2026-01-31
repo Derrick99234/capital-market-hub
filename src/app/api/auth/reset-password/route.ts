@@ -1,52 +1,68 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
-import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { connectDB } from "@/lib/mongodb";
+import User from "@/models/User";
+
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export async function POST(req: Request) {
   try {
-    await connectDB();
-    const { email, password, token } = await req.json();
+    const { token, email, password } = await req.json();
 
-    if (!email || !password || !token) {
+    if (!token || !email || !password) {
       return NextResponse.json(
-        { error: "Email, password, and token are required" },
+        { error: "Token, email, and password are required" },
         { status: 400 }
       );
     }
 
-    // 🔑 Verify token
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-        email: string;
-      };
-
-      if (decoded.email !== email) {
-        return NextResponse.json(
-          { error: "Token does not match email" },
-          { status: 401 }
-        );
-      }
-    } catch (err) {
+    if (password.length < 6) {
       return NextResponse.json(
-        { error: "Invalid or expired token" },
-        { status: 401 }
+        { error: "Password must be at least 6 characters long" },
+        { status: 400 }
       );
     }
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    await connectDB();
+
+    // Verify the JWT token
+    let decoded;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET) as { id: string; email: string };
+    } catch (error) {
+      return NextResponse.json(
+        { error: "Invalid or expired token" },
+        { status: 400 }
+      );
     }
 
-    // ✅ Hash new password
+    // Verify the email matches the token
+    if (decoded.email !== email) {
+      return NextResponse.json(
+        { error: "Token email mismatch" },
+        { status: 400 }
+      );
+    }
+
+    // Find the user
+    const user = await User.findOne({ email: decoded.email });
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    // Hash the new password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update the user's password
     user.password = hashedPassword;
     await user.save();
 
     return NextResponse.json(
-      { message: "Password reset successful" },
+      { message: "Password reset successfully" },
       { status: 200 }
     );
   } catch (error) {

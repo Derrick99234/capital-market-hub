@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/User";
 import { connectDB } from "@/lib/mongodb";
 import Trade from "@/models/Trades";
+import sendNotificationEmail from "@/lib/send-notification";
 
 export async function POST(req: NextRequest) {
   try {
@@ -47,6 +48,20 @@ export async function POST(req: NextRequest) {
       profitLoss: 0,
       status: "PENDING",
     });
+
+    // Send trade placement notification email
+    try {
+      await sendNotificationEmail("tradePlaced", user.email, `${user.firstName} ${user.lastName}`, {
+        tradeType: type,
+        asset: assetTicker,
+        amount: tradeAmount,
+        duration: duration,
+        entryPrice: tradeAmount, // You might want to get actual entry price here
+      });
+    } catch (emailError) {
+      console.error("Failed to send trade placement email:", emailError);
+      // Continue with trade creation even if email fails
+    }
 
     return NextResponse.json(
       { message: "Trade created successfully", trade },

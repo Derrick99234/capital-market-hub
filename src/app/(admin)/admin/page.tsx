@@ -2,14 +2,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Shield,
-  AlertCircle,
-  Users,
-  TrendingUp,
-  DollarSign,
-  Clock,
-} from "lucide-react";
+import { RefreshCw, Trash2 } from "lucide-react";
 
 type User = {
   _id: string;
@@ -34,6 +27,11 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [resettingTrades, setResettingTrades] = useState<string | null>(null);
+  const [tradeLimitInputs, setTradeLimitInputs] = useState<
+    Record<string, string>
+  >({});
+  const [deletingUser, setDeletingUser] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -80,11 +78,88 @@ export default function AdminUsersPage() {
     try {
       const res = await fetch("/api/user");
       const data = await res.json();
-      setUsers(data.users || []);
+      const nextUsers: User[] = data.users || [];
+      setUsers(nextUsers);
+      setTradeLimitInputs((prev) => {
+        const next: Record<string, string> = { ...prev };
+        for (const u of nextUsers) {
+          if (next[u._id] === undefined) {
+            next[u._id] = String(u.dailyTradeLeft ?? 0);
+          }
+        }
+        return next;
+      });
     } catch (error) {
       console.error("Failed to fetch users:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const setUserTradesLeft = async (userId: string, userEmail: string) => {
+    try {
+      const rawValue = tradeLimitInputs[userId] ?? "";
+      const dailyTradeLeft = Number(rawValue);
+      if (!Number.isFinite(dailyTradeLeft) || dailyTradeLeft < 0) {
+        alert("Please enter a valid non-negative number for daily trades left");
+        return;
+      }
+
+      setResettingTrades(userId);
+
+      const res = await fetch(`/api/admin/users/${userId}/reset-trades`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dailyTradeLeft }),
+      });
+
+      if (res.ok) {
+        await res.json();
+        alert(`Successfully set daily trades left for ${userEmail} to ${dailyTradeLeft}`);
+        fetchUsers();
+      } else {
+        const error = await res.json();
+        alert(`Error: ${error.error}`);
+      }
+    } catch (error) {
+      console.error("Failed to set user trades left:", error);
+      alert("Failed to set user trades left");
+    } finally {
+      setResettingTrades(null);
+    }
+  };
+
+  const deleteUser = async (userId: string, userEmail: string) => {
+    if (!confirm(`Are you sure you want to delete user ${userEmail}? This action cannot be undone and will delete all their data including trades and withdrawals.`)) {
+      return;
+    }
+
+    try {
+      setDeletingUser(userId);
+
+      const res = await fetch(`/api/admin/users/${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const result = await res.json();
+        alert(`Successfully deleted user ${userEmail}`);
+        // Refresh users list
+        fetchUsers();
+      } else {
+        const error = await res.json();
+        alert(`Error: ${error.error}`);
+      }
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      alert("Failed to delete user");
+    } finally {
+      setDeletingUser(null);
     }
   };
 
@@ -120,6 +195,7 @@ export default function AdminUsersPage() {
           Total Users: {users?.length || 0}
         </span>
       </div>
+
       <div className="space-y-3 sm:space-y-4">
         {users && users.length ? (
           users.map((u) => (
@@ -165,6 +241,45 @@ export default function AdminUsersPage() {
                     ${u.balance?.depositBalance.toFixed(2)}
                   </div>
                 </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    min="0"
+                    max="999"
+                    value={tradeLimitInputs[u._id] ?? ""}
+                    onChange={(e) =>
+                      setTradeLimitInputs((prev) => ({
+                        ...prev,
+                        [u._id]: e.target.value,
+                      }))
+                    }
+                    className="w-20 px-2 py-1 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-xs"
+                  />
+                  <button
+                    onClick={() => setUserTradesLeft(u._id, u.email)}
+                    disabled={resettingTrades === u._id}
+                    className="flex items-center gap-1 px-3 py-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white text-xs rounded transition-colors"
+                  >
+                    {resettingTrades === u._id ? (
+                      <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                    ) : (
+                      <RefreshCw className="h-3 w-3" />
+                    )}
+                    Update
+                  </button>
+                </div>
+                <button
+                  onClick={() => deleteUser(u._id, u.email)}
+                  disabled={deletingUser === u._id}
+                  className="flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white text-xs rounded transition-colors"
+                >
+                  {deletingUser === u._id ? (
+                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                  ) : (
+                    <Trash2 className="h-3 w-3" />
+                  )}
+                  Delete
+                </button>
               </div>
             </div>
           ))
