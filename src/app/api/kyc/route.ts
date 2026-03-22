@@ -111,20 +111,27 @@ export async function POST(req: NextRequest) {
     }
 
     // Validate file types
-    const allowedTypes = [
+    const allowedIdDocumentTypes = [
       "image/jpeg",
       "image/jpg",
       "image/png",
       "image/webp",
       "application/pdf",
     ];
-    if (!allowedTypes.includes(idDocument.type)) {
+    const allowedSelfieTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+    ];
+
+    if (!allowedIdDocumentTypes.includes(idDocument.type)) {
       return NextResponse.json(
         { error: "ID document must be a JPEG, PNG, WebP, or PDF file" },
         { status: 400 },
       );
     }
-    if (!allowedTypes.includes(selfie.type)) {
+    if (!allowedSelfieTypes.includes(selfie.type)) {
       return NextResponse.json(
         { error: "Selfie must be a JPEG, PNG, or WebP image" },
         { status: 400 },
