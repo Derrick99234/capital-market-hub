@@ -25,17 +25,12 @@ function Dashboard() {
 
   const assetTickers: Record<string, string[]> = {
     Forex: [
-      "EUR/USD",
-      "GBP/USD",
-      "USD/JPY",
-      "AUD/USD",
-      "USD/CAD",
-      "USD/CNY",
-      "USD/CHF",
-      "EUR/GBP",
-      "USD/HKD",
-      "USD/KRW",
-      "NZD/USD",
+      "XAU/USD",
+      "Volatility 100 index",
+      "Volatility 75 index",
+      "AUD/NZD",
+      "AUD/JPY",
+      "EUR/AUD",
     ],
     Crypto: [
       "BTC/USDT",
@@ -62,7 +57,17 @@ function Dashboard() {
       "AAVE/BTC",
       "APE/BTC",
     ],
-    Stocks: ["S&P500", "SPY", "AAPL"],
+    Stocks: [
+      "TSLA",
+      "NVDA",
+      "VOO",
+      "VTI",
+      "AZMN",
+      "GOOGL",
+      "UPS",
+      "META",
+      "SMCI",
+    ],
   };
 
   const [trades, setTrades] = useState<any[]>([]);

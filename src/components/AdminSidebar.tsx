@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { BsWallet2 } from "react-icons/bs";
 import { GrHomeOption, GrTransaction } from "react-icons/gr";
 import { IoIosLogOut } from "react-icons/io";
-import { IoPeopleSharp, IoMenu, IoClose } from "react-icons/io5";
+import { IoPeopleSharp, IoMenu, IoClose, IoShieldCheckmark } from "react-icons/io5";
 import { MdStackedLineChart } from "react-icons/md";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
@@ -101,6 +101,16 @@ function AdminSidebar() {
               >
                 <GrTransaction className="w-5 h-5" />{" "}
                 <span className="text-sm">Update User Balance</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/admin/kyc"
+                className="flex items-center gap-3 py-3 px-2 rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <IoShieldCheckmark className="w-5 h-5" />{" "}
+                <span className="text-sm">KYC Management</span>
               </Link>
             </li>
           </ul>
