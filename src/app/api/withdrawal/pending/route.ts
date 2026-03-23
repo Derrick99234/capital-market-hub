@@ -20,7 +20,7 @@ async function requireAdmin(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    // await requireAdmin(req);
+    await requireAdmin(req);
     const { withdrawalID, reason } = await req.json();
     if (!withdrawalID)
       return NextResponse.json(

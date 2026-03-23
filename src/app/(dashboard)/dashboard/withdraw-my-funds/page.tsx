@@ -3,7 +3,6 @@ import Aside from "@/components/aside";
 import TickerLive from "@/components/live-price";
 import DataTable from "@/components/Table";
 import { useUser } from "@/context/user-context";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
@@ -33,6 +32,7 @@ function WithdrawMyFunds() {
               timeStyle: "short",
             }),
             method: w.method,
+            address: w.address,
             amount: w.amount,
             status: w.status,
           }))
@@ -59,9 +59,9 @@ function WithdrawMyFunds() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user?._id,
         amount,
         method,
+        address,
       }),
     });
 
@@ -147,6 +147,7 @@ function WithdrawMyFunds() {
                 { key: "id", label: "S/N" },
                 { key: "time", label: "Time" },
                 { key: "method", label: "Method" },
+                { key: "address", label: "Address" },
                 { key: "amount", label: "Amount" },
                 { key: "status", label: "Status" },
               ]}

@@ -7,6 +7,7 @@ export interface IWithdrawal extends Document {
   amount: number;
   currency: string;
   method: string;
+  address: string;
   status: string;
   note: string;
 }
@@ -17,6 +18,7 @@ const WithdrawalSchema = new Schema<IWithdrawal>(
     amount: { type: Number, required: true },
     currency: { type: String, default: "USD" },
     method: { type: String }, // e.g. "bank_transfer"
+    address: { type: String, required: true, trim: true },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

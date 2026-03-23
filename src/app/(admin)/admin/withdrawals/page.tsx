@@ -10,7 +10,9 @@ type Withdrawal = {
   amount: number;
   currency: string;
   method?: string;
+  address?: string;
   status: string;
+  note?: string;
   createdAt?: string;
 };
 
@@ -95,9 +97,19 @@ export default function AdminPaymentsPage() {
                   <div className="text-xs sm:text-sm text-gray-200 mt-1">
                     Amount: ${w.amount.toFixed(2)} {w.currency}
                   </div>
+                  {w.address && (
+                    <div className="text-xs sm:text-sm text-gray-200 mt-1 break-all">
+                      Address: {w.address}
+                    </div>
+                  )}
                   <div className="text-xs text-gray-400 mt-1">
                     Status: <span className="capitalize">{w.status}</span>
                   </div>
+                  {w.note && (
+                    <div className="text-xs text-gray-400 mt-1">
+                      Note: {w.note}
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 w-full sm:w-auto">
                   <button
