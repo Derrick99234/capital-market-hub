@@ -82,6 +82,12 @@ function WithdrawMyFunds() {
           <h2 className="text-2xl font-semibold">Withdrawal</h2>
           <TickerLive />
           <div className="flex justify-center flex-col space-y-4">
+            <div className="rounded-xl border border-green-500/20 bg-green-500/10 px-4 py-3">
+              <p className="text-sm text-gray-300">Available Balance</p>
+              <p className="mt-1 text-2xl font-bold text-green-400">
+                ${user.balance?.totalBalance.toFixed(2)}
+              </p>
+            </div>
             <p className="text-sm font-semibold">
               Select our convenient methods of making withdrawal from your
               account
