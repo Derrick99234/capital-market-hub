@@ -6,9 +6,7 @@ import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import KYC from "@/models/KYC";
 import User from "@/models/User";
-import path from "path";
-import { writeFile, mkdir } from "fs/promises";
-import { v4 as uuidv4 } from "uuid";
+import { uploadFileToR2 } from "@/lib/r2";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -26,28 +24,6 @@ async function requireAdmin(req: NextRequest) {
   const user = await getAuthUser(req);
   if (user.role !== "admin") throw new Error("Forbidden");
   return user;
-}
-
-async function saveFile(file: File, subfolder: string): Promise<string> {
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-
-  const ext = path.extname(file.name) || ".jpg";
-  const fileName = `${uuidv4()}${ext}`;
-  const uploadDir = path.join(
-    process.cwd(),
-    "public",
-    "uploads",
-    "kyc",
-    subfolder,
-  );
-
-  await mkdir(uploadDir, { recursive: true });
-
-  const filePath = path.join(uploadDir, fileName);
-  await writeFile(filePath, buffer);
-
-  return `/uploads/kyc/${subfolder}/${fileName}`;
 }
 
 // POST - Submit KYC application
@@ -154,8 +130,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Save files
-    const idDocumentUrl = await saveFile(idDocument, "id-documents");
-    const selfieUrl = await saveFile(selfie, "selfies");
+    const idDocumentUrl = await uploadFileToR2(idDocument, "kyc/id-documents");
+    const selfieUrl = await uploadFileToR2(selfie, "kyc/selfies");
 
     // Create KYC record
     const kyc = new KYC({

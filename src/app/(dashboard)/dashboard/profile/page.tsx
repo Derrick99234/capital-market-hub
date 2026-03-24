@@ -198,7 +198,7 @@ function ProfilePage() {
       setFeedback({
         type: "success",
         message:
-          "Your KYC information has been submitted successfully and is now under review.",
+          "Your KYC information has been submitted successfully and is now under review. Approval takes 24/48 hours.",
       });
     } catch (error) {
       setFeedback({
@@ -415,11 +415,11 @@ function ProfilePage() {
                 ) : isApproved ? (
                   <p>Your identity has already been verified. Your submitted record is shown on this page for reference.</p>
                 ) : isPending ? (
-                  <p>Your KYC application is currently under review. You can view the submitted documents on the left while the admin team processes it.</p>
+                  <p>Your KYC application is currently under review. Approval takes 24/48 hours. You can view the submitted documents on the left while the admin team processes it.</p>
                 ) : kycRecord?.status === "rejected" ? (
                   <p>Previous submission was rejected. Update the details below and upload fresh documents to resubmit your KYC.</p>
                 ) : (
-                  <p>Complete the form below and upload a government-issued ID plus a selfie to verify your account.</p>
+                  <p>Complete the form below and upload a government-issued ID plus a selfie to verify your account. Approval takes 24/48 hours.</p>
                 )}
               </div>
 
