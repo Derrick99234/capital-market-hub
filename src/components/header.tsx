@@ -53,7 +53,7 @@ function Header() {
               LOGIN
             </button>
             <button
-              onClick={() => router.push("/registers")}
+              onClick={() => router.push("/register")}
               className="bg-red-600 text-white px-6 py-2 rounded-lg cursor-pointer"
             >
               REGISTER

@@ -1,7 +1,6 @@
 "use client";
 
 import { useUser } from "@/context/user-context";
-import { u } from "framer-motion/client";
 import React, { useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
 
@@ -89,9 +88,15 @@ const TradeStatus = ({ status }: { status: string }) => {
 
 // --- Main Dashboard Component ---
 
-export default function CopyTradingDashboard() {
+export default function CopyTradingDashboard({
+  traderName,
+  onBack,
+}: {
+  traderName?: string;
+  onBack?: () => void;
+}) {
   const initialData = {
-    traderName: "Daily FX",
+    traderName: traderName || "Alexander Wright",
     totalTrades: "4000",
     commission: "50%",
     amount: "9600",
@@ -201,6 +206,17 @@ export default function CopyTradingDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8 font-sans">
+      {onBack && (
+        <div className="max-w-7xl mx-auto mb-4">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium rounded-lg border border-gray-700 transition-colors cursor-pointer"
+          >
+            ← Back to Copy Traders
+          </button>
+        </div>
+      )}
+
       {error.status && (
         <div className="bg-red-500/30 flex gap-2 p-3 text-red-700 font-semibold my-5">
           <IoCheckmarkDone size={25} />

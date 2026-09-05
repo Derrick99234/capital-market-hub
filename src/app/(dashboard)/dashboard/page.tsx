@@ -6,6 +6,7 @@ import { useUser } from "@/context/user-context";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
+import { Download } from "lucide-react";
 
 function Dashboard() {
   const [selectedAmountLevel, setSelectedAmountLevel] = useState(100);
@@ -96,12 +97,18 @@ function Dashboard() {
           Array.isArray(data)
             ? data.map((w: any, i: number) => ({
               id: i + 1,
+              date: w.createdAt
+                ? new Date(w.createdAt).toLocaleString("en-US", {
+                    dateStyle: "short",
+                    timeStyle: "short",
+                  })
+                : "-",
               type: w.type,
               "asset-class": w.assetClass,
               "asset-ticker": w.assetTicker,
-              "trade-amount": `$${w.tradeAmount.toFixed(2)}`,
+              "trade-amount": `$${w.tradeAmount?.toFixed(2) ?? "0.00"}`,
               durations: w.duration,
-              "profit-loss": `$${w.profitLoss.toFixed(2)}`,
+              "profit-loss": `$${w.profitLoss?.toFixed(2) ?? "0.00"}`,
               status: w.status,
             }))
             : [],
@@ -113,6 +120,54 @@ function Dashboard() {
 
     fetchTrades();
   }, [user]);
+
+  const handleDownloadHistory = () => {
+    if (!trades || trades.length === 0) return;
+
+    const headers = [
+      "S/N",
+      "Date",
+      "Type",
+      "Asset Class",
+      "Asset Ticker",
+      "Trade Amount",
+      "Duration",
+      "Profit/Loss",
+      "Status",
+    ];
+
+    const csvRows = [
+      headers.join(","),
+      ...trades.map((t) =>
+        [
+          t.id,
+          `"${t.date || ""}"`,
+          `"${t.type}"`,
+          `"${t["asset-class"]}"`,
+          `"${t["asset-ticker"]}"`,
+          `"${t["trade-amount"]}"`,
+          `"${t.durations}"`,
+          `"${t["profit-loss"]}"`,
+          `"${t.status}"`,
+        ].join(",")
+      ),
+    ];
+
+    const blob = new Blob([csvRows.join("\n")], {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute(
+      "download",
+      `trading_history_${new Date().toISOString().slice(0, 10)}.csv`
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   if (loading) return <p>Loading...</p>;
   if (!user) redirect("/login");
@@ -194,9 +249,6 @@ function Dashboard() {
               <span className="text-sm">
                 {user.firstName + " " + user.lastName}
               </span>
-              <button className="px-3 py-1 border border-gray-700 rounded-lg hover:bg-gray-800 text-sm sm:text-base">
-                + Add Task
-              </button>
             </div>
           </div>
 
@@ -424,19 +476,40 @@ function Dashboard() {
               )}
             </div>
           </div>
-          <DataTable
-            data={trades}
-            columns={[
-              { key: "id", label: "S/N" },
-              { key: "type", label: "Type" },
-              { key: "asset-class", label: "Asset Class" },
-              { key: "asset-ticker", label: "Asset Ticker" },
-              { key: "trade-amount", label: "Trade Amount" },
-              { key: "durations", label: "Duration" },
-              { key: "profit-loss", label: "Profit/Loss" },
-              { key: "status", label: "Status" },
-            ]}
-          />
+          {/* Trading History Table Section */}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-gray-900 p-4 rounded-lg">
+              <div>
+                <h2 className="text-lg sm:text-xl font-semibold">Trading History</h2>
+                <p className="text-xs sm:text-sm text-gray-400">
+                  Your complete record of trading activities
+                </p>
+              </div>
+              <button
+                onClick={handleDownloadHistory}
+                disabled={trades.length === 0}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-medium rounded-lg transition-colors cursor-pointer shadow"
+                title="Download your trading history as CSV"
+              >
+                <Download className="w-4 h-4" />
+                Download History (CSV)
+              </button>
+            </div>
+            <DataTable
+              data={trades}
+              columns={[
+                { key: "id", label: "S/N" },
+                { key: "date", label: "Date" },
+                { key: "type", label: "Type" },
+                { key: "asset-class", label: "Asset Class" },
+                { key: "asset-ticker", label: "Asset Ticker" },
+                { key: "trade-amount", label: "Trade Amount" },
+                { key: "durations", label: "Duration" },
+                { key: "profit-loss", label: "Profit/Loss" },
+                { key: "status", label: "Status" },
+              ]}
+            />
+          </div>
         </div>
       </main>
     </>

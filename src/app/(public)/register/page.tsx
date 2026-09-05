@@ -6,6 +6,66 @@ import { useRouter } from "next/navigation";
 import { FiEyeOff, FiHome } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 
+const COUNTRIES = [
+  "Argentina",
+  "Australia",
+  "Austria",
+  "Bahamas",
+  "Bahrain",
+  "Belgium",
+  "Brazil",
+  "Canada",
+  "Chile",
+  "Colombia",
+  "Cyprus",
+  "Czech Republic",
+  "Denmark",
+  "Egypt",
+  "Finland",
+  "France",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "Hong Kong",
+  "Hungary",
+  "India",
+  "Indonesia",
+  "Ireland",
+  "Israel",
+  "Italy",
+  "Japan",
+  "Kenya",
+  "Kuwait",
+  "Luxembourg",
+  "Malaysia",
+  "Mexico",
+  "Netherlands",
+  "New Zealand",
+  "Nigeria",
+  "Norway",
+  "Oman",
+  "Panama",
+  "Peru",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Qatar",
+  "Saudi Arabia",
+  "Singapore",
+  "South Africa",
+  "South Korea",
+  "Spain",
+  "Sweden",
+  "Switzerland",
+  "Taiwan",
+  "Thailand",
+  "Turkey",
+  "United Arab Emirates",
+  "United Kingdom",
+  "United States",
+  "Vietnam",
+];
+
 export default function Register() {
   const [form, setForm] = useState({
     firstName: "",
@@ -168,14 +228,18 @@ export default function Register() {
             <select
               name="country"
               value={form.country}
-              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none"
+              className="border-b-[3px] border-gray-700 mb-2 p-2 w-full h-14 sm:h-16 outline-none bg-transparent"
               required
               onChange={handleOnchange}
             >
-              <option value="">Choose country</option>
-              <option value="USA">USA</option>
-              <option value="CANADA">Canada</option>
-              <option value="UK">UK</option>
+              <option value="" className="text-gray-500">
+                Choose country
+              </option>
+              {COUNTRIES.map((country) => (
+                <option key={country} value={country} className="text-black">
+                  {country}
+                </option>
+              ))}
             </select>
             <select
               name="currency"

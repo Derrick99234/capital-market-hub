@@ -8,8 +8,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <AdminSidebar />
         <main className="md:ml-[20%] min-h-screen bg-black">{children}</main>
       </body>
