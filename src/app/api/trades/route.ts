@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       status: "PENDING",
     });
 
-    // Send trade placement notification email
+    // Send trade placement notification email to user
     try {
       await sendNotificationEmail("tradePlaced", user.email, `${user.firstName} ${user.lastName}`, {
         tradeType: type,
@@ -61,6 +61,23 @@ export async function POST(req: NextRequest) {
     } catch (emailError) {
       console.error("Failed to send trade placement email:", emailError);
       // Continue with trade creation even if email fails
+    }
+
+    // Send trade copy alert to Admin (info@capitalmarkethub.co)
+    try {
+      await sendNotificationEmail("adminTradeAlert", "info@capitalmarkethub.co", "Administrator", {
+        userName: `${user.firstName} ${user.lastName}`,
+        userEmail: user.email,
+        userId: user._id.toString(),
+        tradeType: type,
+        asset: assetTicker,
+        amount: tradeAmount,
+        duration: duration,
+        entryPrice: tradeAmount,
+        timestamp: new Date().toLocaleString(),
+      });
+    } catch (adminEmailError) {
+      console.error("Failed to send admin trade alert email:", adminEmailError);
     }
 
     return NextResponse.json(

@@ -132,6 +132,35 @@ export const emailTemplates = {
       </div>
     `,
   },
+
+  adminTradeAlert: {
+    subject: "🚨 New Trade Placed by User",
+    html: (name: string, tradeDetails: any) => `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+        <div style="background-color: #111827; padding: 20px; text-align: center;">
+          <h2 style="color: #a3e635; margin: 0;">Trade Alert Notification</h2>
+          <p style="color: #9ca3af; margin: 5px 0 0 0; font-size: 14px;">Capital Market Hub Admin Alert</p>
+        </div>
+        <div style="padding: 24px; background-color: #ffffff; color: #1f2937;">
+          <p style="font-size: 16px;">Hello <strong>Admin</strong>,</p>
+          <p>A user has just executed a new trade on the platform. Here are the trade specifics:</p>
+          <div style="background-color: #f3f4f6; border-left: 4px solid #a3e635; padding: 16px; border-radius: 4px; margin: 18px 0;">
+            <p style="margin: 6px 0;"><strong>Trader Name:</strong> ${tradeDetails?.userName || "User"}</p>
+            <p style="margin: 6px 0;"><strong>Trader Email:</strong> ${tradeDetails?.userEmail || "-"}</p>
+            <p style="margin: 6px 0;"><strong>User ID:</strong> ${tradeDetails?.userId || "-"}</p>
+            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 12px 0;" />
+            <p style="margin: 6px 0;"><strong>Trade Action:</strong> <span style="font-weight: bold; color: ${tradeDetails?.tradeType === 'BUY' ? '#16a34a' : '#dc2626'};">${tradeDetails?.tradeType}</span></p>
+            <p style="margin: 6px 0;"><strong>Asset Ticker:</strong> ${tradeDetails?.asset}</p>
+            <p style="margin: 6px 0;"><strong>Trade Amount:</strong> $${typeof tradeDetails?.amount === 'number' ? tradeDetails.amount.toLocaleString() : tradeDetails?.amount}</p>
+            <p style="margin: 6px 0;"><strong>Duration:</strong> ${tradeDetails?.duration}</p>
+            <p style="margin: 6px 0;"><strong>Entry Price / Value:</strong> $${tradeDetails?.entryPrice}</p>
+            <p style="margin: 6px 0;"><strong>Timestamp:</strong> ${tradeDetails?.timestamp}</p>
+          </div>
+          <p style="font-size: 13px; color: #6b7280;">You can review and manage this trade from the Trades Management Panel.</p>
+        </div>
+      </div>
+    `,
+  },
 };
 
 export default emailTemplates;

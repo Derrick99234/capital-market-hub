@@ -16,7 +16,7 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
   });
 
   await transporter.sendMail({
-    from: `"Support" <${process.env.SMTP_USER}>`,
+    from: `"Capital Market Hub" <${process.env.SMTP_USER || "info@capitalmarkethub.co"}>`,
     to,
     subject,
     html,
