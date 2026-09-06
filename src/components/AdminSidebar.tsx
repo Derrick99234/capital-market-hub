@@ -113,6 +113,16 @@ function AdminSidebar() {
                 <span className="text-sm">KYC Management</span>
               </Link>
             </li>
+
+            <li>
+              <Link
+                href="/admin/wallets"
+                className="flex items-center gap-3 py-3 px-2 rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <BsWallet2 className="w-5 h-5" />{" "}
+                <span className="text-sm">Deposit Wallets</span>
+              </Link>
+            </li>
           </ul>
         </div>
 

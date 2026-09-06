@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 
@@ -63,4 +63,24 @@ export async function uploadFileToR2(file: File, folder: string) {
   );
 
   return buildPublicUrl(key);
+}
+
+export async function deleteFileFromR2(fileUrl: string) {
+  if (!R2_BUCKET_NAME || !fileUrl) return;
+
+  try {
+    const urlObj = new URL(fileUrl);
+    const key = urlObj.pathname.replace(/^\/+/, "");
+    if (!key) return;
+
+    const client = getR2Client();
+    await client.send(
+      new DeleteObjectCommand({
+        Bucket: R2_BUCKET_NAME,
+        Key: key,
+      })
+    );
+  } catch (err) {
+    console.error("Failed to delete file from R2:", err);
+  }
 }
