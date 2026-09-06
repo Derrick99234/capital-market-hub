@@ -11,6 +11,9 @@ type Payment = {
   currency: string;
   method?: string;
   status: string;
+  planTier?: string;
+  planName?: string;
+  note?: string;
   createdAt?: string;
 };
 
@@ -95,6 +98,16 @@ export default function AdminPaymentsPage() {
                   <div className="text-xs sm:text-sm text-gray-200 mt-1">
                     Amount: ${p.amount.toFixed(2)} {p.currency}
                   </div>
+                  {p.planName && (
+                    <div className="text-xs text-lime-400 font-semibold mt-1">
+                      Plan Upgrade: {p.planName}
+                    </div>
+                  )}
+                  {p.note && !p.planName && (
+                    <div className="text-xs text-gray-400 mt-1">
+                      Note: {p.note}
+                    </div>
+                  )}
                   <div className="text-xs text-gray-400 mt-1">
                     Status: <span className="capitalize">{p.status}</span>
                   </div>

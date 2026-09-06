@@ -1,5 +1,13 @@
 import mongoose, { Schema, Document, models } from "mongoose";
 
+export interface IUserPlan {
+  name: string;
+  tier: "TRIAL" | "BRONZE" | "SILVER" | "GOLD";
+  amount: number;
+  status: "ACTIVE" | "PENDING" | "EXPIRED";
+  upgradedAt?: Date;
+}
+
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
@@ -13,6 +21,7 @@ export interface IUser extends Document {
     depositBalance: number;
     referralBalance: number;
   };
+  plan?: IUserPlan;
   phoneNumber?: string;
   country?: string;
   currency: string;
@@ -50,6 +59,30 @@ const UserSchema = new Schema<IUser>(
       BTC: { type: Number, default: 0 },
       depositBalance: { type: Number, default: 0 },
       referralBalance: { type: Number, default: 0 },
+    },
+    plan: {
+      name: {
+        type: String,
+        default: "Trial Plan",
+      },
+      tier: {
+        type: String,
+        enum: ["TRIAL", "BRONZE", "SILVER", "GOLD"],
+        default: "TRIAL",
+      },
+      amount: {
+        type: Number,
+        default: 250,
+      },
+      status: {
+        type: String,
+        enum: ["ACTIVE", "PENDING", "EXPIRED"],
+        default: "ACTIVE",
+      },
+      upgradedAt: {
+        type: Date,
+        default: () => new Date(),
+      },
     },
     phoneNumber: {
       type: String,

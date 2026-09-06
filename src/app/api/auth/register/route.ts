@@ -47,7 +47,13 @@ export async function POST(req: Request) {
       phoneNumber: phoneNumber || null,
       country: country || null,
       currency: currency || "USD", // default currency if not provided
-      balance: 0, // default starting balance
+      plan: {
+        name: "Trial Plan",
+        tier: "TRIAL",
+        amount: 250,
+        status: "ACTIVE",
+        upgradedAt: new Date(),
+      },
     });
 
     // Send welcome email

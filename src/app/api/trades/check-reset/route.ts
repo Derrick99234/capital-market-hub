@@ -38,5 +38,5 @@ export async function GET(req: Request) {
     Date.now() - new Date(user.lastTradeReset).getTime()
   );
 
-  return NextResponse.json(user);
+  return NextResponse.json({ dailyTradeLeft: user.dailyTradeLeft });
 }

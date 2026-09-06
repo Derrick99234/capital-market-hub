@@ -1,13 +1,21 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
-type User = {
+export interface UserPlan {
+  name: string;
+  tier: "TRIAL" | "BRONZE" | "SILVER" | "GOLD";
+  amount: number;
+  status: string;
+  upgradedAt?: string | Date;
+}
+
+export type User = {
   _id: string;
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
-  country: string;
+  phoneNumber?: string;
+  country?: string;
   currency: string;
   dailyTradeLeft: number;
   balance: {
@@ -16,6 +24,7 @@ type User = {
     depositBalance: number;
     referralBalance: number;
   };
+  plan?: UserPlan;
   createdAt: string;
   updatedAt: string;
 } | null;
@@ -25,6 +34,7 @@ type UserContextType = {
   loading: boolean;
   setLoading: (loading: boolean) => void;
   setUser: (user: User) => void;
+  refreshUser: () => Promise<void>;
   logout: () => void;
 };
 
@@ -37,31 +47,41 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const checkReset = async () => {
-    setLoading(true);
-
-    const res = await fetch("/api/trades/check-reset");
-    const data = await res.json();
-    setUser(data);
-  };
-  // Fetch user from /api/auth/me
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/me");
-        if (!res.ok) {
-          throw new Error("Failed to fetch user");
-        }
-
+    try {
+      const res = await fetch("/api/trades/check-reset");
+      if (res.ok) {
         const data = await res.json();
-        setUser(data.user); // { user: { firstName, lastName, ... } }
-        checkReset();
-      } catch (err) {
-        setUser(null);
-      } finally {
-        setLoading(false);
+        if (data && typeof data.dailyTradeLeft === "number") {
+          setUser((prev) =>
+            prev ? { ...prev, dailyTradeLeft: data.dailyTradeLeft } : prev
+          );
+        }
       }
-    };
+    } catch (e) {
+      console.error("Check reset error:", e);
+    }
+  };
 
+  const fetchUser = async () => {
+    try {
+      const res = await fetch("/api/auth/me");
+      if (!res.ok) {
+        throw new Error("Failed to fetch user");
+      }
+
+      const data = await res.json();
+      if (data?.user) {
+        setUser(data.user);
+        await checkReset();
+      }
+    } catch (err) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchUser();
   }, []);
 
@@ -73,7 +93,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, loading, setUser, logout, setLoading }}
+      value={{ user, loading, setUser, refreshUser: fetchUser, logout, setLoading }}
     >
       {children}
     </UserContext.Provider>

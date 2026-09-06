@@ -8,7 +8,9 @@ export interface IProduct extends Document {
   currency: string;
   method: string;
   status: string;
-  note: string;
+  note?: string;
+  planTier?: "BRONZE" | "SILVER" | "GOLD";
+  planName?: string;
 }
 
 const PaymentSchema = new Schema<IProduct>(
@@ -23,6 +25,11 @@ const PaymentSchema = new Schema<IProduct>(
       default: "pending",
     },
     note: { type: String },
+    planTier: {
+      type: String,
+      enum: ["BRONZE", "SILVER", "GOLD"],
+    },
+    planName: { type: String },
   },
   { timestamps: true }
 );

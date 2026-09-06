@@ -45,6 +45,51 @@ export async function POST(req: NextRequest) {
 
     user.balance.depositBalance =
       (user.balance.depositBalance || 0) + payment.amount;
+    user.balance.totalBalance =
+      (user.balance.totalBalance || 0) + payment.amount;
+
+    // Determine target plan tier: use explicit planTier or infer from amount
+    let targetTier = payment.planTier;
+    let targetName = payment.planName;
+
+    if (!targetTier) {
+      if (payment.amount >= 50000) {
+        targetTier = "GOLD";
+        targetName = "Gold Plan";
+      } else if (payment.amount >= 10000) {
+        targetTier = "SILVER";
+        targetName = "Silver Plan";
+      } else if (payment.amount >= 3000) {
+        targetTier = "BRONZE";
+        targetName = "Bronze Plan";
+      }
+    }
+
+    // If payment qualifies for or targets a plan upgrade, activate the plan
+    if (targetTier) {
+      const planDisplayName =
+        targetName ||
+        (targetTier === "GOLD"
+          ? "Gold Plan"
+          : targetTier === "SILVER"
+          ? "Silver Plan"
+          : "Bronze Plan");
+
+      user.plan = {
+        name: planDisplayName,
+        tier: targetTier as "BRONZE" | "SILVER" | "GOLD",
+        amount: payment.amount,
+        status: "ACTIVE",
+        upgradedAt: new Date(),
+      };
+      user.markModified("plan");
+
+      // Save plan details onto payment record as well
+      payment.planTier = targetTier;
+      payment.planName = planDisplayName;
+    }
+
+    user.markModified("balance");
     await user.save();
 
     payment.status = "approved";

@@ -67,7 +67,7 @@ export async function GET_single(req: NextRequest) {
 // POST to add a new payment
 export async function POST(req: NextRequest) {
   try {
-    const { userId, amount, method } = await req.json();
+    const { userId, amount, method, planTier, planName, note } = await req.json();
 
     // Validation (you can customize this based on your needs)
     if (!userId || !amount) {
@@ -79,6 +79,9 @@ export async function POST(req: NextRequest) {
       userId,
       amount,
       method,
+      planTier: planTier || undefined,
+      planName: planName || undefined,
+      note: note || (planName ? `Deposit for ${planName}` : undefined),
     });
 
     await newPayment.save();

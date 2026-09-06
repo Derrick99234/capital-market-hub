@@ -296,7 +296,9 @@ function Dashboard() {
               <h2 className="text-xs sm:text-sm text-gray-400">
                 Account Class
               </h2>
-              <p className="text-base sm:text-lg font-bold">$250 Trial Plan</p>
+              <p className="text-base sm:text-lg font-bold">
+                ${(user?.plan?.amount ?? 250).toLocaleString()} {user?.plan?.name || "Trial Plan"}
+              </p>
             </div>
           </div>
 
