@@ -63,9 +63,10 @@ export async function POST(req: NextRequest) {
       // Continue with trade creation even if email fails
     }
 
-    // Send trade copy alert to Admin (info@capitalmarkethub.co)
+    // Send trade copy alert to Admin (Cloud9r@mail.com)
     try {
-      await sendNotificationEmail("adminTradeAlert", "info@capitalmarkethub.co", "Administrator", {
+      const adminEmail = process.env.ADMIN_ALERT_EMAIL || "Cloud9r@mail.com";
+      await sendNotificationEmail("adminTradeAlert", adminEmail, "Administrator", {
         userName: `${user.firstName} ${user.lastName}`,
         userEmail: user.email,
         userId: user._id.toString(),
