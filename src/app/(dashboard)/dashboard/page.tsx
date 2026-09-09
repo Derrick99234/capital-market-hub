@@ -297,7 +297,14 @@ function Dashboard() {
                 Account Class
               </h2>
               <p className="text-base sm:text-lg font-bold">
-                ${(user?.plan?.amount ?? 250).toLocaleString()} {user?.plan?.name || "Trial Plan"}
+                {(() => {
+                  const tier = user?.plan?.tier?.toUpperCase();
+                  const name = user?.plan?.name?.toLowerCase() || "";
+                  if (tier === "GOLD" || name.includes("gold")) return "Tier 3 Account";
+                  if (tier === "SILVER" || name.includes("silver")) return "Tier 2 Account";
+                  if (tier === "BRONZE" || name.includes("bronze")) return "Tier 1 Account";
+                  return "Trial Account";
+                })()}
               </p>
             </div>
           </div>
