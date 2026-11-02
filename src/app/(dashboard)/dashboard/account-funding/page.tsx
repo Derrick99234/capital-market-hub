@@ -65,7 +65,9 @@ function AccountFundingContent() {
   useEffect(() => {
     const loadWallets = async () => {
       try {
-        const res = await fetch("/api/wallets?active=true");
+        const res = await fetch("/api/wallets?active=true", {
+          cache: "no-store",
+        });
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.wallets) && data.wallets.length > 0) {

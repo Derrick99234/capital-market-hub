@@ -55,7 +55,9 @@ export default function AdminWalletsPage() {
   const fetchWallets = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/wallets");
+      const res = await fetch("/api/wallets", {
+        cache: "no-store",
+      });
       const data = await res.json();
       if (res.ok && Array.isArray(data.wallets)) {
         setWallets(data.wallets);
@@ -480,6 +482,7 @@ export default function AdminWalletsPage() {
                           alt="QR Preview"
                           fill
                           className="object-contain rounded"
+                          unoptimized
                         />
                       </div>
                       <span className="text-xs text-lime-400 font-medium">
@@ -645,7 +648,7 @@ export default function AdminWalletsPage() {
                         alt="QR Code"
                         fill
                         className="object-contain rounded"
-                        unoptimized={(filePreview || formData.qrCodeUrl).startsWith("http")}
+                        unoptimized
                       />
                     </div>
                     <span className="text-xs text-lime-400 font-medium">

@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { hostname } from "os";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -26,6 +25,18 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.prod.website-files.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.r2.dev",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.r2.cloudflarestorage.com",
         port: "",
         pathname: "/**",
       },

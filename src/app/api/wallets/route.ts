@@ -3,6 +3,9 @@ import { connectDB } from "@/lib/mongodb";
 import DepositWallet from "@/models/DepositWallet";
 import { uploadFileToR2, deleteFileFromR2 } from "@/lib/r2";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const DEFAULT_WALLETS = [
   {
     name: "btc",
@@ -73,7 +76,15 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ wallets }, { status: 200 });
+    return NextResponse.json(
+      { wallets },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      }
+    );
   } catch (error: any) {
     console.error("Fetch wallets error:", error);
     return NextResponse.json(
@@ -218,8 +229,10 @@ export async function PUT(req: NextRequest) {
     }
 
     // If updating QR image and old image was on R2, delete old image
-    if (qrCodeUrl && qrCodeUrl !== wallet.qrCodeUrl && wallet.qrCodeUrl.startsWith("http")) {
-      await deleteFileFromR2(wallet.qrCodeUrl);
+    if (qrCodeUrl && qrCodeUrl !== wallet.qrCodeUrl) {
+      if (wallet.qrCodeUrl && wallet.qrCodeUrl.startsWith("http")) {
+        await deleteFileFromR2(wallet.qrCodeUrl);
+      }
       wallet.qrCodeUrl = qrCodeUrl;
     }
 
